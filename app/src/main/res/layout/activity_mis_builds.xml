@@ -59,6 +59,8 @@
                 android:id="@+id/spPJMisBuilds"/>
             <ScrollView
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -74,10 +76,12 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:background="@color/anemoColor">
                         <LinearLayout
                             android:layout_width="60dp"
-                            android:layout_height="250dp">
+                            android:layout_height="250dp"
+                            android:gravity="center_horizontal">
                             <ImageView
                                 android:layout_gravity="center"
                                 android:background="@drawable/florico"
@@ -85,6 +89,7 @@
                                 android:layout_height="50dp"/>
                         </LinearLayout>
                         <LinearLayout
+                            android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="250dp"
                             android:orientation="vertical">
@@ -119,6 +124,280 @@
                                 android:hint="Stat Secundario D"
                                 android:textColorHint="@color/white"/>
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal">
+                            <Button
+                                android:id="@+id/guardarFlor"
+                                android:layout_gravity="center"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/save"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@color/cryoColor">
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="250dp"
+                            android:gravity="center_horizontal">
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:background="@drawable/plumico"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:orientation="vertical">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Principal"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:hint="Stat Secundario A"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario B"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario C"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario D"
+                                android:textColorHint="@color/white"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal">
+                            <Button
+                                android:id="@+id/guardarPluma"
+                                android:layout_gravity="center"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/save"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@color/electroColor">
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="250dp"
+                            android:gravity="center_horizontal">
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:background="@drawable/relico"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:orientation="vertical">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Principal"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:hint="Stat Secundario A"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario B"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario C"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario D"
+                                android:textColorHint="@color/white"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal">
+                            <Button
+                                android:id="@+id/guardarReloj"
+                                android:layout_gravity="center"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/save"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@color/geoColor">
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="250dp"
+                            android:gravity="center_horizontal">
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:background="@drawable/copico"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:orientation="vertical">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Principal"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:hint="Stat Secundario A"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario B"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario C"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario D"
+                                android:textColorHint="@color/white"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal">
+                            <Button
+                                android:id="@+id/guardarCopa"
+                                android:layout_gravity="center"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/save"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@color/hydroColor">
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="250dp"
+                            android:gravity="center_horizontal">
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:background="@drawable/corico"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="250dp"
+                            android:orientation="vertical">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Principal"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:hint="Stat Secundario A"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario B"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario C"
+                                android:textColorHint="@color/white"/>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:textColor="@color/white"
+                                android:hint="Stat Secundario D"
+                                android:textColorHint="@color/white"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal">
+                            <Button
+                                android:id="@+id/guardarCorona"
+                                android:layout_gravity="center"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@drawable/save"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center"
+                        android:background="@color/pyroColor">
+                        <Button
+                            android:id="@+id/guardarTodo"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/save"/>
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
