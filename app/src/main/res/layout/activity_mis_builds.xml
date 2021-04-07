@@ -97,6 +97,7 @@
                             android:orientation="vertical"
                             android:background="@drawable/borde_layout_artefactos">
                             <EditText
+                                android:id="@+id/etFlorPrin"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -105,6 +106,7 @@
                                 android:hint="Stat Principal"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etFlorSecA"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -113,6 +115,7 @@
                                 android:textColor="@color/white"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etFlorSecB"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -121,6 +124,7 @@
                                 android:hint="Stat Secundario B"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etFlorSecC"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -129,6 +133,7 @@
                                 android:hint="Stat Secundario C"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etFlorSecD"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -173,6 +178,7 @@
                             android:orientation="vertical"
                             android:background="@drawable/borde_layout_artefactos">
                             <EditText
+                                android:id="@+id/etPlumPrin"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -181,6 +187,7 @@
                                 android:hint="Stat Principal"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etPlumSecA"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -189,6 +196,7 @@
                                 android:textColor="@color/white"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etPlumSecB"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -197,6 +205,7 @@
                                 android:hint="Stat Secundario B"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etPlumSecC"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -205,6 +214,7 @@
                                 android:hint="Stat Secundario C"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etPlumSecD"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -249,6 +259,7 @@
                             android:orientation="vertical"
                             android:background="@drawable/borde_layout_artefactos">
                             <EditText
+                                android:id="@+id/etRelPrin"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -257,6 +268,7 @@
                                 android:hint="Stat Principal"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etRelSecA"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -265,6 +277,7 @@
                                 android:textColor="@color/white"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etRelSecB"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -273,6 +286,7 @@
                                 android:hint="Stat Secundario B"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etRelSecC"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -281,6 +295,7 @@
                                 android:hint="Stat Secundario C"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etRelSecD"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -325,6 +340,7 @@
                             android:orientation="vertical"
                             android:background="@drawable/borde_layout_artefactos">
                             <EditText
+                                android:id="@+id/etCopPrin"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -333,6 +349,7 @@
                                 android:hint="Stat Principal"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etCopSecA"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -341,6 +358,7 @@
                                 android:textColor="@color/white"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etCopSecB"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -349,6 +367,7 @@
                                 android:hint="Stat Secundario B"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etCopSecC"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -357,6 +376,7 @@
                                 android:hint="Stat Secundario C"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etCopSecD"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -401,6 +421,7 @@
                             android:orientation="vertical"
                             android:background="@drawable/borde_layout_artefactos">
                             <EditText
+                                android:id="@+id/etCorPrin"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -409,6 +430,7 @@
                                 android:hint="Stat Principal"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etCorSecA"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -417,6 +439,7 @@
                                 android:textColor="@color/white"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etCorSecB"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -425,6 +448,7 @@
                                 android:hint="Stat Secundario B"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etCorSecC"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"
@@ -433,6 +457,7 @@
                                 android:hint="Stat Secundario C"
                                 android:textColorHint="@color/white"/>
                             <EditText
+                                android:id="@+id/etCorSecD"
                                 android:paddingLeft="10dp"
                                 android:background="@drawable/borde_layout_artefactos"
                                 android:layout_width="match_parent"

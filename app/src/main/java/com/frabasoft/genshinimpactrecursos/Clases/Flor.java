@@ -1,6 +1,8 @@
 package com.frabasoft.genshinimpactrecursos.Clases;
 
-public class Flor {
+import java.io.Serializable;
+
+public class Flor implements Serializable {
     private int id;
     private String nombrePersonaje;
     private String principal;
