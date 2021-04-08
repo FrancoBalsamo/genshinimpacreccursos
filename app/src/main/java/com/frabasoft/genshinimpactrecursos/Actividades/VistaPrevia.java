@@ -8,36 +8,32 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.frabasoft.genshinimpactrecursos.Clases.Copa;
-import com.frabasoft.genshinimpactrecursos.Clases.Corona;
-import com.frabasoft.genshinimpactrecursos.Clases.Flor;
-import com.frabasoft.genshinimpactrecursos.Clases.Pluma;
-import com.frabasoft.genshinimpactrecursos.Clases.Reloj;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Pluma;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Reloj;
+import com.frabasoft.genshinimpactrecursos.Clases.CapturarLayout;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.master.permissionhelper.PermissionHelper;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -110,6 +106,16 @@ public class VistaPrevia extends AppCompatActivity {
 
         CargarDatosSQLite(nombrePersonaje);
         backgroundPJ(nombrePersonaje);
+        contenido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(permissionHelper.hasPermission()){
+                    GuardarLayout(VistaPrevia.this);
+                }else{
+                    ejecutar();
+                }
+            }
+        });
     }
 
     private void CargarDatosSQLite(String personaje){
@@ -324,17 +330,6 @@ public class VistaPrevia extends AppCompatActivity {
         }
         if(nombre == "Zhongli" || nombre.equals("Zhongli")){
             bkgPJ.setImageResource(R.drawable.zhonglibuilds);
-            contenido.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if(permissionHelper.hasPermission()){
-                        GuardarLayout(VistaPrevia.this);
-                    }else{
-                        ejecutar();
-                    }
-                    return true;
-                }
-            });
         }
     }
 

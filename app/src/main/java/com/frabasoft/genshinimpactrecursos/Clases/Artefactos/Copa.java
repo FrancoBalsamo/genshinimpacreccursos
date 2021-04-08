@@ -1,6 +1,6 @@
-package com.frabasoft.genshinimpactrecursos.Clases;
+package com.frabasoft.genshinimpactrecursos.Clases.Artefactos;
 
-public class Reloj {
+public class Copa {
     private int id;
     private String nombrePersonaje;
     private String principal;
@@ -65,7 +65,7 @@ public class Reloj {
         this.secundarioD = secundarioD;
     }
 
-    public Reloj(String nombrePersonaje, String principal, String secundarioA, String secundarioB, String secundarioC,
+    public Copa(String nombrePersonaje, String principal, String secundarioA, String secundarioB, String secundarioC,
                 String secundarioD) {
         this.nombrePersonaje = nombrePersonaje;
         this.principal = principal;
@@ -75,5 +75,5 @@ public class Reloj {
         this.secundarioD = secundarioD;
     }
 
-    public Reloj(){}
+    public Copa(){}
 }

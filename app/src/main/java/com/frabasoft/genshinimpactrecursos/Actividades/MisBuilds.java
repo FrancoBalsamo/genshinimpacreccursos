@@ -18,11 +18,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.frabasoft.genshinimpactrecursos.Clases.Copa;
-import com.frabasoft.genshinimpactrecursos.Clases.Corona;
-import com.frabasoft.genshinimpactrecursos.Clases.Flor;
-import com.frabasoft.genshinimpactrecursos.Clases.Pluma;
-import com.frabasoft.genshinimpactrecursos.Clases.Reloj;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Pluma;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Reloj;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;

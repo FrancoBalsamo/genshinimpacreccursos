@@ -1,8 +1,6 @@
-package com.frabasoft.genshinimpactrecursos.Clases;
+package com.frabasoft.genshinimpactrecursos.Clases.Artefactos;
 
-import java.io.Serializable;
-
-public class Flor implements Serializable {
+public class Reloj {
     private int id;
     private String nombrePersonaje;
     private String principal;
@@ -67,7 +65,7 @@ public class Flor implements Serializable {
         this.secundarioD = secundarioD;
     }
 
-    public Flor(String nombrePersonaje, String principal, String secundarioA, String secundarioB, String secundarioC,
+    public Reloj(String nombrePersonaje, String principal, String secundarioA, String secundarioB, String secundarioC,
                 String secundarioD) {
         this.nombrePersonaje = nombrePersonaje;
         this.principal = principal;
@@ -77,5 +75,5 @@ public class Flor implements Serializable {
         this.secundarioD = secundarioD;
     }
 
-    public Flor(){}
+    public Reloj(){}
 }

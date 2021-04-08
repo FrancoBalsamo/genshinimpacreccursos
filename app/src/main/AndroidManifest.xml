@@ -15,7 +15,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Actividades.VistaPrevia"
             android:configChanges="orientation"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape"
+            ></activity>
         <activity android:name=".Actividades.MisBuilds"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>

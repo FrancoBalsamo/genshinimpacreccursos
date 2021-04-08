@@ -7,11 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import com.frabasoft.genshinimpactrecursos.Clases.Copa;
-import com.frabasoft.genshinimpactrecursos.Clases.Corona;
-import com.frabasoft.genshinimpactrecursos.Clases.Flor;
-import com.frabasoft.genshinimpactrecursos.Clases.Pluma;
-import com.frabasoft.genshinimpactrecursos.Clases.Reloj;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Pluma;
+import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Reloj;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.CopaTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.CoronaTablaSqlite;

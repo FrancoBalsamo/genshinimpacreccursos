@@ -1,6 +1,8 @@
-package com.frabasoft.genshinimpactrecursos.Clases;
+package com.frabasoft.genshinimpactrecursos.Clases.Artefactos;
 
-public class Corona {
+import java.io.Serializable;
+
+public class Flor implements Serializable {
     private int id;
     private String nombrePersonaje;
     private String principal;
@@ -65,7 +67,7 @@ public class Corona {
         this.secundarioD = secundarioD;
     }
 
-    public Corona(String nombrePersonaje, String principal, String secundarioA, String secundarioB, String secundarioC,
+    public Flor(String nombrePersonaje, String principal, String secundarioA, String secundarioB, String secundarioC,
                 String secundarioD) {
         this.nombrePersonaje = nombrePersonaje;
         this.principal = principal;
@@ -75,5 +77,5 @@ public class Corona {
         this.secundarioD = secundarioD;
     }
 
-    public Corona(){}
+    public Flor(){}
 }

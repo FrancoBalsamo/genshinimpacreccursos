@@ -1,6 +1,6 @@
-package com.frabasoft.genshinimpactrecursos.Clases;
+package com.frabasoft.genshinimpactrecursos.Clases.Artefactos;
 
-public class Copa {
+public class Pluma {
     private int id;
     private String nombrePersonaje;
     private String principal;
@@ -65,7 +65,7 @@ public class Copa {
         this.secundarioD = secundarioD;
     }
 
-    public Copa(String nombrePersonaje, String principal, String secundarioA, String secundarioB, String secundarioC,
+    public Pluma(String nombrePersonaje, String principal, String secundarioA, String secundarioB, String secundarioC,
                 String secundarioD) {
         this.nombrePersonaje = nombrePersonaje;
         this.principal = principal;
@@ -75,5 +75,5 @@ public class Copa {
         this.secundarioD = secundarioD;
     }
 
-    public Copa(){}
+    public Pluma(){}
 }
