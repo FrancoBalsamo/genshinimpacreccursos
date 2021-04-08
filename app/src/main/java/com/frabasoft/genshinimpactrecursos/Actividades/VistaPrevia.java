@@ -243,92 +243,63 @@ public class VistaPrevia extends AppCompatActivity {
     private void backgroundPJ(String nombre){
         if(nombre == "Albedo" || nombre.equals("Albedo")){
             bkgPJ.setImageResource(R.drawable.albedobuilds);
-        }
-        if(nombre == "Amber" || nombre.equals("Amber")){
+        } else if(nombre == "Amber" || nombre.equals("Amber")){
             bkgPJ.setImageResource(R.drawable.amberbuilds);
-        }
-        if(nombre == "Barbara" || nombre.equals("Barbara")){
+        } else if(nombre == "Barbara" || nombre.equals("Barbara")){
             bkgPJ.setImageResource(R.drawable.barbarabuilds);
-        }
-        if(nombre == "Beidou" || nombre.equals("Beidou")){
+        } else if(nombre == "Beidou" || nombre.equals("Beidou")){
             bkgPJ.setImageResource(R.drawable.beidoubuilds);
-        }
-        if(nombre == "Bennet" || nombre.equals("Bennet")){
+        } else if(nombre == "Bennet" || nombre.equals("Bennet")){
             bkgPJ.setImageResource(R.drawable.bennetbuilds);
-        }
-        if(nombre == "Chongyun" || nombre.equals("Chongyun")){
+        } else if(nombre == "Chongyun" || nombre.equals("Chongyun")){
             bkgPJ.setImageResource(R.drawable.chongyunbuilds);
-        }
-        if(nombre == "Diluc" || nombre.equals("Diluc")){
+        } else if(nombre == "Diluc" || nombre.equals("Diluc")){
             bkgPJ.setImageResource(R.drawable.dilucbuilds);
-        }
-        if(nombre == "Diona" || nombre.equals("Diona")){
+        } else if(nombre == "Diona" || nombre.equals("Diona")){
             bkgPJ.setImageResource(R.drawable.dionabuilds);
-        }
-        if(nombre == "Fischl" || nombre.equals("Fischl")){
+        } else if(nombre == "Fischl" || nombre.equals("Fischl")){
             bkgPJ.setImageResource(R.drawable.fischlbuilds);
-        }
-        if(nombre == "Ganyu" || nombre.equals("Ganyu")){
+        } else if(nombre == "Ganyu" || nombre.equals("Ganyu")){
             bkgPJ.setImageResource(R.drawable.ganyubuilds);
-        }
-        if(nombre == "Hu Tao" || nombre.equals("Hu Tao")){
+        } else if(nombre == "Hu Tao" || nombre.equals("Hu Tao")){
             bkgPJ.setImageResource(R.drawable.hutaobuilds);
-        }
-        if(nombre == "Jean" || nombre.equals("Jean")){
+        } else if(nombre == "Jean" || nombre.equals("Jean")){
             bkgPJ.setImageResource(R.drawable.jeanbuilds);
-        }
-        if(nombre == "Kaeya" || nombre.equals("Kaeya")){
+        } else if(nombre == "Kaeya" || nombre.equals("Kaeya")){
             bkgPJ.setImageResource(R.drawable.kaeyabuilds);
-        }
-        if(nombre == "Keqing" || nombre.equals("Keqing")){
+        } else if(nombre == "Keqing" || nombre.equals("Keqing")){
             bkgPJ.setImageResource(R.drawable.keqingbuilds);
-        }
-        if(nombre == "Klee" || nombre.equals("Klee")){
+        } else if(nombre == "Klee" || nombre.equals("Klee")){
             bkgPJ.setImageResource(R.drawable.kleebuilds);
-        }
-        if(nombre == "Lisa" || nombre.equals("Lisa")){
+        } else if(nombre == "Lisa" || nombre.equals("Lisa")){
             bkgPJ.setImageResource(R.drawable.lisabuilds);
-        }
-        if(nombre == "Mona" || nombre.equals("Mona")){
+        } else if(nombre == "Mona" || nombre.equals("Mona")){
             bkgPJ.setImageResource(R.drawable.monabuilds);
-        }
-        if(nombre == "Ninguang" || nombre.equals("Ninguang")){
+        } else if(nombre == "Ninguang" || nombre.equals("Ninguang")){
             bkgPJ.setImageResource(R.drawable.ningguangbuilds);
-        }
-        if(nombre == "Noelle" || nombre.equals("Noelle")){
+        } else if(nombre == "Noelle" || nombre.equals("Noelle")){
             bkgPJ.setImageResource(R.drawable.noellebuilds);
-        }
-        if(nombre == "Qiqi" || nombre.equals("Qiqi")){
+        } else if(nombre == "Qiqi" || nombre.equals("Qiqi")){
             bkgPJ.setImageResource(R.drawable.qiqibuilds);
-        }
-        if(nombre == "Razor" || nombre.equals("Razor")){
+        } else if(nombre == "Razor" || nombre.equals("Razor")){
             bkgPJ.setImageResource(R.drawable.razorbuilds);
-        }
-        if(nombre == "Rosaria" || nombre.equals("Rosaria")){
+        } else if(nombre == "Rosaria" || nombre.equals("Rosaria")){
             bkgPJ.setImageResource(R.drawable.rosariabuilds);
-        }
-        if(nombre == "Sucrose" || nombre.equals("Sucrose")){
+        } else if(nombre == "Sucrose" || nombre.equals("Sucrose")){
             bkgPJ.setImageResource(R.drawable.sacarosabuilds);
-        }
-        if(nombre == "Tartaglia" || nombre.equals("Tartaglia")){
+        } else if(nombre == "Tartaglia" || nombre.equals("Tartaglia")){
             bkgPJ.setImageResource(R.drawable.tartagliabuilds);
-        }
-        if(nombre == "Venti" || nombre.equals("Venti")){
+        } else if(nombre == "Venti" || nombre.equals("Venti")){
             bkgPJ.setImageResource(R.drawable.ventibuilds);
-        }
-        if(nombre == "Xianling" || nombre.equals("Xianling")){
+        } else if(nombre == "Xianling" || nombre.equals("Xianling")){
             bkgPJ.setImageResource(R.drawable.xianlingbuilds);
-        }
-        if(nombre == "Xiao" || nombre.equals("Xiao")){
+        } else if(nombre == "Xiao" || nombre.equals("Xiao")){
             bkgPJ.setImageResource(R.drawable.xiaobuilds);
-        }
-        if(nombre == "Xingqiu" || nombre.equals("Xingqiu")){
+        } else if(nombre == "Xingqiu" || nombre.equals("Xingqiu")){
             bkgPJ.setImageResource(R.drawable.xingqiubuilds);
-        }
-        if(nombre == "Xinyan" || nombre.equals("Xinyan")){
+        } else if(nombre == "Xinyan" || nombre.equals("Xinyan")){
             bkgPJ.setImageResource(R.drawable.xinyanbuilds);
-        }
-        if(nombre == "Zhongli" || nombre.equals("Zhongli")){
+        } else if(nombre == "Zhongli" || nombre.equals("Zhongli")){
             bkgPJ.setImageResource(R.drawable.zhonglibuilds);
         }
     }
