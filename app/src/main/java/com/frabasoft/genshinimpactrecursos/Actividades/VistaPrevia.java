@@ -334,12 +334,15 @@ public class VistaPrevia extends AppCompatActivity {
     }
 
     private void GuardarLayout(Context context){
+        contenido.setDrawingCacheEnabled(true);
         contenido.buildDrawingCache();
         Bitmap bmap = contenido.getDrawingCache();
         try {
             saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", nombrePersonaje);
         } catch (IOException e) {
             Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        } finally {
+            contenido.destroyDrawingCache();
         }
     }
 
