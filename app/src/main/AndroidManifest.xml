@@ -13,10 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Actividades.MisBuilds"></activity>
-        <activity android:name=".Actividades.RutaArtefactos" />
-        <activity android:name=".Actividades.Builds" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Actividades.VistaPrevia"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".Actividades.MisBuilds"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Actividades.RutaArtefactos"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Actividades.Builds"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

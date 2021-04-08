@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,6 +26,11 @@ import com.frabasoft.genshinimpactrecursos.Clases.Reloj;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.master.permissionhelper.PermissionHelper;
 
 import java.text.DecimalFormat;
@@ -50,18 +57,25 @@ public class MisBuilds extends AppCompatActivity {
     private DecimalFormat df;
     PermissionHelper permissionHelper;
     private final static String TAG = "ERRORTAG";
-    private Button guardarFlor,guardarPluma, guardarReloj, guardarCopa, guardarCorona, guardarTodo;
+    private Button guardarFlor,guardarPluma, guardarReloj, guardarCopa, guardarCorona, guardarTodo, vistaPrevia;
     private EditText etFlorPrin, etFlorSecA, etFlorSecB, etFlorSecC, etFlorSecD;
     private EditText etPlumPrin, etPlumSecA, etPlumSecB, etPlumSecC, etPlumSecD;
     private EditText etRelPrin, etRelSecA, etRelSecB, etRelSecC, etRelSecD;
     private EditText etCopPrin, etCopSecA, etCopSecB, etCopSecC, etCopSecD;
     private EditText etCorPrin, etCorSecA, etCorSecB, etCorSecC, etCorSecD;
     private ArrayList<Flor> florArrayList;
+    private ArrayList<Pluma> plumaArrayList;
+    private ArrayList<Reloj> relojArrayList;
+    private ArrayList<Copa> copaArrayList;
+    private ArrayList<Corona> coronaArrayList;
+
+    private AdView publicidad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mis_builds);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         ejecutar();
 
@@ -83,6 +97,18 @@ public class MisBuilds extends AppCompatActivity {
         etRelSecC = (EditText)findViewById(R.id.etRelSecC);
         etRelSecD = (EditText)findViewById(R.id.etRelSecD);
 
+        etCopPrin = (EditText)findViewById(R.id.etCopPrin);
+        etCopSecA = (EditText)findViewById(R.id.etCopSecA);
+        etCopSecB = (EditText)findViewById(R.id.etCopSecB);
+        etCopSecC = (EditText)findViewById(R.id.etCopSecC);
+        etCopSecD = (EditText)findViewById(R.id.etCopSecD);
+
+        etCorPrin = (EditText)findViewById(R.id.etCorPrin);
+        etCorSecA = (EditText)findViewById(R.id.etCorSecA);
+        etCorSecB = (EditText)findViewById(R.id.etCorSecB);
+        etCorSecC = (EditText)findViewById(R.id.etCorSecC);
+        etCorSecD = (EditText)findViewById(R.id.etCorSecD);
+
         spPJMisBuilds = (Spinner)findViewById(R.id.spPJMisBuilds);
         imgPJMisBuilds = (TouchImageView)findViewById(R.id.imgPJMisBuilds);
         guardarFlor = (Button)findViewById(R.id.guardarFlor);
@@ -91,6 +117,7 @@ public class MisBuilds extends AppCompatActivity {
         guardarCopa = (Button)findViewById(R.id.guardarCopa);
         guardarCorona = (Button)findViewById(R.id.guardarCorona);
         guardarTodo = (Button)findViewById(R.id.guardarTodo);
+        vistaPrevia = (Button)findViewById(R.id.vistaprevia);
 
         df = new DecimalFormat("#.##");
         
@@ -101,618 +128,230 @@ public class MisBuilds extends AppCompatActivity {
                 if (position == 0) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.wallpaper);
-                    guardarFlor.setOnClickListener(new View.OnClickListener() {
+                    GuardadoEnCeroPosicion();
+                    vistaPrevia.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje primero.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje para ir a su vista previa.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else if (position == 1) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.albedobuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++){
-                        if(etFlorPrin.getText().toString()=="" || etFlorPrin.getText().toString()==null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString()=="" || etFlorSecA.getText().toString()==null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString()=="" || etFlorSecB.getText().toString()==null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString()=="" || etFlorSecC.getText().toString()==null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString()=="" || etFlorSecD.getText().toString()==null || etFlorSecD.equals("")){
-                             limpiarET();
-                        }else{
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
-                    guardarFlor.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            guardarActualizarFlor(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
-                        }
-                    });
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 2) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.amberbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                             limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 3) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.barbarabuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                             limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 4) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.beidoubuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 5) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.bennetbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 6) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.chongyunbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 7) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.dilucbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 8) {
-                    imgPJMisBuilds.setImageResource(R.drawable.dionabuilds);
                     limpiarET();
-                    imgPJMisBuilds.setImageResource(R.drawable.dilucbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    imgPJMisBuilds.setImageResource(R.drawable.dionabuilds);
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 9) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.fischlbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 10) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.ganyubuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 11) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.hutaobuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 12) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.jeanbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 13) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.kaeyabuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 14) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.keqingbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 15) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.kleebuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 16) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.lisabuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 17) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.monabuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 18) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.ningguangbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 19) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.noellebuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 20) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.qiqibuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 21) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.razorbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 22) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.rosariabuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 23) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.sacarosabuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 24) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.tartagliabuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 25) {
+                    limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.ventibuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            limpiarET();
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 26) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xianlingbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 27) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xiaobuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 28) {
+                    limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xingqiubuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 29) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xinyanbuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 } else if (position == 30) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.zhonglibuilds);
-                    DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
-                    florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-                    for(int i = 0; i < florArrayList.size(); i++) {
-                        if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
-                                || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
-                                || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
-                                || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
-                                || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
-                            limpiarET();
-                        } else {
-                            etFlorPrin.setText(florArrayList.get(i).getPrincipal());
-                            etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
-                            etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
-                            etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
-                            etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
-                        }
-                    }
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
+
+        banerPublicitario();
     }
 
     private void ejecutar(){
@@ -938,13 +577,238 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateCorona(actividad, personaje, corona);
     }
 
+    private void CargarDatosSQLite(){
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
+        //flor
+        florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
+        for(int i = 0; i < florArrayList.size(); i++){
+            if(etFlorPrin.getText().toString()=="" || etFlorPrin.getText().toString()==null || etFlorPrin.equals("")
+                    || etFlorSecA.getText().toString()=="" || etFlorSecA.getText().toString()==null || etFlorSecA.equals("")
+                    || etFlorSecB.getText().toString()=="" || etFlorSecB.getText().toString()==null || etFlorSecB.equals("")
+                    || etFlorSecC.getText().toString()=="" || etFlorSecC.getText().toString()==null || etFlorSecC.equals("")
+                    || etFlorSecD.getText().toString()=="" || etFlorSecD.getText().toString()==null || etFlorSecD.equals("")){
+                limpiarET();
+            }else{
+                etFlorPrin.setText(florArrayList.get(i).getPrincipal());
+                etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
+                etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
+                etFlorSecC.setText(florArrayList.get(i).getSecundarioC());
+                etFlorSecD.setText(florArrayList.get(i).getSecundarioD());
+            }
+        }
+        //pluma
+        plumaArrayList = datosProcesosSqlite.mostrarDatosDelPjPluma(spPJMisBuilds.getSelectedItem().toString());
+        for(int i = 0; i < plumaArrayList.size(); i++){
+            if(etPlumPrin.getText().toString()=="" || etPlumPrin.getText().toString()==null || etPlumPrin.equals("")
+                    || etPlumSecA.getText().toString()=="" || etPlumSecA.getText().toString()==null || etPlumSecA.equals("")
+                    || etPlumSecB.getText().toString()=="" || etPlumSecB.getText().toString()==null || etPlumSecB.equals("")
+                    || etPlumSecC.getText().toString()=="" || etPlumSecC.getText().toString()==null || etPlumSecC.equals("")
+                    || etPlumSecD.getText().toString()=="" || etPlumSecD.getText().toString()==null || etPlumSecD.equals("")){
+                limpiarET();
+            }else{
+                etPlumPrin.setText(plumaArrayList.get(i).getPrincipal());
+                etPlumSecA.setText(plumaArrayList.get(i).getSecundarioA());
+                etPlumSecB.setText(plumaArrayList.get(i).getSecundarioB());
+                etPlumSecC.setText(plumaArrayList.get(i).getSecundarioC());
+                etPlumSecD.setText(plumaArrayList.get(i).getSecundarioD());
+            }
+        }
+        //reloj
+        relojArrayList = datosProcesosSqlite.mostrarDatosDelPjReloj(spPJMisBuilds.getSelectedItem().toString());
+        for(int i = 0; i < relojArrayList.size(); i++){
+            if(etRelPrin.getText().toString()=="" || etRelPrin.getText().toString()==null || etRelPrin.equals("")
+                    || etRelSecA.getText().toString()=="" || etRelSecA.getText().toString()==null || etRelSecA.equals("")
+                    || etRelSecB.getText().toString()=="" || etRelSecB.getText().toString()==null || etRelSecB.equals("")
+                    || etRelSecC.getText().toString()=="" || etRelSecC.getText().toString()==null || etRelSecC.equals("")
+                    || etRelSecD.getText().toString()=="" || etRelSecD.getText().toString()==null || etRelSecD.equals("")){
+                limpiarET();
+            }else{
+                etRelPrin.setText(relojArrayList.get(i).getPrincipal());
+                etRelSecA.setText(relojArrayList.get(i).getSecundarioA());
+                etRelSecB.setText(relojArrayList.get(i).getSecundarioB());
+                etRelSecC.setText(relojArrayList.get(i).getSecundarioC());
+                etRelSecD.setText(relojArrayList.get(i).getSecundarioD());
+            }
+        }
+        //copa
+        copaArrayList = datosProcesosSqlite.mostrarDatosDelPjCopa(spPJMisBuilds.getSelectedItem().toString());
+        for(int i = 0; i < copaArrayList.size(); i++){
+            if(etCopPrin.getText().toString()=="" || etCopPrin.getText().toString()==null || etCopPrin.equals("")
+                    || etCopSecA.getText().toString()=="" || etCopSecA.getText().toString()==null || etCopSecA.equals("")
+                    || etCopSecB.getText().toString()=="" || etCopSecB.getText().toString()==null || etCopSecB.equals("")
+                    || etCopSecC.getText().toString()=="" || etCopSecC.getText().toString()==null || etCopSecC.equals("")
+                    || etCopSecD.getText().toString()=="" || etCopSecD.getText().toString()==null || etCopSecD.equals("")){
+                limpiarET();
+            }else{
+                etCopPrin.setText(copaArrayList.get(i).getPrincipal());
+                etCopSecA.setText(copaArrayList.get(i).getSecundarioA());
+                etCopSecB.setText(copaArrayList.get(i).getSecundarioB());
+                etCopSecC.setText(copaArrayList.get(i).getSecundarioC());
+                etCopSecD.setText(copaArrayList.get(i).getSecundarioD());
+            }
+        }
+        //corona
+        coronaArrayList = datosProcesosSqlite.mostrarDatosDelPjCorona(spPJMisBuilds.getSelectedItem().toString());
+        for(int i = 0; i < coronaArrayList.size(); i++){
+            if(etCorPrin.getText().toString()=="" || etCorPrin.getText().toString()==null || etCorPrin.equals("")
+                    || etCorSecA.getText().toString()=="" || etCorSecA.getText().toString()==null || etCorSecA.equals("")
+                    || etCorSecB.getText().toString()=="" || etCorSecB.getText().toString()==null || etCorSecB.equals("")
+                    || etCorSecC.getText().toString()=="" || etCorSecC.getText().toString()==null || etCorSecC.equals("")
+                    || etCorSecD.getText().toString()=="" || etCorSecD.getText().toString()==null || etCorSecD.equals("")){
+                limpiarET();
+            }else{
+                etCorPrin.setText(coronaArrayList.get(i).getPrincipal());
+                etCorSecA.setText(coronaArrayList.get(i).getSecundarioA());
+                etCorSecB.setText(coronaArrayList.get(i).getSecundarioB());
+                etCorSecC.setText(coronaArrayList.get(i).getSecundarioC());
+                etCorSecD.setText(coronaArrayList.get(i).getSecundarioD());
+            }
+        }
+    }
 
+    private void GuardarIndividuales(){
+        guardarFlor.setOnClickListener(new View.OnClickListener() {//flor
+            @Override
+            public void onClick(View v) {
+                guardarActualizarFlor(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+            }
+        });
+        guardarPluma.setOnClickListener(new View.OnClickListener() {//pluma
+            @Override
+            public void onClick(View v) {
+                guardarActualizarPluma(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+            }
+        });
+        guardarReloj.setOnClickListener(new View.OnClickListener() {//reloj
+            @Override
+            public void onClick(View v) {
+                guardarActualizarReloj(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+            }
+        });
+        guardarCopa.setOnClickListener(new View.OnClickListener() {//copa
+            @Override
+            public void onClick(View v) {
+                guardarActualizarCopa(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+            }
+        });
+        guardarCorona.setOnClickListener(new View.OnClickListener() {//corona
+            @Override
+            public void onClick(View v) {
+                guardarActualizarCorona(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+            }
+        });
+    }
+
+    private void GuardadoEnCeroPosicion(){
+        guardarFlor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje primero.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        guardarPluma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje primero.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        guardarReloj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje primero.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        guardarCopa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje primero.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        guardarCorona.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje primero.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        guardarTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje primero.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void GuardarTodos(){
+        guardarTodo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guardarActualizarFlor(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                guardarActualizarPluma(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                guardarActualizarReloj(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                guardarActualizarCopa(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                guardarActualizarCorona(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+            }
+        });
+    }
 
     private void limpiarET(){
+        //limpiar flor
         etFlorPrin.setText("");
         etFlorSecA.setText("");
         etFlorSecB.setText("");
         etFlorSecC.setText("");
         etFlorSecD.setText("");
+        //limpiar pluma
+        etPlumPrin.setText("");
+        etPlumSecA.setText("");
+        etPlumSecB.setText("");
+        etPlumSecC.setText("");
+        etPlumSecD.setText("");
+        //limpiar reloj
+        etRelPrin.setText("");
+        etRelSecA.setText("");
+        etRelSecB.setText("");
+        etRelSecC.setText("");
+        etRelSecD.setText("");
+        //limpiar copa
+        etCopPrin.setText("");
+        etCopSecA.setText("");
+        etCopSecB.setText("");
+        etCopSecC.setText("");
+        etCopSecD.setText("");
+        //limpiar corona
+        etCorPrin.setText("");
+        etCorSecA.setText("");
+        etCorSecB.setText("");
+        etCorSecC.setText("");
+        etCorSecD.setText("");
+    }
+
+    private void VistaPreviaBuild(){
+        vistaPrevia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent vista = new Intent(MisBuilds.this, VistaPrevia.class);
+               vista.putExtra("pj", spPJMisBuilds.getSelectedItem().toString());
+               startActivity(vista);
+                //Toast.makeText(MisBuilds.this, "¡Próximamente vas a poder ver la vista previa de tus builds!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void banerPublicitario(){
+        MobileAds.initialize(MisBuilds.this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) { }
+        });
+        publicidad = (AdView)findViewById(R.id.banerMisBuilds);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        publicidad.loadAd(adRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MisBuilds.this.finish();
     }
 }
