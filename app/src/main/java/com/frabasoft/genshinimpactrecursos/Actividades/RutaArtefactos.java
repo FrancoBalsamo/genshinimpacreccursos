@@ -54,6 +54,14 @@ public class RutaArtefactos extends AppCompatActivity {
 
         ejecutar();
 
+        MobileAds.initialize(RutaArtefactos.this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) { }
+        });
+        publicidad = (AdView)findViewById(R.id.banerRuta);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        publicidad.loadAd(adRequest);
+
         spinnerRutas = (Spinner)findViewById(R.id.spinnerRutas);
         descargaArtefactos = (TextView)findViewById(R.id.descargaArtefactos);
         descargaArtefactos.setText("**Puedes descargar las imágenes presionando por unos segundos sobre la misma.");
@@ -271,5 +279,32 @@ public class RutaArtefactos extends AppCompatActivity {
             }
         }
         return uri;
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (publicidad != null) {
+            publicidad.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (publicidad != null) {
+            publicidad.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (publicidad != null) {
+            publicidad.destroy();
+        }
+        super.onDestroy();
     }
 }

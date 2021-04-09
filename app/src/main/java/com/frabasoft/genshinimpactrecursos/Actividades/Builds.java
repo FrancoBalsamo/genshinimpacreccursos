@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frabasoft.genshinimpactrecursos.MainActivity;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
 import com.google.android.gms.ads.AdRequest;
@@ -65,6 +66,14 @@ public class Builds extends FragmentActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         ejecutar();
+
+        MobileAds.initialize(Builds.this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) { }
+        });
+        publicidad = (AdView)findViewById(R.id.banerBuild);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        publicidad.loadAd(adRequest);
 
         personajes = (Spinner)findViewById(R.id.personajes);
         descargaBuild = (TextView)findViewById(R.id.descargaBuilds);
@@ -893,17 +902,6 @@ public class Builds extends FragmentActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
-        banerPublicitario();
-    }
-
-    private void banerPublicitario(){
-        MobileAds.initialize(Builds.this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) { }
-        });
-        publicidad = (AdView)findViewById(R.id.banerBuild);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        publicidad.loadAd(adRequest);
     }
 
     private void toastAnemo(Context actividad, String mensaje){
@@ -1036,5 +1034,32 @@ public class Builds extends FragmentActivity {
             }
         }
         return uri;
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (publicidad != null) {
+            publicidad.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (publicidad != null) {
+            publicidad.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (publicidad != null) {
+            publicidad.destroy();
+        }
+        super.onDestroy();
     }
 }

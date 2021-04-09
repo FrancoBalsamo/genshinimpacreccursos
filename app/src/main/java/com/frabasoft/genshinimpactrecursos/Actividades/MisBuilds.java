@@ -79,6 +79,14 @@ public class MisBuilds extends AppCompatActivity {
 
         ejecutar();
 
+        MobileAds.initialize(MisBuilds.this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) { }
+        });
+        publicidad = (AdView)findViewById(R.id.banerMisBuilds);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        publicidad.loadAd(adRequest);
+
         etFlorPrin = (EditText)findViewById(R.id.etFlorPrin);
         etFlorSecA = (EditText)findViewById(R.id.etFlorSecA);
         etFlorSecB = (EditText)findViewById(R.id.etFlorSecB);
@@ -350,8 +358,6 @@ public class MisBuilds extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
-
-        banerPublicitario();
     }
 
     private void ejecutar(){
@@ -796,19 +802,36 @@ public class MisBuilds extends AppCompatActivity {
         });
     }
 
-    private void banerPublicitario(){
-        MobileAds.initialize(MisBuilds.this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) { }
-        });
-        publicidad = (AdView)findViewById(R.id.banerMisBuilds);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        publicidad.loadAd(adRequest);
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         MisBuilds.this.finish();
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (publicidad != null) {
+            publicidad.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (publicidad != null) {
+            publicidad.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (publicidad != null) {
+            publicidad.destroy();
+        }
+        super.onDestroy();
     }
 }

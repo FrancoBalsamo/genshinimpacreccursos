@@ -39,7 +39,13 @@ public class MainActivity extends AppCompatActivity {
         artefactos = (Button)findViewById(R.id.artefactos);
         misBuilds = (Button)findViewById(R.id.misBuilds);
 
-        banerPublicitario();
+        MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) { }
+        });
+        publicidad = (AdView)findViewById(R.id.banerMainActivity);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        publicidad.loadAd(adRequest);
 
         instagram.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,16 +91,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void banerPublicitario(){
-        MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) { }
-        });
-        publicidad = (AdView)findViewById(R.id.banerMainActivity);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        publicidad.loadAd(adRequest);
-    }
-
     private void buildActivity(){
         Intent build = new Intent(MainActivity.this, Builds.class);
         startActivity(build);
@@ -113,5 +109,32 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         MainActivity.this.finish();
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (publicidad != null) {
+            publicidad.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (publicidad != null) {
+            publicidad.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (publicidad != null) {
+            publicidad.destroy();
+        }
+        super.onDestroy();
     }
 }
