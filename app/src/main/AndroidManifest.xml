@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.frabasoft.genshinimpactrecursos">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -13,20 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Actividades.VistaPrevia"
+        <activity
+            android:name=".Actividades.VistaPrevia"
             android:configChanges="orientation"
-            android:screenOrientation="landscape"
-            ></activity>
-        <activity android:name=".Actividades.MisBuilds"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Actividades.RutaArtefactos"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Actividades.MisBuilds"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".Actividades.Builds"
+        <activity
+            android:name=".Actividades.RutaArtefactos"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".Actividades.Builds"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
