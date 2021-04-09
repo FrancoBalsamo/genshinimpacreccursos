@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.media.MediaScannerConnection;
@@ -317,53 +319,10 @@ public class VistaPrevia extends AppCompatActivity {
             guardarImagen(bmap);
         } catch (Exception e) {
             Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         } finally {
             contenido.destroyDrawingCache();
         }
-    }
-
-    private Uri guardar(Context context, Bitmap bitmap, @NonNull String carpeta, @NonNull String nombreArchivo) throws IOException {
-        OutputStream salida;
-        File archivoImagen = null;
-        Uri uriMenor = null;
-        String[] pjs = {String.valueOf(nombrePersonaje)};
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, nombreArchivo + ".jpg");
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/*");
-            contentValues.put(MediaStore.DownloadColumns.RELATIVE_PATH, "DCIM/Genshin Impact MIS BUILDS");
-            Uri uriImagen = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-            try{
-                salida = context.getContentResolver().openOutputStream(uriImagen);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, salida);
-                salida.close();
-            }catch (FileNotFoundException fileNotFoundException){
-                Toast.makeText(context, "File Not Found Exception: " + fileNotFoundException.getMessage(), Toast.LENGTH_SHORT).show();
-            }catch (IOException ioException){
-                Toast.makeText(context, "Exception: " + ioException.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-
-            return uriImagen;
-        }else{
-            String carpetaImagen = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + File.separator + carpeta;
-            archivoImagen = new File(carpetaImagen);
-            if(!archivoImagen.exists()){
-                archivoImagen.mkdir();
-            }else{
-                archivoImagen.delete();
-            }
-            archivoImagen = new File(carpetaImagen, nombreArchivo + ".jpg");
-            salida = new FileOutputStream(archivoImagen);
-        }
-        boolean guardado = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, salida);
-        salida.flush();
-        salida.close();
-
-        if(archivoImagen != null){
-            MediaScannerConnection.scanFile(context, new String[]{archivoImagen.toString()}, null, null);
-            uriMenor = Uri.fromFile(archivoImagen);
-        }
-        return uriMenor;
     }
 
     private void guardarImagen(Bitmap bitmap) {
@@ -376,25 +335,21 @@ public class VistaPrevia extends AppCompatActivity {
                 try {
                     guardarImagenParaStream(bitmap, this.getContentResolver().openOutputStream(uri));
                     values.put(MediaStore.Images.Media.IS_PENDING, false);
-                    this.getContentResolver().update(uri, values, null, null);
                     Toast.makeText(this, "¡Se ha guardado tu build de manera exitosa!", Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }else{
-                uri = this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                //uri = Uri.parse(String.valueOf("content://media/external/images/media/120274"));
                 try {
                     guardarImagenParaStream(bitmap, this.getContentResolver().openOutputStream(uri));
                     values.put(MediaStore.Images.Media.IS_PENDING, false);
-                    this.getContentResolver().update(uri, values, null, null);
                     Toast.makeText(this, "¡Se ha guardado tu build de manera exitosa!", Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
         } else {
-            File directorioRuta = new File(Environment.getExternalStorageDirectory().toString() + '/' + getString(R.string.app_name));
+            File directorioRuta = new File(Environment.getExternalStorageDirectory().toString() + '/' + "Genshin Impact Mis Builds");
             if (!directorioRuta.exists()) {
                 directorioRuta.mkdirs();
             }
@@ -432,56 +387,6 @@ public class VistaPrevia extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Nullable
-    private Uri saveBitmap(@NonNull final Context context, @NonNull final Bitmap bitmap,
-                           @NonNull final Bitmap.CompressFormat format, @NonNull final String mimeType,
-                           @NonNull final String displayName) throws IOException {
-        final String relativeLocation = Environment.DIRECTORY_DCIM;
-        final ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, displayName + ".jpg");
-        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
-        contentValues.put(MediaStore.DownloadColumns.RELATIVE_PATH, relativeLocation);
-
-        final ContentResolver resolver = context.getContentResolver();
-
-        OutputStream stream = null;
-        Uri uri = null;
-        try{
-
-            final Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            uri = resolver.insert(contentUri, contentValues);
-            if (uri == null){
-                Toast.makeText(context, "uri == null", Toast.LENGTH_SHORT).show();
-                throw new IOException("Fallo de URI nula.");
-            }
-
-            stream = resolver.openOutputStream(uri);
-
-            if (stream == null){
-                Toast.makeText(context, "stream == null", Toast.LENGTH_SHORT).show();
-                throw new IOException("No se pudo obtener la salida.");
-            }
-            if (bitmap.compress(format, 95, stream) == false){
-                Toast.makeText(context, "bitmap.compress(format, 95, stream) == false", Toast.LENGTH_SHORT).show();
-                throw new IOException("Fallo al guardar el Bitmap.");
-            }
-        }catch (IOException e)        {
-            if (uri != null)
-            {
-                resolver.delete(uri, null, null);
-                Toast.makeText(context, "IOException", Toast.LENGTH_SHORT).show();
-            }
-            throw e;
-        }
-        finally{
-            if (stream != null){
-                stream.close();
-                Toast.makeText(context, "¡La imagen se ha guardado con éxito!", Toast.LENGTH_SHORT).show();
-            }
-        }
-        return uri;
     }
 
     private void ejecutar(){
