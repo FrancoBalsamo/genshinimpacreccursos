@@ -20,7 +20,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4467142756516555~5203838957" />
+            android:value="ca-app-pub-4467142756516555~7297213897" />
 
         <activity
             android:name=".Actividades.VistaPrevia"
