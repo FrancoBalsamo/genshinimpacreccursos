@@ -48,7 +48,7 @@ public class Builds extends FragmentActivity {
             "Hu Tao", "Jean", "Kaeya",
             "Keqing", "Keqing v2", "Klee", "Lisa",
             "Mona v1", "Mona v2", "Ninguang",
-            "Noelle", "Qiqi", "Razor",
+            "Noelle", "Qiqi", "Razor", "Rosaria",
             "Sucrose","Tartaglia", "Traveler Anemo",
             "Venti", "Xianling v1", "Xianling v2",
             "Xiao", "Xingqiu v1", "Xingqiu v2",
@@ -591,6 +591,28 @@ public class Builds extends FragmentActivity {
                     });
                 }else if(position == 24){
                     toastElectro(Builds.this, personajes.getSelectedItem().toString());
+                    imgPJ.setImageResource(R.drawable.rosaria);
+                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            if(permissionHelper.hasPermission()){
+                                //convertir imagen a bitmap
+                                imgPJ.buildDrawingCache();
+                                Bitmap bmap = imgPJ.getDrawingCache();
+
+                                try {
+                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
+                                } catch (IOException e) {
+                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }else{
+                                ejecutar();
+                            }
+                            return true;
+                        }
+                    });
+                }else if(position == 25){
+                    toastElectro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.razor);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
@@ -611,7 +633,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 25){
+                }else if(position == 26){
                     toastAnemo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.sucrose);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -633,7 +655,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 26){
+                }else if(position == 27){
                     toastHydro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.tartaglia);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -655,7 +677,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 27){
+                }else if(position == 28){
                     toastAnemo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.traveler_anemo);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -677,7 +699,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 28){
+                }else if(position == 29){
                     toastAnemo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.venti);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -699,7 +721,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 29){
+                }else if(position == 30){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xiangling_v1);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -721,7 +743,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 30){
+                }else if(position == 31){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xiangling_v2);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -743,7 +765,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 31){
+                }else if(position == 32){
                     toastAnemo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xiao);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -765,7 +787,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 32){
+                }else if(position == 33){
                     toastHydro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xingqiu_v1);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -787,7 +809,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 33){
+                }else if(position == 34){
                     toastHydro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xingqiu_v2);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -809,7 +831,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 34){
+                }else if(position == 35){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xinyan);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -831,7 +853,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 35){
+                }else if(position == 36){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.zhongli_v1);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -853,7 +875,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 36){
+                }else if(position == 37){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.zhongli_v2);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
@@ -875,7 +897,7 @@ public class Builds extends FragmentActivity {
                             return true;
                         }
                     });
-                }else if(position == 37){
+                }else if(position == 38){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.zhongli_v3);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {

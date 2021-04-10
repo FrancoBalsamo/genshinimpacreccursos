@@ -2,6 +2,7 @@ package com.frabasoft.genshinimpactrecursos.Actividades;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -22,6 +23,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -112,6 +114,7 @@ public class VistaPrevia extends AppCompatActivity {
         CargarDatosSQLite(nombrePersonaje);
         backgroundPJ(nombrePersonaje);
         contenido.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 if(permissionHelper.hasPermission()){
@@ -314,8 +317,6 @@ public class VistaPrevia extends AppCompatActivity {
         contenido.buildDrawingCache();
         Bitmap bmap = contenido.getDrawingCache();
         try {
-            //guardar(context, bmap, "/Genshin Impact Mis Builds", nombrePersonaje);
-            //saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", nombrePersonaje);
             guardarImagen(bmap);
         } catch (Exception e) {
             Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -335,21 +336,14 @@ public class VistaPrevia extends AppCompatActivity {
                 try {
                     guardarImagenParaStream(bitmap, this.getContentResolver().openOutputStream(uri));
                     values.put(MediaStore.Images.Media.IS_PENDING, false);
-                    Toast.makeText(this, "¡Se ha guardado tu build de manera exitosa!", Toast.LENGTH_SHORT).show();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }else{
-                try {
-                    guardarImagenParaStream(bitmap, this.getContentResolver().openOutputStream(uri));
-                    values.put(MediaStore.Images.Media.IS_PENDING, false);
+                    this.getContentResolver().update(uri, values, null, null);
                     Toast.makeText(this, "¡Se ha guardado tu build de manera exitosa!", Toast.LENGTH_SHORT).show();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
         } else {
-            File directorioRuta = new File(Environment.getExternalStorageDirectory().toString() + '/' + "Genshin Impact Mis Builds");
+            File directorioRuta = new File(Environment.getExternalStorageDirectory().toString() + '/' + getString(R.string.app_name));
             if (!directorioRuta.exists()) {
                 directorioRuta.mkdirs();
             }
