@@ -329,26 +329,34 @@ public class VistaPrevia extends AppCompatActivity {
     private void guardarImagen(Bitmap bitmap) {
         if (android.os.Build.VERSION.SDK_INT >= 29) {
             ContentValues values = contentValues();
-            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/" + "Genshin Impact Mis Builds");
-            values.put(MediaStore.Images.Media.IS_PENDING, true);
             Uri uri = this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             if (uri != null) {
                 try {
                     guardarImagenParaStream(bitmap, this.getContentResolver().openOutputStream(uri));
                     values.put(MediaStore.Images.Media.IS_PENDING, false);
                     this.getContentResolver().update(uri, values, null, null);
+                    Log.d("TRYURINONULL", "guardarImagen: " + uri);
                     Toast.makeText(this, "¡Se ha guardado tu build de manera exitosa!", Toast.LENGTH_SHORT).show();
-                } catch (FileNotFoundException e) {
+                }catch (FileNotFoundException e) {
                     e.printStackTrace();
+                    Log.d("CATCHURINONULL", "FileNotFoundException: " + e.getMessage());
+                }catch (Exception  e) {
+                    e.printStackTrace();
+                    Log.d("CATCHURINONULL", "Exception: " + e.getMessage());
                 }
+            }else{
+                Log.d("URINULA", "else: " + uri);
             }
         } else {
-            File directorioRuta = new File(Environment.getExternalStorageDirectory().toString() + '/' + getString(R.string.app_name));
+            File directorioRuta = new File(Environment.DIRECTORY_PICTURES);
             if (!directorioRuta.exists()) {
                 directorioRuta.mkdirs();
             }
             String nombreDelArchivo = nombrePersonaje + ".jpg";
             File archivoFinal = new File(directorioRuta, nombreDelArchivo);
+            if(archivoFinal.exists()){
+                archivoFinal.delete();
+            }
             try {
                 guardarImagenParaStream(bitmap, new FileOutputStream(archivoFinal));
                 ContentValues values = new ContentValues();
@@ -357,14 +365,14 @@ public class VistaPrevia extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
     private ContentValues contentValues() {
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.DISPLAY_NAME, nombrePersonaje + ".jpg");
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/*");
+        values.put(MediaStore.MediaColumns.DISPLAY_NAME, nombrePersonaje + ".jpg");
+        values.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
+        values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
         values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());

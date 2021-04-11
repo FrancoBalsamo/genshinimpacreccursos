@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,11 +18,17 @@ import android.widget.Toast;
 import com.frabasoft.genshinimpactrecursos.Actividades.Builds;
 import com.frabasoft.genshinimpactrecursos.Actividades.MisBuilds;
 import com.frabasoft.genshinimpactrecursos.Actividades.RutaArtefactos;
+import com.frabasoft.genshinimpactrecursos.Actividades.VistaPrevia;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ImageView instagram, whatsapp;
@@ -33,17 +41,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        instagram = (ImageView)findViewById(R.id.instagram);
-        whatsapp = (ImageView)findViewById(R.id.whatsapp);
-        builds = (Button)findViewById(R.id.builds);
-        artefactos = (Button)findViewById(R.id.artefactos);
-        misBuilds = (Button)findViewById(R.id.misBuilds);
+        instagram = (ImageView) findViewById(R.id.instagram);
+        whatsapp = (ImageView) findViewById(R.id.whatsapp);
+        builds = (Button) findViewById(R.id.builds);
+        artefactos = (Button) findViewById(R.id.artefactos);
+        misBuilds = (Button) findViewById(R.id.misBuilds);
 
         MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
             @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) { }
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
         });
-        publicidad = (AdView)findViewById(R.id.banerMainActivity);
+        publicidad = (AdView) findViewById(R.id.banerMainActivity);
         AdRequest adRequest = new AdRequest.Builder().build();
         publicidad.loadAd(adRequest);
 
@@ -79,28 +88,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void instagramActividad(Context contexto){
+    private void instagramActividad(Context contexto) {
         Uri uri = Uri.parse("https://www.instagram.com/_u/genshinbaoer/");
         Intent instagram = new Intent(Intent.ACTION_VIEW, uri);
         try {
             startActivity(instagram);
-        }catch (ActivityNotFoundException activityNotFoundException){
+        } catch (ActivityNotFoundException activityNotFoundException) {
             Toast.makeText(contexto, "No dispones de la aplicación, se abrirá en el navegador.", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://www.instagram.com/genshinbaoer/")));
         }
     }
 
-    private void buildActivity(){
+    private void buildActivity() {
         Intent build = new Intent(MainActivity.this, Builds.class);
         startActivity(build);
     }
 
-    private void misBuildsActivity(){
+    private void misBuildsActivity() {
         Intent miBuild = new Intent(MainActivity.this, MisBuilds.class);
         startActivity(miBuild);
     }
-    private void artefactosActivity(){
+
+    private void artefactosActivity() {
         Intent artefactos = new Intent(MainActivity.this, RutaArtefactos.class);
         startActivity(artefactos);
     }
@@ -111,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.finish();
     }
 
-    /** Called when leaving the activity */
+    /**
+     * Called when leaving the activity
+     */
     @Override
     public void onPause() {
         if (publicidad != null) {
@@ -120,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    /** Called when returning to the activity */
+    /**
+     * Called when returning to the activity
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -129,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /** Called before the activity is destroyed */
+    /**
+     * Called before the activity is destroyed
+     */
     @Override
     public void onDestroy() {
         if (publicidad != null) {

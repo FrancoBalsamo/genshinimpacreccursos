@@ -794,10 +794,10 @@ public class MisBuilds extends AppCompatActivity {
         vistaPrevia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//               Intent vista = new Intent(MisBuilds.this, VistaPrevia.class);
-//               vista.putExtra("pj", spPJMisBuilds.getSelectedItem().toString());
-//               startActivity(vista);
-                Toast.makeText(MisBuilds.this, "¡Próximamente vas a poder ver la vista previa de tus builds!", Toast.LENGTH_SHORT).show();
+               Intent vista = new Intent(MisBuilds.this, VistaPrevia.class);
+               vista.putExtra("pj", spPJMisBuilds.getSelectedItem().toString());
+               startActivity(vista);
+//                Toast.makeText(MisBuilds.this, "¡Próximamente vas a poder ver la vista previa de tus builds!", Toast.LENGTH_SHORT).show();
             }
         });
     }
