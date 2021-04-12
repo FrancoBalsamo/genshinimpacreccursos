@@ -43,7 +43,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class VistaPrevia extends AppCompatActivity {
     private ArrayList<Flor> florArrayList;
@@ -312,14 +314,15 @@ public class VistaPrevia extends AppCompatActivity {
         }
     }
 
-    private void GuardarLayout(Context context){
+    private void GuardarLayout(Context context) {
         contenido.setDrawingCacheEnabled(true);
         contenido.buildDrawingCache();
         Bitmap bmap = contenido.getDrawingCache();
         try {
-            guardarImagen(bmap);
+            //guardarImagen(bmap);
+            saveImagesTwo(bmap);
         } catch (Exception e) {
-            Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.d("GuardarLayout", "GuardarLayout: " + e.getMessage());
             e.printStackTrace();
         } finally {
             contenido.destroyDrawingCache();
@@ -329,23 +332,26 @@ public class VistaPrevia extends AppCompatActivity {
     private void guardarImagen(Bitmap bitmap) {
         if (android.os.Build.VERSION.SDK_INT >= 29) {
             ContentValues values = contentValues();
+
+            Log.d("RESOLVER", "guardarImagen: " + this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values));
             Uri uri = this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
             if (uri != null) {
                 try {
                     guardarImagenParaStream(bitmap, this.getContentResolver().openOutputStream(uri));
                     values.put(MediaStore.Images.Media.IS_PENDING, false);
                     this.getContentResolver().update(uri, values, null, null);
-                    Log.d("TRYURINONULL", "guardarImagen: " + uri);
+                    Log.d("TRYURINONULL", "guardarImagen: " + values);
                     Toast.makeText(this, "¡Se ha guardado tu build de manera exitosa!", Toast.LENGTH_SHORT).show();
                 }catch (FileNotFoundException e) {
                     e.printStackTrace();
-                    Log.d("CATCHURINONULL", "FileNotFoundException: " + e.getMessage());
+                    Log.d("CATCHURINONULL", "FileNotFoundException: " + e.getMessage() + "\n" + values);
                 }catch (Exception  e) {
                     e.printStackTrace();
-                    Log.d("CATCHURINONULL", "Exception: " + e.getMessage());
+                    Log.d("CATCHURINONULL", "Exception: " + e.getMessage() + "\n" + values);
                 }
             }else{
-                Log.d("URINULA", "else: " + uri);
+                Log.d("URINULA", "else: " + values);
             }
         } else {
             File directorioRuta = new File(Environment.DIRECTORY_PICTURES);
@@ -368,11 +374,36 @@ public class VistaPrevia extends AppCompatActivity {
         }
     }
 
+    private void saveImagesTwo(Bitmap bitmap){
+        File ruta = new File(Environment.getExternalStorageDirectory() + "/Pictures");
+        if (!ruta.exists()) {
+            File wallpaperDirectory = new File("/sdcard/Pictures/");
+            wallpaperDirectory.mkdirs();
+        }
+
+        File archivo = new File("/sdcard/Pictures/", nombrePersonaje + ".jpg");
+        if (archivo.exists()) {
+            archivo.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(archivo);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            Toast.makeText(this, "¡Se ha guardado con éxito tu build!", Toast.LENGTH_SHORT).show();
+            Log.d("saveImagesTwo", "try: " + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "¡Ha ocurrido un error al intentar guardar tu build!", Toast.LENGTH_SHORT).show();
+            Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+        }
+    }
+
     private ContentValues contentValues() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.MediaColumns.DISPLAY_NAME, nombrePersonaje + ".jpg");
         values.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
-        values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+        values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM);
         values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
