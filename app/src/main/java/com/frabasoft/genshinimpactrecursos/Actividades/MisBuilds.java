@@ -32,7 +32,6 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.master.permissionhelper.PermissionHelper;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -49,15 +48,14 @@ public class MisBuilds extends AppCompatActivity {
             "Mona", "Ninguang",
             "Noelle", "Qiqi", "Razor",
             "Rosaria",
-            "Sucrose","Tartaglia",
+            "Sucrose", "Tartaglia",
             "Venti", "Xianling",
             "Xiao", "Xingqiu",
-            "Xinyan","Zhongli"};
+            "Xinyan", "Zhongli"};
 
     private DecimalFormat df;
     PermissionHelper permissionHelper;
-    private final static String TAG = "ERRORTAG";
-    private Button guardarFlor,guardarPluma, guardarReloj, guardarCopa, guardarCorona, guardarTodo, vistaPrevia;
+    private Button guardarFlor, guardarPluma, guardarReloj, guardarCopa, guardarCorona, guardarTodo, vistaPrevia;
     private EditText etFlorPrin, etFlorSecA, etFlorSecB, etFlorSecC, etFlorSecD;
     private EditText etPlumPrin, etPlumSecA, etPlumSecB, etPlumSecC, etPlumSecD;
     private EditText etRelPrin, etRelSecA, etRelSecB, etRelSecC, etRelSecD;
@@ -81,54 +79,55 @@ public class MisBuilds extends AppCompatActivity {
 
         MobileAds.initialize(MisBuilds.this, new OnInitializationCompleteListener() {
             @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) { }
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
         });
-        publicidad = (AdView)findViewById(R.id.banerMisBuilds);
+        publicidad = (AdView) findViewById(R.id.banerMisBuilds);
         AdRequest adRequest = new AdRequest.Builder().build();
         publicidad.loadAd(adRequest);
 
-        etFlorPrin = (EditText)findViewById(R.id.etFlorPrin);
-        etFlorSecA = (EditText)findViewById(R.id.etFlorSecA);
-        etFlorSecB = (EditText)findViewById(R.id.etFlorSecB);
-        etFlorSecC = (EditText)findViewById(R.id.etFlorSecC);
-        etFlorSecD = (EditText)findViewById(R.id.etFlorSecD);
+        etFlorPrin = (EditText) findViewById(R.id.etFlorPrin);
+        etFlorSecA = (EditText) findViewById(R.id.etFlorSecA);
+        etFlorSecB = (EditText) findViewById(R.id.etFlorSecB);
+        etFlorSecC = (EditText) findViewById(R.id.etFlorSecC);
+        etFlorSecD = (EditText) findViewById(R.id.etFlorSecD);
 
-        etPlumPrin = (EditText)findViewById(R.id.etPlumPrin);
-        etPlumSecA = (EditText)findViewById(R.id.etPlumSecA);
-        etPlumSecB = (EditText)findViewById(R.id.etPlumSecB);
-        etPlumSecC = (EditText)findViewById(R.id.etPlumSecC);
-        etPlumSecD = (EditText)findViewById(R.id.etPlumSecD);
+        etPlumPrin = (EditText) findViewById(R.id.etPlumPrin);
+        etPlumSecA = (EditText) findViewById(R.id.etPlumSecA);
+        etPlumSecB = (EditText) findViewById(R.id.etPlumSecB);
+        etPlumSecC = (EditText) findViewById(R.id.etPlumSecC);
+        etPlumSecD = (EditText) findViewById(R.id.etPlumSecD);
 
-        etRelPrin = (EditText)findViewById(R.id.etRelPrin);
-        etRelSecA = (EditText)findViewById(R.id.etRelSecA);
-        etRelSecB = (EditText)findViewById(R.id.etRelSecB);
-        etRelSecC = (EditText)findViewById(R.id.etRelSecC);
-        etRelSecD = (EditText)findViewById(R.id.etRelSecD);
+        etRelPrin = (EditText) findViewById(R.id.etRelPrin);
+        etRelSecA = (EditText) findViewById(R.id.etRelSecA);
+        etRelSecB = (EditText) findViewById(R.id.etRelSecB);
+        etRelSecC = (EditText) findViewById(R.id.etRelSecC);
+        etRelSecD = (EditText) findViewById(R.id.etRelSecD);
 
-        etCopPrin = (EditText)findViewById(R.id.etCopPrin);
-        etCopSecA = (EditText)findViewById(R.id.etCopSecA);
-        etCopSecB = (EditText)findViewById(R.id.etCopSecB);
-        etCopSecC = (EditText)findViewById(R.id.etCopSecC);
-        etCopSecD = (EditText)findViewById(R.id.etCopSecD);
+        etCopPrin = (EditText) findViewById(R.id.etCopPrin);
+        etCopSecA = (EditText) findViewById(R.id.etCopSecA);
+        etCopSecB = (EditText) findViewById(R.id.etCopSecB);
+        etCopSecC = (EditText) findViewById(R.id.etCopSecC);
+        etCopSecD = (EditText) findViewById(R.id.etCopSecD);
 
-        etCorPrin = (EditText)findViewById(R.id.etCorPrin);
-        etCorSecA = (EditText)findViewById(R.id.etCorSecA);
-        etCorSecB = (EditText)findViewById(R.id.etCorSecB);
-        etCorSecC = (EditText)findViewById(R.id.etCorSecC);
-        etCorSecD = (EditText)findViewById(R.id.etCorSecD);
+        etCorPrin = (EditText) findViewById(R.id.etCorPrin);
+        etCorSecA = (EditText) findViewById(R.id.etCorSecA);
+        etCorSecB = (EditText) findViewById(R.id.etCorSecB);
+        etCorSecC = (EditText) findViewById(R.id.etCorSecC);
+        etCorSecD = (EditText) findViewById(R.id.etCorSecD);
 
-        spPJMisBuilds = (Spinner)findViewById(R.id.spPJMisBuilds);
-        imgPJMisBuilds = (TouchImageView)findViewById(R.id.imgPJMisBuilds);
-        guardarFlor = (Button)findViewById(R.id.guardarFlor);
-        guardarPluma = (Button)findViewById(R.id.guardarPluma);
-        guardarReloj = (Button)findViewById(R.id.guardarReloj);
-        guardarCopa = (Button)findViewById(R.id.guardarCopa);
-        guardarCorona = (Button)findViewById(R.id.guardarCorona);
-        guardarTodo = (Button)findViewById(R.id.guardarTodo);
-        vistaPrevia = (Button)findViewById(R.id.vistaprevia);
+        spPJMisBuilds = (Spinner) findViewById(R.id.spPJMisBuilds);
+        imgPJMisBuilds = (TouchImageView) findViewById(R.id.imgPJMisBuilds);
+        guardarFlor = (Button) findViewById(R.id.guardarFlor);
+        guardarPluma = (Button) findViewById(R.id.guardarPluma);
+        guardarReloj = (Button) findViewById(R.id.guardarReloj);
+        guardarCopa = (Button) findViewById(R.id.guardarCopa);
+        guardarCorona = (Button) findViewById(R.id.guardarCorona);
+        guardarTodo = (Button) findViewById(R.id.guardarTodo);
+        vistaPrevia = (Button) findViewById(R.id.vistaprevia);
 
         df = new DecimalFormat("#.##");
-        
+
         spPJMisBuilds.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, personajesString));
         spPJMisBuilds.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -355,32 +354,34 @@ public class MisBuilds extends AppCompatActivity {
                     VistaPreviaBuild();
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
-    private void ejecutar(){
+    private void ejecutar() {
         permissionHelper = new PermissionHelper(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
         permissionHelper.request(new PermissionHelper.PermissionCallback() {
             @Override
             public void onPermissionGranted() {
-                Log.d(TAG, "onPermissionGranted() called");
+                Log.d("TAG", "onPermissionGranted() called");
             }
 
             @Override
             public void onIndividualPermissionGranted(String[] grantedPermission) {
-                Log.d(TAG, "onIndividualPermissionGranted() called with: grantedPermission = [" + TextUtils.join(",",grantedPermission) + "]");
+                Log.d("TAG", "onIndividualPermissionGranted() called with: grantedPermission = [" + TextUtils.join(",", grantedPermission) + "]");
             }
 
             @Override
             public void onPermissionDenied() {
-                Log.d(TAG, "onPermissionDenied() called");
+                Log.d("TAG", "onPermissionDenied() called");
             }
 
             @Override
             public void onPermissionDeniedBySystem() {
-                Log.d(TAG, "onPermissionDeniedBySystem() called");
+                Log.d("TAG", "onPermissionDeniedBySystem() called");
             }
         });
     }
@@ -393,7 +394,7 @@ public class MisBuilds extends AppCompatActivity {
         }
     }
 
-    private void guardarActualizarFlor(Context actividad, String personaje){
+    private void guardarActualizarFlor(Context actividad, String personaje) {
         if (TextUtils.isEmpty(etFlorPrin.getText().toString())) {
             etFlorPrin.setError("El campo no puede estar vacío.");
             etFlorPrin.requestFocus();
@@ -431,7 +432,7 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateFlor(actividad, personaje, flor);
     }
 
-    private void guardarActualizarPluma(Context actividad, String personaje){
+    private void guardarActualizarPluma(Context actividad, String personaje) {
         if (TextUtils.isEmpty(etPlumPrin.getText().toString())) {
             etPlumPrin.setError("El campo no puede estar vacío.");
             etPlumPrin.requestFocus();
@@ -469,7 +470,7 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdatePluma(actividad, personaje, plumar);
     }
 
-    private void guardarActualizarReloj(Context actividad, String personaje){
+    private void guardarActualizarReloj(Context actividad, String personaje) {
         if (TextUtils.isEmpty(etRelPrin.getText().toString())) {
             etRelPrin.setError("El campo no puede estar vacío.");
             etRelPrin.requestFocus();
@@ -507,7 +508,7 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateReloj(actividad, personaje, reloj);
     }
 
-    private void guardarActualizarCopa(Context actividad, String personaje){
+    private void guardarActualizarCopa(Context actividad, String personaje) {
         if (TextUtils.isEmpty(etCopPrin.getText().toString())) {
             etCopPrin.setError("El campo no puede estar vacío.");
             etCopPrin.requestFocus();
@@ -545,7 +546,7 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateCopa(actividad, personaje, copa);
     }
 
-    private void guardarActualizarCorona(Context actividad, String personaje){
+    private void guardarActualizarCorona(Context actividad, String personaje) {
         if (TextUtils.isEmpty(etCorPrin.getText().toString())) {
             etCorPrin.setError("El campo no puede estar vacío.");
             etCorPrin.requestFocus();
@@ -583,18 +584,18 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateCorona(actividad, personaje, corona);
     }
 
-    private void CargarDatosSQLite(){
+    private void CargarDatosSQLite() {
         DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(getApplicationContext());
         //flor
         florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(spPJMisBuilds.getSelectedItem().toString());
-        for(int i = 0; i < florArrayList.size(); i++){
-            if(etFlorPrin.getText().toString()=="" || etFlorPrin.getText().toString()==null || etFlorPrin.equals("")
-                    || etFlorSecA.getText().toString()=="" || etFlorSecA.getText().toString()==null || etFlorSecA.equals("")
-                    || etFlorSecB.getText().toString()=="" || etFlorSecB.getText().toString()==null || etFlorSecB.equals("")
-                    || etFlorSecC.getText().toString()=="" || etFlorSecC.getText().toString()==null || etFlorSecC.equals("")
-                    || etFlorSecD.getText().toString()=="" || etFlorSecD.getText().toString()==null || etFlorSecD.equals("")){
+        for (int i = 0; i < florArrayList.size(); i++) {
+            if (etFlorPrin.getText().toString() == "" || etFlorPrin.getText().toString() == null || etFlorPrin.equals("")
+                    || etFlorSecA.getText().toString() == "" || etFlorSecA.getText().toString() == null || etFlorSecA.equals("")
+                    || etFlorSecB.getText().toString() == "" || etFlorSecB.getText().toString() == null || etFlorSecB.equals("")
+                    || etFlorSecC.getText().toString() == "" || etFlorSecC.getText().toString() == null || etFlorSecC.equals("")
+                    || etFlorSecD.getText().toString() == "" || etFlorSecD.getText().toString() == null || etFlorSecD.equals("")) {
                 limpiarET();
-            }else{
+            } else {
                 etFlorPrin.setText(florArrayList.get(i).getPrincipal());
                 etFlorSecA.setText(florArrayList.get(i).getSecundarioA());
                 etFlorSecB.setText(florArrayList.get(i).getSecundarioB());
@@ -604,14 +605,14 @@ public class MisBuilds extends AppCompatActivity {
         }
         //pluma
         plumaArrayList = datosProcesosSqlite.mostrarDatosDelPjPluma(spPJMisBuilds.getSelectedItem().toString());
-        for(int i = 0; i < plumaArrayList.size(); i++){
-            if(etPlumPrin.getText().toString()=="" || etPlumPrin.getText().toString()==null || etPlumPrin.equals("")
-                    || etPlumSecA.getText().toString()=="" || etPlumSecA.getText().toString()==null || etPlumSecA.equals("")
-                    || etPlumSecB.getText().toString()=="" || etPlumSecB.getText().toString()==null || etPlumSecB.equals("")
-                    || etPlumSecC.getText().toString()=="" || etPlumSecC.getText().toString()==null || etPlumSecC.equals("")
-                    || etPlumSecD.getText().toString()=="" || etPlumSecD.getText().toString()==null || etPlumSecD.equals("")){
+        for (int i = 0; i < plumaArrayList.size(); i++) {
+            if (etPlumPrin.getText().toString() == "" || etPlumPrin.getText().toString() == null || etPlumPrin.equals("")
+                    || etPlumSecA.getText().toString() == "" || etPlumSecA.getText().toString() == null || etPlumSecA.equals("")
+                    || etPlumSecB.getText().toString() == "" || etPlumSecB.getText().toString() == null || etPlumSecB.equals("")
+                    || etPlumSecC.getText().toString() == "" || etPlumSecC.getText().toString() == null || etPlumSecC.equals("")
+                    || etPlumSecD.getText().toString() == "" || etPlumSecD.getText().toString() == null || etPlumSecD.equals("")) {
                 limpiarET();
-            }else{
+            } else {
                 etPlumPrin.setText(plumaArrayList.get(i).getPrincipal());
                 etPlumSecA.setText(plumaArrayList.get(i).getSecundarioA());
                 etPlumSecB.setText(plumaArrayList.get(i).getSecundarioB());
@@ -621,14 +622,14 @@ public class MisBuilds extends AppCompatActivity {
         }
         //reloj
         relojArrayList = datosProcesosSqlite.mostrarDatosDelPjReloj(spPJMisBuilds.getSelectedItem().toString());
-        for(int i = 0; i < relojArrayList.size(); i++){
-            if(etRelPrin.getText().toString()=="" || etRelPrin.getText().toString()==null || etRelPrin.equals("")
-                    || etRelSecA.getText().toString()=="" || etRelSecA.getText().toString()==null || etRelSecA.equals("")
-                    || etRelSecB.getText().toString()=="" || etRelSecB.getText().toString()==null || etRelSecB.equals("")
-                    || etRelSecC.getText().toString()=="" || etRelSecC.getText().toString()==null || etRelSecC.equals("")
-                    || etRelSecD.getText().toString()=="" || etRelSecD.getText().toString()==null || etRelSecD.equals("")){
+        for (int i = 0; i < relojArrayList.size(); i++) {
+            if (etRelPrin.getText().toString() == "" || etRelPrin.getText().toString() == null || etRelPrin.equals("")
+                    || etRelSecA.getText().toString() == "" || etRelSecA.getText().toString() == null || etRelSecA.equals("")
+                    || etRelSecB.getText().toString() == "" || etRelSecB.getText().toString() == null || etRelSecB.equals("")
+                    || etRelSecC.getText().toString() == "" || etRelSecC.getText().toString() == null || etRelSecC.equals("")
+                    || etRelSecD.getText().toString() == "" || etRelSecD.getText().toString() == null || etRelSecD.equals("")) {
                 limpiarET();
-            }else{
+            } else {
                 etRelPrin.setText(relojArrayList.get(i).getPrincipal());
                 etRelSecA.setText(relojArrayList.get(i).getSecundarioA());
                 etRelSecB.setText(relojArrayList.get(i).getSecundarioB());
@@ -638,14 +639,14 @@ public class MisBuilds extends AppCompatActivity {
         }
         //copa
         copaArrayList = datosProcesosSqlite.mostrarDatosDelPjCopa(spPJMisBuilds.getSelectedItem().toString());
-        for(int i = 0; i < copaArrayList.size(); i++){
-            if(etCopPrin.getText().toString()=="" || etCopPrin.getText().toString()==null || etCopPrin.equals("")
-                    || etCopSecA.getText().toString()=="" || etCopSecA.getText().toString()==null || etCopSecA.equals("")
-                    || etCopSecB.getText().toString()=="" || etCopSecB.getText().toString()==null || etCopSecB.equals("")
-                    || etCopSecC.getText().toString()=="" || etCopSecC.getText().toString()==null || etCopSecC.equals("")
-                    || etCopSecD.getText().toString()=="" || etCopSecD.getText().toString()==null || etCopSecD.equals("")){
+        for (int i = 0; i < copaArrayList.size(); i++) {
+            if (etCopPrin.getText().toString() == "" || etCopPrin.getText().toString() == null || etCopPrin.equals("")
+                    || etCopSecA.getText().toString() == "" || etCopSecA.getText().toString() == null || etCopSecA.equals("")
+                    || etCopSecB.getText().toString() == "" || etCopSecB.getText().toString() == null || etCopSecB.equals("")
+                    || etCopSecC.getText().toString() == "" || etCopSecC.getText().toString() == null || etCopSecC.equals("")
+                    || etCopSecD.getText().toString() == "" || etCopSecD.getText().toString() == null || etCopSecD.equals("")) {
                 limpiarET();
-            }else{
+            } else {
                 etCopPrin.setText(copaArrayList.get(i).getPrincipal());
                 etCopSecA.setText(copaArrayList.get(i).getSecundarioA());
                 etCopSecB.setText(copaArrayList.get(i).getSecundarioB());
@@ -655,14 +656,14 @@ public class MisBuilds extends AppCompatActivity {
         }
         //corona
         coronaArrayList = datosProcesosSqlite.mostrarDatosDelPjCorona(spPJMisBuilds.getSelectedItem().toString());
-        for(int i = 0; i < coronaArrayList.size(); i++){
-            if(etCorPrin.getText().toString()=="" || etCorPrin.getText().toString()==null || etCorPrin.equals("")
-                    || etCorSecA.getText().toString()=="" || etCorSecA.getText().toString()==null || etCorSecA.equals("")
-                    || etCorSecB.getText().toString()=="" || etCorSecB.getText().toString()==null || etCorSecB.equals("")
-                    || etCorSecC.getText().toString()=="" || etCorSecC.getText().toString()==null || etCorSecC.equals("")
-                    || etCorSecD.getText().toString()=="" || etCorSecD.getText().toString()==null || etCorSecD.equals("")){
+        for (int i = 0; i < coronaArrayList.size(); i++) {
+            if (etCorPrin.getText().toString() == "" || etCorPrin.getText().toString() == null || etCorPrin.equals("")
+                    || etCorSecA.getText().toString() == "" || etCorSecA.getText().toString() == null || etCorSecA.equals("")
+                    || etCorSecB.getText().toString() == "" || etCorSecB.getText().toString() == null || etCorSecB.equals("")
+                    || etCorSecC.getText().toString() == "" || etCorSecC.getText().toString() == null || etCorSecC.equals("")
+                    || etCorSecD.getText().toString() == "" || etCorSecD.getText().toString() == null || etCorSecD.equals("")) {
                 limpiarET();
-            }else{
+            } else {
                 etCorPrin.setText(coronaArrayList.get(i).getPrincipal());
                 etCorSecA.setText(coronaArrayList.get(i).getSecundarioA());
                 etCorSecB.setText(coronaArrayList.get(i).getSecundarioB());
@@ -672,7 +673,7 @@ public class MisBuilds extends AppCompatActivity {
         }
     }
 
-    private void GuardarIndividuales(){
+    private void GuardarIndividuales() {
         guardarFlor.setOnClickListener(new View.OnClickListener() {//flor
             @Override
             public void onClick(View v) {
@@ -705,7 +706,7 @@ public class MisBuilds extends AppCompatActivity {
         });
     }
 
-    private void GuardadoEnCeroPosicion(){
+    private void GuardadoEnCeroPosicion() {
         guardarFlor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -744,7 +745,7 @@ public class MisBuilds extends AppCompatActivity {
         });
     }
 
-    private void GuardarTodos(){
+    private void GuardarTodos() {
         guardarTodo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -757,7 +758,7 @@ public class MisBuilds extends AppCompatActivity {
         });
     }
 
-    private void limpiarET(){
+    private void limpiarET() {
         //limpiar flor
         etFlorPrin.setText("");
         etFlorSecA.setText("");
@@ -790,13 +791,13 @@ public class MisBuilds extends AppCompatActivity {
         etCorSecD.setText("");
     }
 
-    private void VistaPreviaBuild(){
+    private void VistaPreviaBuild() {
         vistaPrevia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent vista = new Intent(MisBuilds.this, VistaPrevia.class);
-               vista.putExtra("pj", spPJMisBuilds.getSelectedItem().toString());
-               startActivity(vista);
+                Intent vista = new Intent(MisBuilds.this, VistaPrevia.class);
+                vista.putExtra("pj", spPJMisBuilds.getSelectedItem().toString());
+                startActivity(vista);
 //                Toast.makeText(MisBuilds.this, "¡Próximamente vas a poder ver la vista previa de tus builds!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -808,7 +809,9 @@ public class MisBuilds extends AppCompatActivity {
         MisBuilds.this.finish();
     }
 
-    /** Called when leaving the activity */
+    /**
+     * Called when leaving the activity
+     */
     @Override
     public void onPause() {
         if (publicidad != null) {
@@ -817,7 +820,9 @@ public class MisBuilds extends AppCompatActivity {
         super.onPause();
     }
 
-    /** Called when returning to the activity */
+    /**
+     * Called when returning to the activity
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -826,7 +831,9 @@ public class MisBuilds extends AppCompatActivity {
         }
     }
 
-    /** Called before the activity is destroyed */
+    /**
+     * Called before the activity is destroyed
+     */
     @Override
     public void onDestroy() {
         if (publicidad != null) {

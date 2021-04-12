@@ -591,7 +591,7 @@ public class Builds extends FragmentActivity {
                     });
                 }else if(position == 24){
                     toastElectro(Builds.this, personajes.getSelectedItem().toString());
-                    imgPJ.setImageResource(R.drawable.rosaria);
+                    imgPJ.setImageResource(R.drawable.razor);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
@@ -612,8 +612,8 @@ public class Builds extends FragmentActivity {
                         }
                     });
                 }else if(position == 25){
-                    toastElectro(Builds.this, personajes.getSelectedItem().toString());
-                    imgPJ.setImageResource(R.drawable.razor);
+                    toastCryo(Builds.this, personajes.getSelectedItem().toString());
+                    imgPJ.setImageResource(R.drawable.rosaria);
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {

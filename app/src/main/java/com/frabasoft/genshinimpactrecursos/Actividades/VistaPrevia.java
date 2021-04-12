@@ -1,29 +1,19 @@
 package com.frabasoft.genshinimpactrecursos.Actividades;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,13 +29,8 @@ import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosS
 import com.master.permissionhelper.PermissionHelper;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class VistaPrevia extends AppCompatActivity {
     private ArrayList<Flor> florArrayList;
@@ -319,8 +304,7 @@ public class VistaPrevia extends AppCompatActivity {
         contenido.buildDrawingCache();
         Bitmap bmap = contenido.getDrawingCache();
         try {
-            //guardarImagen(bmap);
-            saveImagesTwo(bmap);
+            guardarImagenMedoto(bmap);
         } catch (Exception e) {
             Log.d("GuardarLayout", "GuardarLayout: " + e.getMessage());
             e.printStackTrace();
@@ -329,53 +313,9 @@ public class VistaPrevia extends AppCompatActivity {
         }
     }
 
-    private void guardarImagen(Bitmap bitmap) {
-        if (android.os.Build.VERSION.SDK_INT >= 29) {
-            ContentValues values = contentValues();
-
-            Log.d("RESOLVER", "guardarImagen: " + this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values));
-            Uri uri = this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
-            if (uri != null) {
-                try {
-                    guardarImagenParaStream(bitmap, this.getContentResolver().openOutputStream(uri));
-                    values.put(MediaStore.Images.Media.IS_PENDING, false);
-                    this.getContentResolver().update(uri, values, null, null);
-                    Log.d("TRYURINONULL", "guardarImagen: " + values);
-                    Toast.makeText(this, "¡Se ha guardado tu build de manera exitosa!", Toast.LENGTH_SHORT).show();
-                }catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    Log.d("CATCHURINONULL", "FileNotFoundException: " + e.getMessage() + "\n" + values);
-                }catch (Exception  e) {
-                    e.printStackTrace();
-                    Log.d("CATCHURINONULL", "Exception: " + e.getMessage() + "\n" + values);
-                }
-            }else{
-                Log.d("URINULA", "else: " + values);
-            }
-        } else {
-            File directorioRuta = new File(Environment.DIRECTORY_PICTURES);
-            if (!directorioRuta.exists()) {
-                directorioRuta.mkdirs();
-            }
-            String nombreDelArchivo = nombrePersonaje + ".jpg";
-            File archivoFinal = new File(directorioRuta, nombreDelArchivo);
-            if(archivoFinal.exists()){
-                archivoFinal.delete();
-            }
-            try {
-                guardarImagenParaStream(bitmap, new FileOutputStream(archivoFinal));
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.DATA, archivoFinal.getAbsolutePath());
-                this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void saveImagesTwo(Bitmap bitmap){
-        File ruta = new File(Environment.getExternalStorageDirectory() + "/Pictures");
+    private void guardarImagenMedoto(Bitmap bitmap){
+        File ruta = new File(Environment.DIRECTORY_PICTURES+ "/Pictures");
+        //File ruta = new File(Environment.getExternalStorageDirectory() + "/Pictures");
         if (!ruta.exists()) {
             File wallpaperDirectory = new File("/sdcard/Pictures/");
             wallpaperDirectory.mkdirs();
@@ -396,29 +336,6 @@ public class VistaPrevia extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "¡Ha ocurrido un error al intentar guardar tu build!", Toast.LENGTH_SHORT).show();
             Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + ruta + "\nArchivo: " + archivo);
-        }
-    }
-
-    private ContentValues contentValues() {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.MediaColumns.DISPLAY_NAME, nombrePersonaje + ".jpg");
-        values.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
-        values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM);
-        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-        }
-        return values;
-    }
-
-    private void guardarImagenParaStream(Bitmap bitmap, OutputStream outputStream) {
-        if (outputStream != null) {
-            try {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                outputStream.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 
