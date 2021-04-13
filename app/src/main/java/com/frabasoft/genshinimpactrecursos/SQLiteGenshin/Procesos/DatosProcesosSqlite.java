@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Environment;
+import android.os.FileUtils;
 import android.text.Editable;
 import android.util.Log;
 import android.widget.Toast;
@@ -41,6 +42,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite.DB_NAME;
 
 public class DatosProcesosSqlite implements Serializable {
     private SQLiteDatabase sqLiteDatabase;
@@ -468,8 +471,9 @@ public class DatosProcesosSqlite implements Serializable {
         return list;
     }
 
-    /////////////////////////////////////////////////////////////////////////Creación de TXTX
+    /////////////////////////////////////////////////////////////////////////Creación de TXT y copia de bd
     public void copiarArchivo(String detalles){
+        //para el archivo txt
         Calendar fechaHoy = Calendar.getInstance();
         int mesActual = fechaHoy.get(Calendar.MONTH) + 1;
         if(fechaHoy.get(Calendar.DAY_OF_MONTH) < 10){
@@ -493,15 +497,16 @@ public class DatosProcesosSqlite implements Serializable {
         try{
             BufferedWriter dr = new BufferedWriter(new FileWriter(archivoTxt, true));
             if(archivoTxt.length() == 0){
+                //saludo inicio
                 String lineaA = formatoHoy + "\n"
                         + detalles;
                 dr.write(lineaA);
 
                 dr.flush();
                 dr.close();
-                //saludo inicio
             }else{
-                lineaB += "Esto es una prueba de tercera línea";
+                lineaB += formatoHoy + "\n"
+                        + detalles + "\n" + "\n";
                 dr.write(lineaB);
                 dr.flush();
                 dr.close();
@@ -511,12 +516,41 @@ public class DatosProcesosSqlite implements Serializable {
         }catch(Exception exception){
             Log.d("TAG", "copiarArchivo: " + exception.getMessage());
         }
+
+        //para la copia del archivo .db
+        String rutaBD = "/data/data/com.frabasoft.genshinimpactrecursos/databases/genshin_db_prueba.db";
+        File archivoBd = new File(rutaBD);
+        String destinoBD = "/sdcard/Download/Genshin Impact Datos/" + DB_NAME;
+        File archivoDestinoBD = new File(destinoBD);
+        if(archivoDestinoBD.exists()){
+            archivoDestinoBD.delete();
+        }
+        try{
+            FileUtils.copy(new FileInputStream(archivoBd), new FileOutputStream(archivoDestinoBD));
+            Log.d("BDTry", "bdfile: " + archivoDestinoBD);
+        }catch(IOException ioException){
+            Log.d("BDCatch", "bdfile: " + ioException.getMessage());
+        }
+    }
+
+    private void validarExistenciaDeBD(){
+        String archivoBackUp = "/sdcard/Download/Genshin Impact Datos/" + DB_NAME;
+        File archivoBKPCreado = new File(archivoBackUp);
+
+        String archivoYrutaAsignada = "/data/data/com.frabasoft.genshinimpactrecursos/databases/genshin_db_prueba.db";
+        File archivoBd = new File(archivoYrutaAsignada);
+        try{
+            FileUtils.copy(new FileInputStream(archivoBd), new FileOutputStream(archivoBKPCreado));
+            Log.d("BDTry", "bdfile: " + archivoBKPCreado);
+        }catch(IOException ioException){
+            Log.d("BDCatch", "bdfile: " + ioException.getMessage());
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////Creación de tablas al instalar
     private static class DBHelper extends SQLiteOpenHelper{
         public DBHelper(Context contexto){
-            super(contexto, NombreVersionSqlite.DB_NAME, null, NombreVersionSqlite.DB_VERSION);
+            super(contexto, DB_NAME, null, NombreVersionSqlite.DB_VERSION);
         }
 
         @Override

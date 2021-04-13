@@ -1111,7 +1111,6 @@ public class Builds extends FragmentActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void agregarLineasFicheroTXT(String builds, String pj) throws IOException {
         String detalleRutaYArchivoDescargado = "Se ha descargado el archivo: "
                 + pj + ".jpg" + "\n"

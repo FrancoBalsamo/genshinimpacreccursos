@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
             "\n-Instalación de Genshin Impact Recursos exitosa." +
             "\n" +
             "\n";
+    private String segundoStringTxt = "Esta aplicación fue creada para el uso y consumo de jugadores de Genshin Impact. " +
+            "\n-Creada por un jugador para otros jugadores. " +
+            "\n-La aplicación creará de manera automática un archivo .db en tu memoria, por favor no lo elimines o perderás tu BackUp personal." +
+            "\n" +
+            "\n";
     PermissionHelper permissionHelper;
 
     @Override
@@ -61,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         ejecutar();
         if(permissionHelper.hasPermission()){
-            crearFicheroTxt(primerStringTxt);
+            crearFicheroTxt(primerStringTxt + segundoStringTxt);
         }
 
         instagram = (ImageView) findViewById(R.id.instagram);
