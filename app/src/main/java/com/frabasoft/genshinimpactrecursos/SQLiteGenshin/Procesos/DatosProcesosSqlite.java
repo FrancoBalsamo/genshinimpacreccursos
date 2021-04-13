@@ -1,12 +1,21 @@
 package com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.os.Environment;
+import android.text.Editable;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+
+import com.frabasoft.genshinimpactrecursos.Actividades.VistaPrevia;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
@@ -19,12 +28,29 @@ import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.FlorTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.PlumaTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.RelojTablaSqlite;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class DatosProcesosSqlite implements Serializable {
     private SQLiteDatabase sqLiteDatabase;
     private DBHelper dbHelper;
+    private String formatoHoy;
+    private String nombreTXT = "Leer Importante Sobre Genshin Impact Recursos.txt";
+    private String guardar = "Se ha generado la build ";
+    private String guardarA = "del personaje ";
+    private String actualizar = "Se ha actualizado la build ";
+    private String actualizarA = "del personaje ";
 
     public DatosProcesosSqlite(Context contexto){
         dbHelper = new DBHelper(contexto);
@@ -73,7 +99,8 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdateFlor(Context actividad, String personaje, Flor flor){//meétodo para validar el estado no visible del manga
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean validarUInsertUpdateFlor(Context actividad, String personaje, Flor flor) throws IOException {//método para validar el estado no visible del manga
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
         String consulta = "SELECT * FROM " + FlorTablaSqlite.TABLA_FLOR + " WHERE " + FlorTablaSqlite.NOMBRE_PERSONAJE + " = ?";
@@ -81,13 +108,15 @@ public class DatosProcesosSqlite implements Serializable {
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarFlor(flor);
-            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto!", Toast.LENGTH_SHORT).show();
+            copiarArchivo(guardar + "Flor " + guardarA + personaje);
+            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto en Flor!", Toast.LENGTH_SHORT).show();
             return false;
         }else{
             if(cursor.moveToFirst()){
                 String pj = cursor.getString(cursor.getColumnIndex(FlorTablaSqlite.NOMBRE_PERSONAJE));
                 actualizarFlor(flor, pj);
-                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + "!", Toast.LENGTH_SHORT).show();
+                copiarArchivo(actualizar + "Flor " + actualizarA + personaje);
+                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + " en Flor!", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -150,7 +179,8 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdatePluma(Context actividad, String personaje, Pluma pluma){//meétodo para validar el estado no visible del manga
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean validarUInsertUpdatePluma(Context actividad, String personaje, Pluma pluma) throws IOException {//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
         String consulta = "SELECT * FROM " + PlumaTablaSqlite.TABLA_PLUMA + " WHERE " + PlumaTablaSqlite.NOMBRE_PERSONAJE + " = ?";
@@ -158,13 +188,15 @@ public class DatosProcesosSqlite implements Serializable {
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarPluma(pluma);
-            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto!", Toast.LENGTH_SHORT).show();
+            copiarArchivo(guardar + "Pluma " + guardarA + personaje);
+            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto en Pluma!", Toast.LENGTH_SHORT).show();
             return false;
         }else{
             if(cursor.moveToFirst()){
                 String pj = cursor.getString(cursor.getColumnIndex(PlumaTablaSqlite.NOMBRE_PERSONAJE));
                 actualizarPluma(pluma, pj);
-                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + "!", Toast.LENGTH_SHORT).show();
+                copiarArchivo(actualizar + "Pluma " + actualizarA + personaje);
+                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + " en Pluma!", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -227,7 +259,8 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdateReloj(Context actividad, String personaje, Reloj reloj){//meétodo para validar el estado no visible del manga
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean validarUInsertUpdateReloj(Context actividad, String personaje, Reloj reloj) throws IOException {//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
         String consulta = "SELECT * FROM " + RelojTablaSqlite.TABLA_RELOJ + " WHERE " + RelojTablaSqlite.NOMBRE_PERSONAJE + " = ?";
@@ -235,13 +268,15 @@ public class DatosProcesosSqlite implements Serializable {
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarReloj(reloj);
-            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto!", Toast.LENGTH_SHORT).show();
+            copiarArchivo(guardar + "Reloj " + guardarA + personaje);
+            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto en Reloj!", Toast.LENGTH_SHORT).show();
             return false;
         }else{
             if(cursor.moveToFirst()){
                 String pj = cursor.getString(cursor.getColumnIndex(RelojTablaSqlite.NOMBRE_PERSONAJE));
                 actualizarReloj(reloj, pj);
-                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + "!", Toast.LENGTH_SHORT).show();
+                copiarArchivo(actualizar + "Reloj " + actualizarA + personaje);
+                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + " en Reloj!", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -304,7 +339,8 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdateCopa(Context actividad, String personaje, Copa copa){//meétodo para validar el estado no visible del manga
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean validarUInsertUpdateCopa(Context actividad, String personaje, Copa copa) throws IOException {//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
         String consulta = "SELECT * FROM " + CopaTablaSqlite.TABLA_COPA + " WHERE " + CopaTablaSqlite.NOMBRE_PERSONAJE + " = ?";
@@ -312,13 +348,15 @@ public class DatosProcesosSqlite implements Serializable {
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarCopa(copa);
-            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto!", Toast.LENGTH_SHORT).show();
+            copiarArchivo(guardar + "Copa " + guardarA + personaje);
+            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto en Copa!", Toast.LENGTH_SHORT).show();
             return false;
         }else{
             if(cursor.moveToFirst()){
                 String pj = cursor.getString(cursor.getColumnIndex(CopaTablaSqlite.NOMBRE_PERSONAJE));
                 actualizarCopa(copa, pj);
-                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + "!", Toast.LENGTH_SHORT).show();
+                copiarArchivo(actualizar + "Copa " + actualizarA + personaje);
+                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + " en Copa!", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -381,7 +419,8 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdateCorona(Context actividad, String personaje, Corona corona){//meétodo para validar el estado no visible del manga
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean validarUInsertUpdateCorona(Context actividad, String personaje, Corona corona) throws IOException {//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
         String consulta = "SELECT * FROM " + CoronaTablaSqlite.TABLA_CORONA + " WHERE " + CoronaTablaSqlite.NOMBRE_PERSONAJE + " = ?";
@@ -389,13 +428,15 @@ public class DatosProcesosSqlite implements Serializable {
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarCorona(corona);
-            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto!", Toast.LENGTH_SHORT).show();
+            copiarArchivo(guardar + "Corona " + guardarA + personaje);
+            Toast.makeText(actividad, "¡Se ha creado un nuevo registro de artefacto en Corona!", Toast.LENGTH_SHORT).show();
             return false;
         }else{
             if(cursor.moveToFirst()){
                 String pj = cursor.getString(cursor.getColumnIndex(CoronaTablaSqlite.NOMBRE_PERSONAJE));
                 actualizarCorona(corona, pj);
-                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + "!", Toast.LENGTH_SHORT).show();
+                copiarArchivo(actualizar + "Corona " + actualizarA + personaje);
+                Toast.makeText(actividad, "¡Se ha actualizado la build de: " + personaje + " en Corona!", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -425,6 +466,51 @@ public class DatosProcesosSqlite implements Serializable {
         } finally { c.close(); }
         this.cerrarBD();
         return list;
+    }
+
+    /////////////////////////////////////////////////////////////////////////Creación de TXTX
+    public void copiarArchivo(String detalles){
+        Calendar fechaHoy = Calendar.getInstance();
+        int mesActual = fechaHoy.get(Calendar.MONTH) + 1;
+        if(fechaHoy.get(Calendar.DAY_OF_MONTH) < 10){
+            formatoHoy = fechaHoy.get(Calendar.YEAR) + " - " + mesActual + " - 1" + fechaHoy.get(Calendar.DAY_OF_MONTH);
+            Log.d("FechaLOGD", "copiarArchivo: " + formatoHoy);
+        }else if(mesActual < 10){
+            formatoHoy = fechaHoy.get(Calendar.YEAR) + " - " + "0" + mesActual + " - " + fechaHoy.get(Calendar.DAY_OF_MONTH);
+            Log.d("FechaLOGD", "copiarArchivo: " + formatoHoy);
+        }
+        else{
+            formatoHoy = fechaHoy.get(Calendar.YEAR) + " - " + mesActual + " - " + fechaHoy.get(Calendar.DAY_OF_MONTH);
+            Log.d("FechaLOGD", "copiarArchivo: " + formatoHoy);
+        }
+
+        File rutaDestino = new File("/sdcard/Download/Genshin Impact Datos/");
+        if(!rutaDestino.exists()){
+            rutaDestino.mkdirs();
+        }
+        File archivoTxt = new File(rutaDestino, nombreTXT);
+        String lineaB = "";
+        try{
+            BufferedWriter dr = new BufferedWriter(new FileWriter(archivoTxt, true));
+            if(archivoTxt.length() == 0){
+                String lineaA = formatoHoy + "\n"
+                        + detalles;
+                dr.write(lineaA);
+
+                dr.flush();
+                dr.close();
+                //saludo inicio
+            }else{
+                lineaB += "Esto es una prueba de tercera línea";
+                dr.write(lineaB);
+                dr.flush();
+                dr.close();
+            }
+        }catch (IOException e){
+            Log.d("TAG", "copiarArchivo: " + e.getMessage());
+        }catch(Exception exception){
+            Log.d("TAG", "copiarArchivo: " + exception.getMessage());
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////Creación de tablas al instalar

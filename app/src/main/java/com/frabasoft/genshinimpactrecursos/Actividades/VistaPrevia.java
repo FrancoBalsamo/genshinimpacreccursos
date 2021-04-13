@@ -30,6 +30,7 @@ import com.master.permissionhelper.PermissionHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class VistaPrevia extends AppCompatActivity {
@@ -53,6 +54,10 @@ public class VistaPrevia extends AppCompatActivity {
     private final static String TAG = "ERRORTAG";
 
     private LinearLayout contenido;
+
+
+    private String VistaPreviaDetalle = "VISTA PREVIA DE PERSONAJES: ";
+    private DatosProcesosSqlite datosProcesosSqlite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,12 +304,14 @@ public class VistaPrevia extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void GuardarLayout(Context context) {
         contenido.setDrawingCacheEnabled(true);
         contenido.buildDrawingCache();
         Bitmap bmap = contenido.getDrawingCache();
         try {
             guardarImagenMedoto(bmap);
+            agregarLineasFicheroTXT(VistaPreviaDetalle, nombrePersonaje);
         } catch (Exception e) {
             Log.d("GuardarLayout", "GuardarLayout: " + e.getMessage());
             e.printStackTrace();
@@ -314,14 +321,13 @@ public class VistaPrevia extends AppCompatActivity {
     }
 
     private void guardarImagenMedoto(Bitmap bitmap){
-        File ruta = new File(Environment.DIRECTORY_PICTURES+ "/Pictures");
-        //File ruta = new File(Environment.getExternalStorageDirectory() + "/Pictures");
+        File ruta = new File(Environment.DIRECTORY_PICTURES + File.separator + "Genshin Impact Mis Builds");
         if (!ruta.exists()) {
-            File wallpaperDirectory = new File("/sdcard/Pictures/");
+            File wallpaperDirectory = new File("/sdcard/Pictures/Genshin Impact Mis Builds");
             wallpaperDirectory.mkdirs();
         }
 
-        File archivo = new File("/sdcard/Pictures/", nombrePersonaje + ".jpg");
+        File archivo = new File("/sdcard/Pictures/Genshin Impact Mis Builds", nombrePersonaje + ".jpg");
         if (archivo.exists()) {
             archivo.delete();
         }
@@ -330,11 +336,11 @@ public class VistaPrevia extends AppCompatActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             out.flush();
             out.close();
-            Toast.makeText(this, "¡Se ha guardado con éxito tu build!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "¡Se ha guardado con éxito tu build de " + nombrePersonaje + "!", Toast.LENGTH_SHORT).show();
             Log.d("saveImagesTwo", "try: " + "\nRuta: " + ruta + "\nArchivo: " + archivo);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "¡Ha ocurrido un error al intentar guardar tu build!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "¡Ha ocurrido un error al intentar guardar tu build de " + nombrePersonaje + "!", Toast.LENGTH_SHORT).show();
             Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + ruta + "\nArchivo: " + archivo);
         }
     }
@@ -376,5 +382,17 @@ public class VistaPrevia extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         VistaPrevia.this.finish();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void agregarLineasFicheroTXT(String vistaPrevia, String pj) throws IOException {
+        String detalleRutaYArchivoDescargado = "Se ha descargado el archivo: "
+                + pj + ".jpg" + "\n"
+                + "Ubicación del archivo: "
+                + Environment.DIRECTORY_PICTURES
+                + File.separator
+                + "Genshin Impact Mis Builds";
+        datosProcesosSqlite = new DatosProcesosSqlite(VistaPrevia.this);
+        datosProcesosSqlite.copiarArchivo(vistaPrevia + detalleRutaYArchivoDescargado);
     }
 }

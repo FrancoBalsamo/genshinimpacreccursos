@@ -2,6 +2,7 @@ package com.frabasoft.genshinimpactrecursos.Actividades;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
@@ -12,7 +13,9 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,6 +28,7 @@ import android.widget.Toast;
 
 import com.frabasoft.genshinimpactrecursos.MainActivity;
 import com.frabasoft.genshinimpactrecursos.R;
+import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -33,9 +37,12 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.master.permissionhelper.PermissionHelper;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 
 public class Builds extends FragmentActivity {
     AdView publicidad;
@@ -58,7 +65,10 @@ public class Builds extends FragmentActivity {
     private DecimalFormat df;
     PermissionHelper permissionHelper;
     private final static String TAG = "ERRORTAG";
+    private String buildsDetalle = "BUILDS DE PERSONAJES: ";
+    private DatosProcesosSqlite datosProcesosSqlite;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,10 +108,11 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -120,10 +131,11 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -141,10 +153,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -162,10 +176,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -183,11 +199,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -205,11 +222,11 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -227,11 +244,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -249,11 +267,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -271,11 +290,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -293,11 +313,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -315,11 +336,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -337,11 +359,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -359,11 +382,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -381,11 +405,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -395,6 +420,7 @@ public class Builds extends FragmentActivity {
                     });
                 }else if(position == 15){
                     imgPJ.setImageResource(R.drawable.keqing);
+                    toastElectro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
@@ -402,11 +428,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -416,6 +443,7 @@ public class Builds extends FragmentActivity {
                     });
                 }else if(position == 16){
                     imgPJ.setImageResource(R.drawable.kekingv2);
+                    toastElectro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
@@ -423,11 +451,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -445,11 +474,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -467,11 +497,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -489,11 +520,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -511,11 +543,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -533,11 +566,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -555,11 +589,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -577,11 +612,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -599,11 +635,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -621,11 +658,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -643,11 +681,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -665,11 +704,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -687,11 +727,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -709,11 +750,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -731,11 +773,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -753,11 +796,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -775,11 +819,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -797,11 +842,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -819,11 +865,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -841,11 +888,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -863,11 +911,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -885,11 +934,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -907,11 +957,12 @@ public class Builds extends FragmentActivity {
                                 //convertir imagen a bitmap
                                 imgPJ.buildDrawingCache();
                                 Bitmap bmap = imgPJ.getDrawingCache();
-                                
+                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", personajes.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(Builds.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -1008,56 +1059,6 @@ public class Builds extends FragmentActivity {
         }
     }
 
-    @Nullable
-    private Uri saveBitmap(@NonNull final Context context, @NonNull final Bitmap bitmap,
-                           @NonNull final Bitmap.CompressFormat format, @NonNull final String mimeType,
-                           @NonNull final String displayName) throws IOException{
-        final ContentValues  contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, displayName + ".jpg");
-        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
-        contentValues.put(MediaStore.DownloadColumns.RELATIVE_PATH, "DCIM/Genshin Impact BUILDS");
-
-        final ContentResolver resolver = context.getContentResolver();
-
-        OutputStream stream = null;
-        Uri uri = null;
-
-        try{
-            final Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            uri = resolver.insert(contentUri, contentValues);
-
-            if (uri == null){
-                Toast.makeText(context, "uri == null", Toast.LENGTH_SHORT).show();
-                throw new IOException("Fallo al crear.");
-            }
-
-            stream = resolver.openOutputStream(uri);
-
-            if (stream == null){
-                Toast.makeText(context, "stream == null", Toast.LENGTH_SHORT).show();
-                throw new IOException("No se pudo obtener la salida.");
-            }
-            if (bitmap.compress(format, 95, stream) == false){
-                Toast.makeText(context, "bitmap.compress(format, 95, stream) == false", Toast.LENGTH_SHORT).show();
-                throw new IOException("Fallo al guardar el Bitmap.");
-            }
-        }catch (IOException e)        {
-            if (uri != null)
-            {
-                resolver.delete(uri, null, null);
-                Toast.makeText(context, "IOException", Toast.LENGTH_SHORT).show();
-            }
-            throw e;
-        }
-        finally{
-            if (stream != null){
-                stream.close();
-                Toast.makeText(context, "¡La imagen se ha guardado con éxito!", Toast.LENGTH_SHORT).show();
-            }
-        }
-        return uri;
-    }
-
     /** Called when leaving the activity */
     @Override
     public void onPause() {
@@ -1083,5 +1084,40 @@ public class Builds extends FragmentActivity {
             publicidad.destroy();
         }
         super.onDestroy();
+    }
+
+    private void guardarImagenMedoto(Bitmap bitmap, String nombrePersonaje){
+        File ruta = new File(Environment.DIRECTORY_PICTURES + File.separator + "Genshin Impact Builds");
+        if (!ruta.exists()) {
+            File wallpaperDirectory = new File("/sdcard/Pictures/Genshin Impact Builds");
+            wallpaperDirectory.mkdirs();
+        }
+
+        File archivo = new File("/sdcard/Pictures/Genshin Impact Builds", nombrePersonaje + ".jpg");
+        if (archivo.exists()) {
+            archivo.delete();
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(archivo);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            Toast.makeText(this, "¡Se ha guardado con éxito la build de " + nombrePersonaje + "!", Toast.LENGTH_SHORT).show();
+            Log.d("saveImagesTwo", "try: " + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "¡Ha ocurrido un error al intentar guardar la build de " + nombrePersonaje + "!", Toast.LENGTH_SHORT).show();
+            Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void agregarLineasFicheroTXT(String builds, String pj) throws IOException {
+        String detalleRutaYArchivoDescargado = "Se ha descargado el archivo: "
+                + pj + ".jpg" + "\n"
+                + "Ubicación del archivo: " + Environment.DIRECTORY_PICTURES
+                + File.separator + "Genshin Impact Builds";
+        datosProcesosSqlite = new DatosProcesosSqlite(Builds.this);
+        datosProcesosSqlite.copiarArchivo(builds + detalleRutaYArchivoDescargado);
     }
 }

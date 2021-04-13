@@ -81,9 +81,9 @@
                         <Button
                             android:id="@+id/vistaprevia"
                             android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:fontFamily="@font/gifontuno"
                             android:text="Vista Previa"
+                            android:textColor="@color/white"
+                            android:layout_height="50dp"
                             android:background="@color/black"/>
                     </LinearLayout>
                     <LinearLayout

@@ -2,6 +2,7 @@ package com.frabasoft.genshinimpactrecursos.Actividades;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -11,7 +12,9 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frabasoft.genshinimpactrecursos.R;
+import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -31,6 +35,8 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.master.permissionhelper.PermissionHelper;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
@@ -45,7 +51,10 @@ public class RutaArtefactos extends AppCompatActivity {
     private DecimalFormat df;
     PermissionHelper permissionHelper;
     private final static String TAG = "ERRORTAG";
+    private DatosProcesosSqlite datosProcesosSqlite;
+    private String buildsDetalle = "RUTA DE ARTEFACTOS: ";
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,10 +93,11 @@ public class RutaArtefactos extends AppCompatActivity {
                                 //convertir imagen a bitmap
                                 imgRutas.buildDrawingCache();
                                 Bitmap bmap = imgRutas.getDrawingCache();
+                                guardarImagenMedoto(bmap, spinnerRutas.getSelectedItem().toString());
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", spinnerRutas.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(RutaArtefactos.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, spinnerRutas.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -104,10 +114,11 @@ public class RutaArtefactos extends AppCompatActivity {
                                 //convertir imagen a bitmap
                                 imgRutas.buildDrawingCache();
                                 Bitmap bmap = imgRutas.getDrawingCache();
+                                guardarImagenMedoto(bmap, spinnerRutas.getSelectedItem().toString());
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", spinnerRutas.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(RutaArtefactos.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, spinnerRutas.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -124,10 +135,11 @@ public class RutaArtefactos extends AppCompatActivity {
                                 //convertir imagen a bitmap
                                 imgRutas.buildDrawingCache();
                                 Bitmap bmap = imgRutas.getDrawingCache();
+                                guardarImagenMedoto(bmap, spinnerRutas.getSelectedItem().toString());
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", spinnerRutas.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(RutaArtefactos.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, spinnerRutas.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -144,10 +156,11 @@ public class RutaArtefactos extends AppCompatActivity {
                                 //convertir imagen a bitmap
                                 imgRutas.buildDrawingCache();
                                 Bitmap bmap = imgRutas.getDrawingCache();
+                                guardarImagenMedoto(bmap, spinnerRutas.getSelectedItem().toString());
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", spinnerRutas.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(RutaArtefactos.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, spinnerRutas.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -164,10 +177,11 @@ public class RutaArtefactos extends AppCompatActivity {
                                 //convertir imagen a bitmap
                                 imgRutas.buildDrawingCache();
                                 Bitmap bmap = imgRutas.getDrawingCache();
+                                guardarImagenMedoto(bmap, spinnerRutas.getSelectedItem().toString());
                                 try {
-                                    saveBitmap(getApplicationContext(), bmap, Bitmap.CompressFormat.JPEG, "image/*", spinnerRutas.getSelectedItem().toString());
-                                } catch (IOException e) {
-                                    Toast.makeText(RutaArtefactos.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    agregarLineasFicheroTXT(buildsDetalle, spinnerRutas.getSelectedItem().toString());
+                                } catch (IOException ioException) {
+                                    ioException.printStackTrace();
                                 }
                             }else{
                                 ejecutar();
@@ -231,54 +245,29 @@ public class RutaArtefactos extends AppCompatActivity {
         }
     }
 
-    @Nullable
-    private Uri saveBitmap(@NonNull final Context context, @NonNull final Bitmap bitmap,
-                           @NonNull final Bitmap.CompressFormat format, @NonNull final String mimeType,
-                           @NonNull final String displayName) throws IOException {
-        final ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, displayName + ".jpg");
-        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
-        contentValues.put(MediaStore.DownloadColumns.RELATIVE_PATH, "DCIM/Genshin Impact Artefactos");
-
-        final ContentResolver resolver = context.getContentResolver();
-
-        OutputStream stream = null;
-        Uri uri = null;
-
-        try{
-            final Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            uri = resolver.insert(contentUri, contentValues);
-
-            if (uri == null){
-                Toast.makeText(context, "uri == null", Toast.LENGTH_SHORT).show();
-                throw new IOException("Fallo al crear.");
-            }
-
-            stream = resolver.openOutputStream(uri);
-
-            if (stream == null){
-                Toast.makeText(context, "stream == null", Toast.LENGTH_SHORT).show();
-                throw new IOException("No se pudo obtener la salida.");
-            }
-            if (bitmap.compress(format, 95, stream) == false){
-                Toast.makeText(context, "bitmap.compress(format, 95, stream) == false", Toast.LENGTH_SHORT).show();
-                throw new IOException("Fallo al guardar el Bitmap.");
-            }
-        }catch (IOException e)        {
-            if (uri != null)
-            {
-                resolver.delete(uri, null, null);
-                Toast.makeText(context, "IOException", Toast.LENGTH_SHORT).show();
-            }
-            throw e;
+    private void guardarImagenMedoto(Bitmap bitmap, String rutaDetalle){
+        File ruta = new File(Environment.DIRECTORY_PICTURES + File.separator + "Genshin Impact Ruta Artefactos");
+        if (!ruta.exists()) {
+            File wallpaperDirectory = new File("/sdcard/Pictures/Genshin Impact Ruta Artefactos");
+            wallpaperDirectory.mkdirs();
         }
-        finally{
-            if (stream != null){
-                stream.close();
-                Toast.makeText(context, "¡La imagen se ha guardado con éxito!", Toast.LENGTH_SHORT).show();
-            }
+
+        File archivo = new File("/sdcard/Pictures/Genshin Impact Ruta Artefactos", rutaDetalle + ".jpg");
+        if (archivo.exists()) {
+            archivo.delete();
         }
-        return uri;
+        try {
+            FileOutputStream out = new FileOutputStream(archivo);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            Toast.makeText(this, "¡Se ha guardado con éxito tu ruta!", Toast.LENGTH_SHORT).show();
+            Log.d("saveImagesTwo", "try: " + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "¡Ha ocurrido un error al intentar guardar tu ruta!", Toast.LENGTH_SHORT).show();
+            Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+        }
     }
 
     /** Called when leaving the activity */
@@ -306,5 +295,17 @@ public class RutaArtefactos extends AppCompatActivity {
             publicidad.destroy();
         }
         super.onDestroy();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void agregarLineasFicheroTXT(String ruta, String archivo) throws IOException {
+        String detalleRutaYArchivoDescargado = "Se ha descargado el archivo: "
+                + archivo + ".jpg" + "\n"
+                + "Ubicación del archivo: "
+                + Environment.DIRECTORY_PICTURES
+                + File.separator
+                + "Genshin Impact Ruta Artefactos";
+        datosProcesosSqlite = new DatosProcesosSqlite(RutaArtefactos.this);
+        datosProcesosSqlite.copiarArchivo(ruta + detalleRutaYArchivoDescargado);
     }
 }

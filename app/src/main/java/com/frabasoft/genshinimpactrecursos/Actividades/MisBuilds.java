@@ -1,13 +1,16 @@
 package com.frabasoft.genshinimpactrecursos.Actividades;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +35,9 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.master.permissionhelper.PermissionHelper;
+
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -130,6 +136,7 @@ public class MisBuilds extends AppCompatActivity {
 
         spPJMisBuilds.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, personajesString));
         spPJMisBuilds.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
@@ -394,7 +401,8 @@ public class MisBuilds extends AppCompatActivity {
         }
     }
 
-    private void guardarActualizarFlor(Context actividad, String personaje) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void guardarActualizarFlor(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etFlorPrin.getText().toString())) {
             etFlorPrin.setError("El campo no puede estar vacío.");
             etFlorPrin.requestFocus();
@@ -432,7 +440,8 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateFlor(actividad, personaje, flor);
     }
 
-    private void guardarActualizarPluma(Context actividad, String personaje) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void guardarActualizarPluma(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etPlumPrin.getText().toString())) {
             etPlumPrin.setError("El campo no puede estar vacío.");
             etPlumPrin.requestFocus();
@@ -470,7 +479,8 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdatePluma(actividad, personaje, plumar);
     }
 
-    private void guardarActualizarReloj(Context actividad, String personaje) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void guardarActualizarReloj(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etRelPrin.getText().toString())) {
             etRelPrin.setError("El campo no puede estar vacío.");
             etRelPrin.requestFocus();
@@ -508,7 +518,8 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateReloj(actividad, personaje, reloj);
     }
 
-    private void guardarActualizarCopa(Context actividad, String personaje) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void guardarActualizarCopa(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etCopPrin.getText().toString())) {
             etCopPrin.setError("El campo no puede estar vacío.");
             etCopPrin.requestFocus();
@@ -546,7 +557,8 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateCopa(actividad, personaje, copa);
     }
 
-    private void guardarActualizarCorona(Context actividad, String personaje) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void guardarActualizarCorona(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etCorPrin.getText().toString())) {
             etCorPrin.setError("El campo no puede estar vacío.");
             etCorPrin.requestFocus();
@@ -673,35 +685,56 @@ public class MisBuilds extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void GuardarIndividuales() {
         guardarFlor.setOnClickListener(new View.OnClickListener() {//flor
             @Override
             public void onClick(View v) {
-                guardarActualizarFlor(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                try {
+                    guardarActualizarFlor(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
         guardarPluma.setOnClickListener(new View.OnClickListener() {//pluma
             @Override
             public void onClick(View v) {
-                guardarActualizarPluma(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                try {
+                    guardarActualizarPluma(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
         guardarReloj.setOnClickListener(new View.OnClickListener() {//reloj
             @Override
             public void onClick(View v) {
-                guardarActualizarReloj(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                try {
+                    guardarActualizarReloj(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
         guardarCopa.setOnClickListener(new View.OnClickListener() {//copa
             @Override
             public void onClick(View v) {
-                guardarActualizarCopa(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                try {
+                    guardarActualizarCopa(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
         guardarCorona.setOnClickListener(new View.OnClickListener() {//corona
             @Override
             public void onClick(View v) {
-                guardarActualizarCorona(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                try {
+                    guardarActualizarCorona(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
     }
@@ -747,13 +780,34 @@ public class MisBuilds extends AppCompatActivity {
 
     private void GuardarTodos() {
         guardarTodo.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                guardarActualizarFlor(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
-                guardarActualizarPluma(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
-                guardarActualizarReloj(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
-                guardarActualizarCopa(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
-                guardarActualizarCorona(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                try {
+                    guardarActualizarFlor(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    guardarActualizarPluma(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    guardarActualizarReloj(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    guardarActualizarCopa(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    guardarActualizarCorona(MisBuilds.this, spPJMisBuilds.getSelectedItem().toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
     }
