@@ -44,7 +44,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     ImageView instagram, whatsapp;
     AdView publicidad;
-    Button builds, artefactos, misBuilds;
+    Button builds, artefactos, misBuilds, hacerBackUp;
     private DatosProcesosSqlite datosProcesosSqlite;
     private String primerStringTxt = "Archivo de instalación: " +
             "\n-Se ha creado por primera vez el archivo. " +

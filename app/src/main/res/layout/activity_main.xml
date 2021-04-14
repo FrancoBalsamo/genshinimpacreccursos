@@ -77,22 +77,22 @@
                 android:background="@color/black"/>
         </LinearLayout>
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp">
-        <Button
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mis Builds"
-            android:textColor="@color/white"
-            android:id="@+id/misBuilds"
-            android:fontFamily="@font/sadness"
-            android:background="@color/black"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Mis Builds"
+                android:textColor="@color/white"
+                android:id="@+id/misBuilds"
+                android:fontFamily="@font/sadness"
+                android:background="@color/black"/>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,5 +110,6 @@
                 android:fontFamily="@font/sadness"
                 android:background="@color/black"/>
         </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

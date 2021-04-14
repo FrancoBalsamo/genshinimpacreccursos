@@ -35,6 +35,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
@@ -525,25 +527,27 @@ public class DatosProcesosSqlite implements Serializable {
         if(archivoDestinoBD.exists()){
             archivoDestinoBD.delete();
         }
-        try{
-            FileUtils.copy(new FileInputStream(archivoBd), new FileOutputStream(archivoDestinoBD));
-            Log.d("BDTry", "bdfile: " + archivoDestinoBD);
-        }catch(IOException ioException){
-            Log.d("BDCatch", "bdfile: " + ioException.getMessage());
-        }
-    }
-
-    private void validarExistenciaDeBD(){
-        String archivoBackUp = "/sdcard/Download/Genshin Impact Datos/" + DB_NAME;
-        File archivoBKPCreado = new File(archivoBackUp);
-
-        String archivoYrutaAsignada = "/data/data/com.frabasoft.genshinimpactrecursos/databases/genshin_db_prueba.db";
-        File archivoBd = new File(archivoYrutaAsignada);
-        try{
-            FileUtils.copy(new FileInputStream(archivoBd), new FileOutputStream(archivoBKPCreado));
-            Log.d("BDTry", "bdfile: " + archivoBKPCreado);
-        }catch(IOException ioException){
-            Log.d("BDCatch", "bdfile: " + ioException.getMessage());
+        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.Q){
+            try{
+                FileUtils.copy(new FileInputStream(archivoBd), new FileOutputStream(archivoDestinoBD));
+                Log.d("BDTry", "bdfile: " + archivoDestinoBD);
+            }catch(IOException ioException){
+                Log.d("BDCatch", "bdfile: " + ioException.getMessage());
+            }
+        }else{
+            try{
+                InputStream in = new FileInputStream(archivoBd);
+                OutputStream out = new FileOutputStream(archivoDestinoBD);
+                byte[] buff = new byte[1024];
+                int len;
+                while ((len = in.read(buff)) > 0){
+                    out.write(buff, 0, len);
+                }
+                in.close();
+                out.close();
+            }catch (IOException ioException){
+                Log.d("HOLA", "copiarArchivo: " +ioException.getMessage());
+            }
         }
     }
 
