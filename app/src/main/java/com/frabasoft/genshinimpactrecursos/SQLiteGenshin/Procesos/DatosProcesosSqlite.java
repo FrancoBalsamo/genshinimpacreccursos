@@ -477,14 +477,16 @@ public class DatosProcesosSqlite implements Serializable {
         Calendar fechaHoy = Calendar.getInstance();
         int mesActual = fechaHoy.get(Calendar.MONTH) + 1;
         if(fechaHoy.get(Calendar.DAY_OF_MONTH) < 10){
-            formatoHoy = fechaHoy.get(Calendar.YEAR) + " - " + mesActual + " - 1" + fechaHoy.get(Calendar.DAY_OF_MONTH);
+            formatoHoy = "FECHA: " + "0" + fechaHoy.get(Calendar.DAY_OF_MONTH) + "/" + mesActual + fechaHoy.get(Calendar.YEAR)
+                    + "\nHORA: " + fechaHoy.get(Calendar.HOUR_OF_DAY) + ":" + fechaHoy.get(Calendar.MINUTE) + ":" + fechaHoy.get(Calendar.SECOND); //hora del día
             Log.d("FechaLOGD", "copiarArchivo: " + formatoHoy);
         }else if(mesActual < 10){
-            formatoHoy = fechaHoy.get(Calendar.YEAR) + " - " + "0" + mesActual + " - " + fechaHoy.get(Calendar.DAY_OF_MONTH);
+            formatoHoy = "FECHA: " + fechaHoy.get(Calendar.DAY_OF_MONTH) + "/" + "0" + mesActual + "/" + fechaHoy.get(Calendar.YEAR)
+                    + "\nHORA: " + fechaHoy.get(Calendar.HOUR_OF_DAY) + ":" + fechaHoy.get(Calendar.MINUTE) + ":" + fechaHoy.get(Calendar.SECOND);
             Log.d("FechaLOGD", "copiarArchivo: " + formatoHoy);
-        }
-        else{
-            formatoHoy = fechaHoy.get(Calendar.YEAR) + " - " + mesActual + " - " + fechaHoy.get(Calendar.DAY_OF_MONTH);
+        }else{
+            formatoHoy ="FECHA: " + fechaHoy.get(Calendar.DAY_OF_MONTH) + "/" + mesActual + "/" + fechaHoy.get(Calendar.YEAR)
+                    + "\nHORA: " + fechaHoy.get(Calendar.HOUR_OF_DAY) + ":" + fechaHoy.get(Calendar.MINUTE) + ":" + fechaHoy.get(Calendar.SECOND);
             Log.d("FechaLOGD", "copiarArchivo: " + formatoHoy);
         }
 
@@ -493,34 +495,21 @@ public class DatosProcesosSqlite implements Serializable {
             rutaDestino.mkdirs();
         }
         File archivoTxt = new File(rutaDestino, nombreTXT);
-        String lineaB = "";
         try{
             //instalaciòn
             BufferedWriter bw = new BufferedWriter(new FileWriter(archivoTxt, true));
-            BufferedReader br = new BufferedReader(new FileReader(archivoTxt));
-            if(archivoTxt.length() == 0){
-                try{
-                    String escribirA = formatoHoy + "\n"
-                            + detalles;
-                    bw.write(escribirA);
+            try{
+                String escribir = formatoHoy + "\n"
+                        + detalles
+                        + "\n"
+                        + "\n";
+                bw.write(escribir);
 
-                    bw.flush();
-                    bw.close();
-                    Log.d("BufferedReadA", "imprimir textoA: " + bw);
-                }catch(Exception e){
-                    Log.d("BufferedReadA", "imprimir textoA: " + e.getMessage());
-                }
-            }else{
-                try{
-                    lineaB += formatoHoy + "\n"
-                            + detalles + "\n" + "\n";
-                    bw.write(lineaB);
-                    bw.flush();
-                    bw.close();
-                    Log.d("BufferedReadB", "imprimir textoA: " + bw);
-                }catch (Exception exception){
-                    Log.d("BufferedReadB", "imprimir textoB: " + exception.getMessage());
-                }
+                bw.flush();
+                bw.close();
+                Log.d("Buffer", "imprimir textoA: " + bw);
+            }catch(Exception e){
+                Log.d("Buffered", "imprimir textoA: " + e.getMessage());
             }
         }catch (IOException e){
             Log.d("TAG", "copiarArchivo: " + e.getMessage());
@@ -533,7 +522,7 @@ public class DatosProcesosSqlite implements Serializable {
         File archivoBd = new File(rutaBD);
         String destinoBD = "/sdcard/Genshin Impact Recursos/Genshin Impact Datos/" + DB_NAME;
         File archivoDestinoBD = new File(destinoBD);
-        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.O){
+        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.Q){
             try{
                 FileUtils.copy(new FileInputStream(archivoBd), new FileOutputStream(archivoDestinoBD));
                 Log.d("CopiarArchivoO", "BDTry: " + archivoDestinoBD);
@@ -564,7 +553,7 @@ public class DatosProcesosSqlite implements Serializable {
         String rutaBD = "/data/data/com.frabasoft.genshinimpactrecursos/databases/genshin_db_prueba.db";
         File archivoBd = new File(rutaBD);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
             try{
                 FileUtils.copy(new FileInputStream(archivoBackUp), new FileOutputStream(archivoBd));
                 Log.d("ImportBKP", "try: " + archivoBd);

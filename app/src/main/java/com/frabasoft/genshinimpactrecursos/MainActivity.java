@@ -45,15 +45,12 @@ public class MainActivity extends AppCompatActivity {
     private DatosProcesosSqlite datosProcesosSqlite;
     private String primerStringTxt = "Archivo de instalación: " +
             "\n-Se ha creado por primera vez el archivo. " +
-            "\n-Instalación de Genshin Impact Recursos exitosa." +
-            "\n" +
-            "\n";
+            "\n-Instalación de Genshin Impact Recursos exitosa.";
     private String segundoStringTxt = "Esta aplicación fue creada para el uso y consumo de jugadores de Genshin Impact. " +
             "\n-Creada por un jugador para otros jugadores. " +
-            "\n-La aplicación creará de manera automática un archivo .db en tu memoria, por favor no lo elimines o perderás tu BackUp personal." +
-            "\n" +
-            "\n";
+            "\n-La aplicación creará de manera automática un archivo .db en tu memoria, por favor no lo elimines o perderás tu BackUp personal.";
     PermissionHelper permissionHelper;
+    private String nombreTXT = "Leer Importante Sobre Genshin Impact Recursos.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
         crearDirectorio();
 
         ejecutar();
-        if(permissionHelper.hasPermission()){
-            crearFicheroTxt(primerStringTxt + segundoStringTxt);
-        }
 
         instagram = (ImageView) findViewById(R.id.instagram);
         whatsapp = (ImageView) findViewById(R.id.whatsapp);
@@ -201,8 +195,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void crearFicheroTxt(String instalacion){
-        datosProcesosSqlite = new DatosProcesosSqlite(MainActivity.this);
-        datosProcesosSqlite.copiarArchivo(instalacion);
+        File directorioArchivo = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Datos/", nombreTXT);
+        if(!directorioArchivo.exists()){
+            datosProcesosSqlite = new DatosProcesosSqlite(MainActivity.this);
+            datosProcesosSqlite.copiarArchivo(instalacion);
+        }
     }
 
     private void ejecutar(){
@@ -210,6 +207,8 @@ public class MainActivity extends AppCompatActivity {
         permissionHelper.request(new PermissionHelper.PermissionCallback() {
             @Override
             public void onPermissionGranted() {
+
+                crearFicheroTxt(primerStringTxt + segundoStringTxt);
                 Log.d("TAG", "onPermissionGranted() called");
             }
 
@@ -240,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
 
     //CREAR DIRECTORIO DE ARCHIVOS DE GUARDADO
     public void crearDirectorio(){
-        File directorioApp = new File("/sdcard/Genshin Impact Recursos/");
+        File directorioApp = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Datos/", DB_NAME);
         if (!directorioApp.exists()) {
             File rutaGenshin = new File("/sdcard/Genshin Impact Recursos/");
             rutaGenshin.mkdirs();
