@@ -1087,13 +1087,13 @@ public class Builds extends FragmentActivity {
     }
 
     private void guardarImagenMedoto(Bitmap bitmap, String nombrePersonaje){
-        File ruta = new File(Environment.DIRECTORY_PICTURES + File.separator + "Genshin Impact Builds");
-        if (!ruta.exists()) {
-            File wallpaperDirectory = new File("/sdcard/Pictures/Genshin Impact Builds");
-            wallpaperDirectory.mkdirs();
+        File rutaBuilds = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Builds/");
+        if (!rutaBuilds.exists()) {
+            File rutaBuildsCrear = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Builds/");
+            rutaBuildsCrear.mkdirs();
         }
 
-        File archivo = new File("/sdcard/Pictures/Genshin Impact Builds", nombrePersonaje + ".jpg");
+        File archivo = new File(rutaBuilds, nombrePersonaje + ".jpg");
         if (archivo.exists()) {
             archivo.delete();
         }
@@ -1103,19 +1103,18 @@ public class Builds extends FragmentActivity {
             out.flush();
             out.close();
             Toast.makeText(this, "¡Se ha guardado con éxito la build de " + nombrePersonaje + "!", Toast.LENGTH_SHORT).show();
-            Log.d("saveImagesTwo", "try: " + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+            Log.d("guardarImagenMedoto", "try: " + "\nRuta: " + rutaBuilds + "\nArchivo: " + archivo);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "¡Ha ocurrido un error al intentar guardar la build de " + nombrePersonaje + "!", Toast.LENGTH_SHORT).show();
-            Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+            Log.d("guardarImagenMedoto", "Catch: " + e.getMessage() + "\nRuta: " + rutaBuilds + "\nArchivo: " + archivo);
         }
     }
 
     private void agregarLineasFicheroTXT(String builds, String pj) throws IOException {
         String detalleRutaYArchivoDescargado = "Se ha descargado el archivo: "
                 + pj + ".jpg" + "\n"
-                + "Ubicación del archivo: " + Environment.DIRECTORY_PICTURES
-                + File.separator + "Genshin Impact Builds";
+                + "Ubicación del archivo: sdcard/Genshin Impact Recursos/Genshin Impact Builds";
         datosProcesosSqlite = new DatosProcesosSqlite(Builds.this);
         datosProcesosSqlite.copiarArchivo(builds + detalleRutaYArchivoDescargado);
     }

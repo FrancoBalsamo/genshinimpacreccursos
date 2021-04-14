@@ -246,13 +246,13 @@ public class RutaArtefactos extends AppCompatActivity {
     }
 
     private void guardarImagenMedoto(Bitmap bitmap, String rutaDetalle){
-        File ruta = new File(Environment.DIRECTORY_PICTURES + File.separator + "Genshin Impact Ruta Artefactos");
-        if (!ruta.exists()) {
-            File wallpaperDirectory = new File("/sdcard/Pictures/Genshin Impact Ruta Artefactos");
-            wallpaperDirectory.mkdirs();
+        File rutaArtefactos = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Ruta Artefactos");
+        if (!rutaArtefactos.exists()) {
+            File rutaArtefactosCrear = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Ruta Artefactos");
+            rutaArtefactosCrear.mkdirs();
         }
 
-        File archivo = new File("/sdcard/Pictures/Genshin Impact Ruta Artefactos", rutaDetalle + ".jpg");
+        File archivo = new File(rutaArtefactos, rutaDetalle + ".jpg");
         if (archivo.exists()) {
             archivo.delete();
         }
@@ -262,11 +262,11 @@ public class RutaArtefactos extends AppCompatActivity {
             out.flush();
             out.close();
             Toast.makeText(this, "¡Se ha guardado con éxito tu ruta!", Toast.LENGTH_SHORT).show();
-            Log.d("saveImagesTwo", "try: " + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+            Log.d("saveImagesTwo", "try: " + "\nRuta: " + rutaArtefactos + "\nArchivo: " + archivo);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "¡Ha ocurrido un error al intentar guardar tu ruta!", Toast.LENGTH_SHORT).show();
-            Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+            Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + rutaArtefactos + "\nArchivo: " + archivo);
         }
     }
 
@@ -301,10 +301,7 @@ public class RutaArtefactos extends AppCompatActivity {
     private void agregarLineasFicheroTXT(String ruta, String archivo) throws IOException {
         String detalleRutaYArchivoDescargado = "Se ha descargado el archivo: "
                 + archivo + ".jpg" + "\n"
-                + "Ubicación del archivo: "
-                + Environment.DIRECTORY_PICTURES
-                + File.separator
-                + "Genshin Impact Ruta Artefactos";
+                + "Ubicación del archivo: sdcard/Genshin Impact Recursos/Genshin Impact Ruta Artefactos";
         datosProcesosSqlite = new DatosProcesosSqlite(RutaArtefactos.this);
         datosProcesosSqlite.copiarArchivo(ruta + detalleRutaYArchivoDescargado);
     }

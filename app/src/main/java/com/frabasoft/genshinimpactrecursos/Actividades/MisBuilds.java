@@ -136,7 +136,7 @@ public class MisBuilds extends AppCompatActivity {
 
         spPJMisBuilds.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, personajesString));
         spPJMisBuilds.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
+            
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
@@ -401,7 +401,7 @@ public class MisBuilds extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    
     private void guardarActualizarFlor(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etFlorPrin.getText().toString())) {
             etFlorPrin.setError("El campo no puede estar vacío.");
@@ -429,18 +429,23 @@ public class MisBuilds extends AppCompatActivity {
             return;
         }
 
-        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(actividad);
-        Flor flor = new Flor();
-        flor.setNombrePersonaje(personaje);
-        flor.setPrincipal(etFlorPrin.getText().toString());
-        flor.setSecundarioA(etFlorSecA.getText().toString());
-        flor.setSecundarioB(etFlorSecB.getText().toString());
-        flor.setSecundarioC(etFlorSecC.getText().toString());
-        flor.setSecundarioD(etFlorSecD.getText().toString());
-        datosProcesosSqlite.validarUInsertUpdateFlor(actividad, personaje, flor);
+        try {
+            DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(actividad);
+            Flor flor = new Flor();
+            flor.setNombrePersonaje(personaje);
+            flor.setPrincipal(etFlorPrin.getText().toString());
+            flor.setSecundarioA(etFlorSecA.getText().toString());
+            flor.setSecundarioB(etFlorSecB.getText().toString());
+            flor.setSecundarioC(etFlorSecC.getText().toString());
+            flor.setSecundarioD(etFlorSecD.getText().toString());
+            datosProcesosSqlite.validarUInsertUpdateFlor(actividad, personaje, flor);
+            Log.d("GuardarActualizarFlor", "try: " + flor.toString());
+        }catch(Exception e){
+            Log.d("GuardarActualizarFlor", "guardarActualizarFlor: " + e.getMessage());
+        }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    
     private void guardarActualizarPluma(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etPlumPrin.getText().toString())) {
             etPlumPrin.setError("El campo no puede estar vacío.");
@@ -479,7 +484,7 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdatePluma(actividad, personaje, plumar);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    
     private void guardarActualizarReloj(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etRelPrin.getText().toString())) {
             etRelPrin.setError("El campo no puede estar vacío.");
@@ -518,7 +523,7 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateReloj(actividad, personaje, reloj);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    
     private void guardarActualizarCopa(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etCopPrin.getText().toString())) {
             etCopPrin.setError("El campo no puede estar vacío.");
@@ -556,8 +561,7 @@ public class MisBuilds extends AppCompatActivity {
         copa.setSecundarioD(etCopSecD.getText().toString());
         datosProcesosSqlite.validarUInsertUpdateCopa(actividad, personaje, copa);
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    
     private void guardarActualizarCorona(Context actividad, String personaje) throws IOException {
         if (TextUtils.isEmpty(etCorPrin.getText().toString())) {
             etCorPrin.setError("El campo no puede estar vacío.");
@@ -684,8 +688,7 @@ public class MisBuilds extends AppCompatActivity {
             }
         }
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    
     private void GuardarIndividuales() {
         guardarFlor.setOnClickListener(new View.OnClickListener() {//flor
             @Override
@@ -780,7 +783,6 @@ public class MisBuilds extends AppCompatActivity {
 
     private void GuardarTodos() {
         guardarTodo.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 try {

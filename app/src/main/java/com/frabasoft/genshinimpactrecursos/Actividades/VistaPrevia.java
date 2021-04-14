@@ -330,13 +330,13 @@ public class VistaPrevia extends AppCompatActivity {
     }
 
     private void guardarImagenMedoto(Bitmap bitmap){
-        File ruta = new File(Environment.DIRECTORY_PICTURES + File.separator + "Genshin Impact Mis Builds");
-        if (!ruta.exists()) {
-            File wallpaperDirectory = new File("/sdcard/Pictures/Genshin Impact Mis Builds");
-            wallpaperDirectory.mkdirs();
+        File rutaMisBuilds = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Mis Builds/");
+        if (!rutaMisBuilds.exists()) {
+            File rutaMisBuildsCrear = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Mis Builds/");
+            rutaMisBuildsCrear.mkdirs();
         }
 
-        File archivo = new File("/sdcard/Pictures/Genshin Impact Mis Builds", nombrePersonaje + ".jpg");
+        File archivo = new File(rutaMisBuilds, nombrePersonaje + ".jpg");
         if (archivo.exists()) {
             archivo.delete();
         }
@@ -346,11 +346,11 @@ public class VistaPrevia extends AppCompatActivity {
             out.flush();
             out.close();
             Toast.makeText(this, "¡Se ha guardado con éxito tu build de " + nombrePersonaje + "!", Toast.LENGTH_SHORT).show();
-            Log.d("saveImagesTwo", "try: " + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+            Log.d("saveImagesTwo", "try: " + "\nRuta: " + rutaMisBuilds + "\nArchivo: " + archivo);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "¡Ha ocurrido un error al intentar guardar tu build de " + nombrePersonaje + "!", Toast.LENGTH_SHORT).show();
-            Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + ruta + "\nArchivo: " + archivo);
+            Log.d("saveImagesTwo", "Catch: " + e.getMessage() + "\nRuta: " + rutaMisBuilds + "\nArchivo: " + archivo);
         }
     }
 
@@ -397,10 +397,7 @@ public class VistaPrevia extends AppCompatActivity {
     private void agregarLineasFicheroTXT(String vistaPrevia, String pj) throws IOException {
         String detalleRutaYArchivoDescargado = "Se ha descargado el archivo: "
                 + pj + ".jpg" + "\n"
-                + "Ubicación del archivo: "
-                + Environment.DIRECTORY_PICTURES
-                + File.separator
-                + "Genshin Impact Mis Builds";
+                + "Ubicación del archivo: sdcard/Genshin Impact Recursos/Genshin Impact Mis Builds";
         datosProcesosSqlite = new DatosProcesosSqlite(VistaPrevia.this);
         datosProcesosSqlite.copiarArchivo(vistaPrevia + detalleRutaYArchivoDescargado);
     }

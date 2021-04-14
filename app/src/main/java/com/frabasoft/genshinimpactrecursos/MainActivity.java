@@ -9,7 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.FileUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +30,13 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.master.permissionhelper.PermissionHelper;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import static com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite.DB_NAME;
 
 public class MainActivity extends AppCompatActivity {
     ImageView instagram, whatsapp;
@@ -50,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        crearDirectorio();
 
         ejecutar();
         if(permissionHelper.hasPermission()){
@@ -111,8 +123,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void importarBKP() {
-        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(MainActivity.this);
-        datosProcesosSqlite.importarBackUp();
+        try{
+            DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(MainActivity.this);
+            datosProcesosSqlite.importarBackUp();
+            Toast.makeText(this, "¡Se ha importado con éxito tu BD, ahora puedes ver tus datos almacenados!", Toast.LENGTH_SHORT).show();
+            Log.d("LOGImportBKP", "Try: ");
+        }catch(Exception e){
+            Toast.makeText(this, "¡Ha ocurrido un error al intentar importar tu BD!", Toast.LENGTH_SHORT).show();
+            Log.d("LOGImportBKP", "Catch: " + e.getMessage());
+        }
     }
 
     private void instagramActividad(Context contexto) {
@@ -216,6 +235,20 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (permissionHelper != null) {
             permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    //CREAR DIRECTORIO DE ARCHIVOS DE GUARDADO
+    public void crearDirectorio(){
+        File directorioApp = new File("/sdcard/Genshin Impact Recursos/");
+        if (!directorioApp.exists()) {
+            File rutaGenshin = new File("/sdcard/Genshin Impact Recursos/");
+            rutaGenshin.mkdirs();
+        }
+        File rutaBDDatos = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Datos/");
+        if (!rutaBDDatos.exists()) {
+            File rutaBDDatosCrear = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Datos/");
+            rutaBDDatosCrear.mkdirs();
         }
     }
 }

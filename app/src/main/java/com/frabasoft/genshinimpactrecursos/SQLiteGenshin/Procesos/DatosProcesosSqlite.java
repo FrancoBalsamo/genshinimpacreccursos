@@ -29,10 +29,12 @@ import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.FlorTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.PlumaTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.RelojTablaSqlite;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -104,8 +106,8 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public boolean validarUInsertUpdateFlor(Context actividad, String personaje, Flor flor) throws IOException {//método para validar el estado no visible del manga
+
+    public boolean validarUInsertUpdateFlor(Context actividad, String personaje, Flor flor) throws IOException {
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
         String consulta = "SELECT * FROM " + FlorTablaSqlite.TABLA_FLOR + " WHERE " + FlorTablaSqlite.NOMBRE_PERSONAJE + " = ?";
@@ -184,7 +186,6 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean validarUInsertUpdatePluma(Context actividad, String personaje, Pluma pluma) throws IOException {//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
@@ -264,7 +265,6 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean validarUInsertUpdateReloj(Context actividad, String personaje, Reloj reloj) throws IOException {//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
@@ -344,7 +344,6 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean validarUInsertUpdateCopa(Context actividad, String personaje, Copa copa) throws IOException {//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
@@ -424,7 +423,6 @@ public class DatosProcesosSqlite implements Serializable {
         sqLiteDatabase.close();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean validarUInsertUpdateCorona(Context actividad, String personaje, Corona corona) throws IOException {//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
         String[] nom = {String.valueOf(personaje)};
@@ -490,28 +488,39 @@ public class DatosProcesosSqlite implements Serializable {
             Log.d("FechaLOGD", "copiarArchivo: " + formatoHoy);
         }
 
-        File rutaDestino = new File("/sdcard/Download/Genshin Impact Datos/");
+        File rutaDestino = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Datos/");
         if(!rutaDestino.exists()){
             rutaDestino.mkdirs();
         }
         File archivoTxt = new File(rutaDestino, nombreTXT);
         String lineaB = "";
         try{
-            BufferedWriter dr = new BufferedWriter(new FileWriter(archivoTxt, true));
+            //instalaciòn
+            BufferedWriter bw = new BufferedWriter(new FileWriter(archivoTxt, true));
+            BufferedReader br = new BufferedReader(new FileReader(archivoTxt));
             if(archivoTxt.length() == 0){
-                //saludo inicio
-                String lineaA = formatoHoy + "\n"
-                        + detalles;
-                dr.write(lineaA);
+                try{
+                    String escribirA = formatoHoy + "\n"
+                            + detalles;
+                    bw.write(escribirA);
 
-                dr.flush();
-                dr.close();
+                    bw.flush();
+                    bw.close();
+                    Log.d("BufferedReadA", "imprimir textoA: " + bw);
+                }catch(Exception e){
+                    Log.d("BufferedReadA", "imprimir textoA: " + e.getMessage());
+                }
             }else{
-                lineaB += formatoHoy + "\n"
-                        + detalles + "\n" + "\n";
-                dr.write(lineaB);
-                dr.flush();
-                dr.close();
+                try{
+                    lineaB += formatoHoy + "\n"
+                            + detalles + "\n" + "\n";
+                    bw.write(lineaB);
+                    bw.flush();
+                    bw.close();
+                    Log.d("BufferedReadB", "imprimir textoA: " + bw);
+                }catch (Exception exception){
+                    Log.d("BufferedReadB", "imprimir textoB: " + exception.getMessage());
+                }
             }
         }catch (IOException e){
             Log.d("TAG", "copiarArchivo: " + e.getMessage());
@@ -522,14 +531,14 @@ public class DatosProcesosSqlite implements Serializable {
         //para la copia del archivo .db
         String rutaBD = "/data/data/com.frabasoft.genshinimpactrecursos/databases/genshin_db_prueba.db";
         File archivoBd = new File(rutaBD);
-        String destinoBD = "/sdcard/Download/Genshin Impact Datos/" + DB_NAME;
+        String destinoBD = "/sdcard/Genshin Impact Recursos/Genshin Impact Datos/" + DB_NAME;
         File archivoDestinoBD = new File(destinoBD);
         if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.O){
             try{
                 FileUtils.copy(new FileInputStream(archivoBd), new FileOutputStream(archivoDestinoBD));
-                Log.d("BDTry", "bdfile: " + archivoDestinoBD);
+                Log.d("CopiarArchivoO", "BDTry: " + archivoDestinoBD);
             }catch(IOException ioException){
-                Log.d("BDCatch", "bdfile: " + ioException.getMessage());
+                Log.d("CopiarArchivoO", "BDCatch: " + ioException.getMessage());
             }
         }else{
             try{
@@ -550,7 +559,7 @@ public class DatosProcesosSqlite implements Serializable {
 
     /////////////////////////////////////////////////////////////////////////Para el backup interno
     public void importarBackUp(){
-        String rutaBackUp = "/sdcard/Download/Genshin Impact Datos/" + DB_NAME;
+        String rutaBackUp = "/sdcard/Genshin Impact Recursos/Genshin Impact Datos/" + DB_NAME;
         File archivoBackUp = new File(rutaBackUp);
         String rutaBD = "/data/data/com.frabasoft.genshinimpactrecursos/databases/genshin_db_prueba.db";
         File archivoBd = new File(rutaBD);
