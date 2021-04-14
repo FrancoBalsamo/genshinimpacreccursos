@@ -524,10 +524,7 @@ public class DatosProcesosSqlite implements Serializable {
         File archivoBd = new File(rutaBD);
         String destinoBD = "/sdcard/Download/Genshin Impact Datos/" + DB_NAME;
         File archivoDestinoBD = new File(destinoBD);
-        if(archivoDestinoBD.exists()){
-            archivoDestinoBD.delete();
-        }
-        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.Q){
+        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.O){
             try{
                 FileUtils.copy(new FileInputStream(archivoBd), new FileOutputStream(archivoDestinoBD));
                 Log.d("BDTry", "bdfile: " + archivoDestinoBD);
@@ -547,6 +544,23 @@ public class DatosProcesosSqlite implements Serializable {
                 out.close();
             }catch (IOException ioException){
                 Log.d("HOLA", "copiarArchivo: " +ioException.getMessage());
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////Para el backup interno
+    public void importarBackUp(){
+        String rutaBackUp = "/sdcard/Download/Genshin Impact Datos/" + DB_NAME;
+        File archivoBackUp = new File(rutaBackUp);
+        String rutaBD = "/data/data/com.frabasoft.genshinimpactrecursos/databases/genshin_db_prueba.db";
+        File archivoBd = new File(rutaBD);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            try{
+                FileUtils.copy(new FileInputStream(archivoBackUp), new FileOutputStream(archivoBd));
+                Log.d("ImportBKP", "try: " + archivoBd);
+            }catch(IOException ioException){
+                Log.d("ImportBKP", "catch: " + ioException.getMessage());
             }
         }
     }

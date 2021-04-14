@@ -1,7 +1,6 @@
 package com.frabasoft.genshinimpactrecursos;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -10,10 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +20,6 @@ import android.widget.Toast;
 import com.frabasoft.genshinimpactrecursos.Actividades.Builds;
 import com.frabasoft.genshinimpactrecursos.Actividades.MisBuilds;
 import com.frabasoft.genshinimpactrecursos.Actividades.RutaArtefactos;
-import com.frabasoft.genshinimpactrecursos.Actividades.VistaPrevia;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -33,18 +28,10 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.master.permissionhelper.PermissionHelper;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
     ImageView instagram, whatsapp;
     AdView publicidad;
-    Button builds, artefactos, misBuilds, hacerBackUp;
+    Button builds, artefactos, misBuilds, hacerBKP;
     private DatosProcesosSqlite datosProcesosSqlite;
     private String primerStringTxt = "Archivo de instalación: " +
             "\n-Se ha creado por primera vez el archivo. " +
@@ -74,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         builds = (Button) findViewById(R.id.builds);
         artefactos = (Button) findViewById(R.id.artefactos);
         misBuilds = (Button) findViewById(R.id.misBuilds);
+        hacerBKP = (Button)findViewById(R.id.hacerBKP);
 
         MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
             @Override
@@ -114,6 +102,17 @@ public class MainActivity extends AppCompatActivity {
                 artefactosActivity();
             }
         });
+        hacerBKP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                importarBKP();
+            }
+        });
+    }
+
+    private void importarBKP() {
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(MainActivity.this);
+        datosProcesosSqlite.importarBackUp();
     }
 
     private void instagramActividad(Context contexto) {
