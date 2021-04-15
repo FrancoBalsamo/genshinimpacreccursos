@@ -69,51 +69,18 @@ public class MainActivity extends AppCompatActivity {
         misBuilds = (Button) findViewById(R.id.misBuilds);
         hacerBKP = (Button)findViewById(R.id.hacerBKP);
 
-        MobileAds.initialize(MainActivity.this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
+        MobileAds.initialize(MainActivity.this, initializationStatus -> {
         });
         publicidad = (AdView) findViewById(R.id.banerMainActivity);
         AdRequest adRequest = new AdRequest.Builder().build();
         publicidad.loadAd(adRequest);
 
-        instagram.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                instagramActividad(MainActivity.this);
-            }
-        });
-        whatsapp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Próximamente.", Toast.LENGTH_SHORT).show();
-            }
-        });
-        builds.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buildActivity();
-            }
-        });
-        misBuilds.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                misBuildsActivity();
-            }
-        });
-        artefactos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                artefactosActivity();
-            }
-        });
-        hacerBKP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                importarBKP();
-            }
-        });
+        instagram.setOnClickListener(v -> instagramActividad(MainActivity.this));
+        whatsapp.setOnClickListener(v -> Toast.makeText(MainActivity.this, "Próximamente.", Toast.LENGTH_SHORT).show());
+        builds.setOnClickListener(v -> buildActivity());
+        misBuilds.setOnClickListener(v -> misBuildsActivity());
+        artefactos.setOnClickListener(v -> artefactosActivity());
+        hacerBKP.setOnClickListener(v -> importarBKP());
     }
 
     private void importarBKP() {
