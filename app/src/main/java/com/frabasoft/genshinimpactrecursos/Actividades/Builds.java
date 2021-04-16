@@ -1087,9 +1087,9 @@ public class Builds extends FragmentActivity {
     }
 
     private void guardarImagenMedoto(Bitmap bitmap, String nombrePersonaje){
-        File rutaBuilds = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Builds/");
+        File rutaBuilds = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Builds/");
         if (!rutaBuilds.exists()) {
-            File rutaBuildsCrear = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Builds/");
+            File rutaBuildsCrear = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Builds/");
             rutaBuildsCrear.mkdirs();
         }
 

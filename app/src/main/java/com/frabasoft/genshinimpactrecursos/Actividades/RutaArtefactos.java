@@ -246,9 +246,9 @@ public class RutaArtefactos extends AppCompatActivity {
     }
 
     private void guardarImagenMedoto(Bitmap bitmap, String rutaDetalle){
-        File rutaArtefactos = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Ruta Artefactos");
+        File rutaArtefactos = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Ruta Artefactos");
         if (!rutaArtefactos.exists()) {
-            File rutaArtefactosCrear = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Ruta Artefactos");
+            File rutaArtefactosCrear = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Ruta Artefactos");
             rutaArtefactosCrear.mkdirs();
         }
 

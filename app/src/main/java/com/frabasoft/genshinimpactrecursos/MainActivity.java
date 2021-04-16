@@ -206,9 +206,9 @@ public class MainActivity extends AppCompatActivity {
 
     //CREAR DIRECTORIO DE ARCHIVOS DE GUARDADO
     public void crearDirectorio(){
-        File directorioApp = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Datos/", DB_NAME);
+        File directorioApp = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Datos/", DB_NAME);
         if (!directorioApp.exists()) {
-            File rutaGenshin = new File("/sdcard/Genshin Impact Recursos/");
+            File rutaGenshin = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Datos/");
             rutaGenshin.mkdirs();
         }
         File rutaBDDatos = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Datos/");

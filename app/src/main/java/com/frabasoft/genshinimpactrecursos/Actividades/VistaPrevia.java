@@ -118,7 +118,7 @@ public class VistaPrevia extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(permissionHelper.hasPermission()){
-                    GuardarLayout(VistaPrevia.this);
+                    GuardarLayout();
                 }else{
                     ejecutar();
                 }
@@ -312,14 +312,12 @@ public class VistaPrevia extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void GuardarLayout(Context context) {
+    private void GuardarLayout() {
         contenido.setDrawingCacheEnabled(true);
         contenido.buildDrawingCache();
         Bitmap bmap = contenido.getDrawingCache();
         try {
             guardarImagenMedoto(bmap);
-            //saveBitmapAsNewFile(bmap);
             agregarLineasFicheroTXT(VistaPreviaDetalle, nombrePersonaje);
         } catch (Exception e) {
             Log.d("GuardarLayout", "GuardarLayout: " + e.getMessage());
@@ -330,9 +328,9 @@ public class VistaPrevia extends AppCompatActivity {
     }
 
     private void guardarImagenMedoto(Bitmap bitmap){
-        File rutaMisBuilds = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Mis Builds/");
+        File rutaMisBuilds = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Mis Builds/");
         if (!rutaMisBuilds.exists()) {
-            File rutaMisBuildsCrear = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Mis Builds/");
+            File rutaMisBuildsCrear = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Mis Builds/");
             rutaMisBuildsCrear.mkdirs();
         }
 
@@ -393,85 +391,11 @@ public class VistaPrevia extends AppCompatActivity {
         VistaPrevia.this.finish();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void agregarLineasFicheroTXT(String vistaPrevia, String pj) throws IOException {
         String detalleRutaYArchivoDescargado = "Se ha descargado el archivo: "
                 + pj + ".jpg" + "\n"
                 + "Ubicación del archivo: sdcard/Genshin Impact Recursos/Genshin Impact Mis Builds";
         datosProcesosSqlite = new DatosProcesosSqlite(VistaPrevia.this);
         datosProcesosSqlite.copiarArchivo(vistaPrevia + detalleRutaYArchivoDescargado);
-    }
-
-    private void saveBitmapAsNewFile(Bitmap target){
-
-        // Define directory names
-        String fileName = nombrePersonaje + "_new_file.jpg"; /* or Replace with yout filename*/
-        String root = "/sdcard/Pictures/Genshin Impact Mis Builds";
-        OutputStream outputStream = null;
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-
-            ContentResolver resolver = getApplicationContext().getContentResolver();
-            ContentValues contentValues = new ContentValues(); // or your content values
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName); // avoid this column if DisplayName is already set
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + root);
-            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-
-
-            try {
-                resolver.notifyChange(Objects.requireNonNull(imageUri), null);
-                outputStream = resolver.openOutputStream(Objects.requireNonNull(imageUri));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Log.d("PRUEBATAG", "=> Error creating directory on path " + imageUri);
-            }
-        }
-        else {
-            if (!isExternalStorageReadable() || !isExternalStorageWritable()) {
-                Log.d("PRUEBATAG", "=> Cannot read or write on External directory ");
-                return;
-            }
-
-            String file_path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + root;
-            File dir = new File(file_path);
-            if (!dir.exists() && !dir.mkdirs()) {
-                Log.d("Error in" , "=> Error creating directory on path " + file_path);
-                return;
-            }
-
-            File file = new File(dir, fileName);
-
-            if(file.exists())
-                return;
-
-            try {
-                outputStream = new FileOutputStream(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-
-        try{
-            if(outputStream != null) {
-                target.compress(Bitmap.CompressFormat.JPEG, 85, outputStream);
-                outputStream.flush();
-                outputStream.close();
-            }
-        } catch (IOException e) {
-            Log.d("Error in", "=> Error creating image on path");
-            e.printStackTrace();
-        }
-
-    }
-
-    public static boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
-    }
-
-    public static boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 }

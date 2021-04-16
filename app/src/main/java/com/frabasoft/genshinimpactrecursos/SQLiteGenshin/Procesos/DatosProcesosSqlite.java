@@ -490,7 +490,7 @@ public class DatosProcesosSqlite implements Serializable {
             Log.d("FechaLOGD", "copiarArchivo: " + formatoHoy);
         }
 
-        File rutaDestino = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Datos/");
+        File rutaDestino = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Datos/");
         if(!rutaDestino.exists()){
             rutaDestino.mkdirs();
         }
@@ -520,7 +520,7 @@ public class DatosProcesosSqlite implements Serializable {
         //para la copia del archivo .db
         String rutaBD = "/data/data/com.frabasoft.genshinimpactrecursos/databases/genshin_db_prueba.db";
         File archivoBd = new File(rutaBD);
-        String destinoBD = "/sdcard/Genshin Impact Recursos/Genshin Impact Datos/" + DB_NAME;
+        String destinoBD = Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Datos/" + DB_NAME;
         File archivoDestinoBD = new File(destinoBD);
         if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.Q){
             try{
@@ -548,7 +548,7 @@ public class DatosProcesosSqlite implements Serializable {
 
     /////////////////////////////////////////////////////////////////////////Para el backup interno
     public void importarBackUp(){
-        String rutaBackUp = "/sdcard/Genshin Impact Recursos/Genshin Impact Datos/" + DB_NAME;
+        String rutaBackUp = Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Datos/" + DB_NAME;
         File archivoBackUp = new File(rutaBackUp);
         String rutaBD = "/data/data/com.frabasoft.genshinimpactrecursos/databases/genshin_db_prueba.db";
         File archivoBd = new File(rutaBD);
