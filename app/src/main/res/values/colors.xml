@@ -16,4 +16,5 @@
     <color name="geoColor">#D39A40</color>
     <color name="hydroColor">#228CB8</color>
     <color name="pyroColor">#BB2629</color>
+    <color name="letrasVistaPrevia">#693d30</color>
 </resources>

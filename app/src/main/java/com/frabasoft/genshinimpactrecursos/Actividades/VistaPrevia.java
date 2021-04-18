@@ -10,6 +10,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,13 +59,11 @@ public class VistaPrevia extends AppCompatActivity {
     private ArrayList<Copa> copaArrayList;
     private ArrayList<Corona> coronaArrayList;
 
-    private TextView tvF, tvFl, tvFlo, tvFlor, tvFore;
+    private TextView tvf, tvFl, tvFlo, tvFlor, tvFore;
     private TextView P, Pl, Plu, Plum, Pluma;
     private TextView RR, Re, Rel, Relo, Reloj;
     private TextView C, Co, Cop, Copa, Copas;
     private TextView tvC, tvCo, tvCor, tvCoro, tvCoron;
-
-    private ImageView bkgPJ;
 
     private String nombrePersonaje = "";
 
@@ -95,7 +95,7 @@ public class VistaPrevia extends AppCompatActivity {
 
         nombrePersonaje = getIntent().getStringExtra("pj");
 
-        tvF = (TextView)findViewById(R.id.tvF);
+        tvf = (TextView)findViewById(R.id.tvF);
         tvFl = (TextView)findViewById(R.id.tvFl);
         tvFlo = (TextView)findViewById(R.id.tvFlo);
         tvFlor = (TextView)findViewById(R.id.tvFlor);
@@ -125,8 +125,6 @@ public class VistaPrevia extends AppCompatActivity {
         tvCoro = (TextView)findViewById(R.id.tvCoro);
         tvCoron = (TextView)findViewById(R.id.tvCoron);
 
-        bkgPJ = (ImageView)findViewById(R.id.bkgPJ);
-
         CargarDatosSQLite(nombrePersonaje);
         backgroundPJ(nombrePersonaje);
         contenido.setOnClickListener(new View.OnClickListener() {
@@ -147,14 +145,14 @@ public class VistaPrevia extends AppCompatActivity {
         //flor
         florArrayList = datosProcesosSqlite.mostrarDatosDelPjFlor(personaje);
         for(int i = 0; i < florArrayList.size(); i++){
-            if(tvF.getText().toString()=="" || tvF.getText().toString()==null || tvF.equals("")
+            if(tvf.getText().toString()=="" || tvf.getText().toString()==null || tvf.equals("")
                     || tvFl.getText().toString()=="" || tvFl.getText().toString()==null || tvFl.equals("")
                     || tvFlo.getText().toString()=="" || tvFlo.getText().toString()==null || tvFlo.equals("")
                     || tvFlor.getText().toString()=="" || tvFlor.getText().toString()==null || tvFlor.equals("")
                     || tvFore.getText().toString()=="" || tvFore.getText().toString()==null || tvFore.equals("")){
                 limpiarTV();
             }else{
-                tvF.setText(florArrayList.get(i).getPrincipal());
+                tvf.setText(florArrayList.get(i).getPrincipal());
                 tvFl.setText(florArrayList.get(i).getSecundarioA());
                 tvFlo.setText(florArrayList.get(i).getSecundarioB());
                 tvFlor.setText(florArrayList.get(i).getSecundarioC());
@@ -233,7 +231,7 @@ public class VistaPrevia extends AppCompatActivity {
 
     private void limpiarTV() {
         //flor
-        tvF.setText("");
+        tvf.setText("");
         tvFl.setText("");
         tvFlo.setText("");
         tvFlor.setText("");
@@ -266,65 +264,65 @@ public class VistaPrevia extends AppCompatActivity {
 
     private void backgroundPJ(String nombre){
         if(nombre == "Albedo" || nombre.equals("Albedo")){
-            bkgPJ.setImageResource(R.drawable.albedobuilds);
+            contenido.setBackgroundResource(R.drawable.albedobuilds);
         } else if(nombre == "Amber" || nombre.equals("Amber")){
-            bkgPJ.setImageResource(R.drawable.amberbuilds);
+            contenido.setBackgroundResource(R.drawable.amberbuilds);
         } else if(nombre == "Barbara" || nombre.equals("Barbara")){
-            bkgPJ.setImageResource(R.drawable.barbarabuilds);
+            contenido.setBackgroundResource(R.drawable.barbarabuilds);
         } else if(nombre == "Beidou" || nombre.equals("Beidou")){
-            bkgPJ.setImageResource(R.drawable.beidoubuilds);
+            contenido.setBackgroundResource(R.drawable.beidoubuilds);
         } else if(nombre == "Bennet" || nombre.equals("Bennet")){
-            bkgPJ.setImageResource(R.drawable.bennetbuilds);
+            contenido.setBackgroundResource(R.drawable.bennetbuilds);
         } else if(nombre == "Chongyun" || nombre.equals("Chongyun")){
-            bkgPJ.setImageResource(R.drawable.chongyunbuilds);
+            contenido.setBackgroundResource(R.drawable.chongyunbuilds);
         } else if(nombre == "Diluc" || nombre.equals("Diluc")){
-            bkgPJ.setImageResource(R.drawable.dilucbuilds);
+            contenido.setBackgroundResource(R.drawable.dilucbuilds);
         } else if(nombre == "Diona" || nombre.equals("Diona")){
-            bkgPJ.setImageResource(R.drawable.dionabuilds);
+            contenido.setBackgroundResource(R.drawable.dionabuilds);
         } else if(nombre == "Fischl" || nombre.equals("Fischl")){
-            bkgPJ.setImageResource(R.drawable.fischlbuilds);
+            contenido.setBackgroundResource(R.drawable.fischlbuilds);
         } else if(nombre == "Ganyu" || nombre.equals("Ganyu")){
-            bkgPJ.setImageResource(R.drawable.ganyubuilds);
+            contenido.setBackgroundResource(R.drawable.ganyubuilds);
         } else if(nombre == "Hu Tao" || nombre.equals("Hu Tao")){
-            bkgPJ.setImageResource(R.drawable.hutaobuilds);
+            contenido.setBackgroundResource(R.drawable.hutaobuilds);
         } else if(nombre == "Jean" || nombre.equals("Jean")){
-            bkgPJ.setImageResource(R.drawable.jeanbuilds);
+            contenido.setBackgroundResource(R.drawable.jeanbuilds);
         } else if(nombre == "Kaeya" || nombre.equals("Kaeya")){
-            bkgPJ.setImageResource(R.drawable.kaeyabuilds);
+            contenido.setBackgroundResource(R.drawable.kaeyabuilds);
         } else if(nombre == "Keqing" || nombre.equals("Keqing")){
-            bkgPJ.setImageResource(R.drawable.keqingbuilds);
+            contenido.setBackgroundResource(R.drawable.keqingbuilds);
         } else if(nombre == "Klee" || nombre.equals("Klee")){
-            bkgPJ.setImageResource(R.drawable.kleebuilds);
+            contenido.setBackgroundResource(R.drawable.kleebuilds);
         } else if(nombre == "Lisa" || nombre.equals("Lisa")){
-            bkgPJ.setImageResource(R.drawable.lisabuilds);
+            contenido.setBackgroundResource(R.drawable.lisabuilds);
         } else if(nombre == "Mona" || nombre.equals("Mona")){
-            bkgPJ.setImageResource(R.drawable.monabuilds);
+            contenido.setBackgroundResource(R.drawable.monabuilds);
         } else if(nombre == "Ninguang" || nombre.equals("Ninguang")){
-            bkgPJ.setImageResource(R.drawable.ningguangbuilds);
+            contenido.setBackgroundResource(R.drawable.ningguangbuilds);
         } else if(nombre == "Noelle" || nombre.equals("Noelle")){
-            bkgPJ.setImageResource(R.drawable.noellebuilds);
+            contenido.setBackgroundResource(R.drawable.noellebuilds);
         } else if(nombre == "Qiqi" || nombre.equals("Qiqi")){
-            bkgPJ.setImageResource(R.drawable.qiqibuilds);
+            contenido.setBackgroundResource(R.drawable.qiqibuilds);
         } else if(nombre == "Razor" || nombre.equals("Razor")){
-            bkgPJ.setImageResource(R.drawable.razorbuilds);
+            contenido.setBackgroundResource(R.drawable.razorbuilds);
         } else if(nombre == "Rosaria" || nombre.equals("Rosaria")){
-            bkgPJ.setImageResource(R.drawable.rosariabuilds);
+            contenido.setBackgroundResource(R.drawable.rosariabuilds);
         } else if(nombre == "Sucrose" || nombre.equals("Sucrose")){
-            bkgPJ.setImageResource(R.drawable.sacarosabuilds);
+            contenido.setBackgroundResource(R.drawable.sacarosabuilds);
         } else if(nombre == "Tartaglia" || nombre.equals("Tartaglia")){
-            bkgPJ.setImageResource(R.drawable.tartagliabuilds);
+            contenido.setBackgroundResource(R.drawable.tartagliabuilds);
         } else if(nombre == "Venti" || nombre.equals("Venti")){
-            bkgPJ.setImageResource(R.drawable.ventibuilds);
+            contenido.setBackgroundResource(R.drawable.ventibuilds);
         } else if(nombre == "Xianling" || nombre.equals("Xianling")){
-            bkgPJ.setImageResource(R.drawable.xianlingbuilds);
+            contenido.setBackgroundResource(R.drawable.xianlingbuilds);
         } else if(nombre == "Xiao" || nombre.equals("Xiao")){
-            bkgPJ.setImageResource(R.drawable.xiaobuilds);
+            contenido.setBackgroundResource(R.drawable.xiaobuilds);
         } else if(nombre == "Xingqiu" || nombre.equals("Xingqiu")){
-            bkgPJ.setImageResource(R.drawable.xingqiubuilds);
+            contenido.setBackgroundResource(R.drawable.xingqiubuilds);
         } else if(nombre == "Xinyan" || nombre.equals("Xinyan")){
-            bkgPJ.setImageResource(R.drawable.xinyanbuilds);
+            contenido.setBackgroundResource(R.drawable.xinyanbuilds);
         } else if(nombre == "Zhongli" || nombre.equals("Zhongli")){
-            bkgPJ.setImageResource(R.drawable.zhonglibuilds);
+            contenido.setBackgroundResource(R.drawable.zhonglibuilds);
         }
     }
 

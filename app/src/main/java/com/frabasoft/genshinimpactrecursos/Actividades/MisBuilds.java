@@ -64,6 +64,8 @@ public class MisBuilds extends AppCompatActivity {
             "Xiao", "Xingqiu",
             "Xinyan", "Zhongli"};
 
+    private String datoImagenarma = "";
+
     private DecimalFormat df;
     PermissionHelper permissionHelper;
     private Button guardarFlor, guardarPluma, guardarReloj, guardarCopa, guardarCorona, guardarTodo, vistaPrevia;
@@ -148,15 +150,10 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.wallpaper);
                     GuardadoEnCeroPosicion();
-                    vistaPrevia.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje para ir a su vista previa.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    vistaPrevia.setOnClickListener(v -> Toast.makeText(MisBuilds.this, "Debe seleccionar un personaje para ir a su vista previa.", Toast.LENGTH_SHORT).show());
                 } else if (position == 1) {
                     limpiarET();
-                    imgPJMisBuilds.setImageResource(R.drawable.albedobuilds);
+                    imgPJMisBuilds.setImageResource(R.drawable.albedo_misbuilds);
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();

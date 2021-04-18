@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Actividades.VistaPrevia"
-    android:background="@color/black"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@drawable/albedobuilds">
     <LinearLayout
         android:id="@+id/creado"
         android:layout_width="match_parent"
@@ -16,18 +16,19 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
+                android:layout_marginRight="17dp">
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp">
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginTop="115dp">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -43,41 +44,51 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/tvF"
-                            android:fontFamily="@font/gifontdos"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Principal"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/tvFl"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario A"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/tvFlo"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario B"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/tvFlor"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario C"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/tvFlore"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario D"
@@ -85,8 +96,8 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
+                    android:layout_marginTop="115dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -105,41 +116,51 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
+                            android:gravity="center_vertical"
                             android:id="@+id/P"
-                            android:fontFamily="@font/gifontdos"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Principal"
+                            android:textSize="7sp"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/Pl"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario A"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/Plu"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario B"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/Plum"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario C"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/Pluma"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario D"
@@ -147,6 +168,166 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="17dp"
+                android:layout_marginBottom="17dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="11dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/copico"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/C"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Principal"
+                            android:paddingLeft="15dp"/>
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/Co"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Secundario A"
+                            android:paddingLeft="15dp"/>
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/Cop"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Secundario B"
+                            android:paddingLeft="15dp"/>
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/Copa"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Secundario C"
+                            android:paddingLeft="15dp"/>
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/Copas"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Secundario D"
+                            android:paddingLeft="15dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/corico"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/tvC"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Principal"
+                            android:paddingLeft="15dp"/>
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/tvCo"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Secundario A"
+                            android:paddingLeft="15dp"/>
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/tvCor"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Secundario B"
+                            android:paddingLeft="15dp"/>
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/tvCoro"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Secundario C"
+                            android:paddingLeft="15dp"/>
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
+                            android:id="@+id/tvCoron"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
+                            android:layout_width="160dp"
+                            android:layout_height="20dp"
+                            android:text="Stat Secundario D"
+                            android:paddingLeft="15dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:textSize="7sp"
                     android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -166,181 +347,51 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/R"
-                            android:fontFamily="@font/gifontdos"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Principal"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/Re"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario A"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/Rel"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario B"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/Relo"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario C"
                             android:paddingLeft="15dp"/>
                         <TextView
+                            android:gravity="center_vertical"
+                            android:textSize="7sp"
                             android:id="@+id/Reloj"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Secundario D"
-                            android:paddingLeft="15dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
-                <LinearLayout
-                    android:layout_marginTop="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="15dp">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/copico"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/C"
-                            android:fontFamily="@font/gifontdos"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Principal"
-                            android:paddingLeft="15dp"/>
-                        <TextView
-                            android:id="@+id/Co"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Secundario A"
-                            android:paddingLeft="15dp"/>
-                        <TextView
-                            android:id="@+id/Cop"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Secundario B"
-                            android:paddingLeft="15dp"/>
-                        <TextView
-                            android:id="@+id/Copa"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Secundario C"
-                            android:paddingLeft="15dp"/>
-                        <TextView
-                            android:id="@+id/Copas"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Secundario D"
-                            android:paddingLeft="15dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="270dp"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/bkgPJ"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@drawable/corico"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/tvC"
-                            android:fontFamily="@font/gifontdos"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Principal"
-                            android:paddingLeft="15dp"/>
-                        <TextView
-                            android:id="@+id/tvCo"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Secundario A"
-                            android:paddingLeft="15dp"/>
-                        <TextView
-                            android:id="@+id/tvCor"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Secundario B"
-                            android:paddingLeft="15dp"/>
-                        <TextView
-                            android:id="@+id/tvCoro"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
-                            android:layout_width="160dp"
-                            android:layout_height="20dp"
-                            android:text="Stat Secundario C"
-                            android:paddingLeft="15dp"/>
-                        <TextView
-                            android:id="@+id/tvCoron"
-                            android:fontFamily="@font/gifontuno"
-                            android:textColor="@color/white"
+                            android:fontFamily="@font/vistapreviafont"
+                            android:textColor="@color/letrasVistaPrevia"
                             android:layout_width="160dp"
                             android:layout_height="20dp"
                             android:text="Stat Secundario D"
