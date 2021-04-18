@@ -29,11 +29,16 @@ import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Reloj;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.master.permissionhelper.PermissionHelper;
 
 import java.io.File;
@@ -73,7 +78,7 @@ public class MisBuilds extends AppCompatActivity {
     private ArrayList<Copa> copaArrayList;
     private ArrayList<Corona> coronaArrayList;
 
-    private AdView publicidad;
+    AdView publicidad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -24,11 +24,16 @@ import com.frabasoft.genshinimpactrecursos.Actividades.Builds;
 import com.frabasoft.genshinimpactrecursos.Actividades.MisBuilds;
 import com.frabasoft.genshinimpactrecursos.Actividades.RutaArtefactos;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.master.permissionhelper.PermissionHelper;
 
 import java.io.File;
@@ -39,7 +44,7 @@ import java.io.IOException;
 import static com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite.DB_NAME;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView instagram, whatsapp;
+    ImageView instagram;
     AdView publicidad;
     Button builds, artefactos, misBuilds, hacerBKP;
     private DatosProcesosSqlite datosProcesosSqlite;
@@ -52,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
     PermissionHelper permissionHelper;
     private String nombreTXT = "Leer Importante Sobre Genshin Impact Recursos.txt";
 
+    //para el ad de la descarga de la imagen
+    private final static String TAG = "ERRORTAG";
+    private static final String AD_UNIT_ID = "ca-app-pub-4467142756516555/7442029029";
+    private InterstitialAd interstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         crearDirectorio();
+        loadAd();
 
         ejecutar();
 
         instagram = (ImageView) findViewById(R.id.instagram);
-        whatsapp = (ImageView) findViewById(R.id.whatsapp);
         builds = (Button) findViewById(R.id.builds);
         artefactos = (Button) findViewById(R.id.artefactos);
         misBuilds = (Button) findViewById(R.id.misBuilds);
@@ -76,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         publicidad.loadAd(adRequest);
 
         instagram.setOnClickListener(v -> instagramActividad(MainActivity.this));
-        whatsapp.setOnClickListener(v -> Toast.makeText(MainActivity.this, "Próximamente.", Toast.LENGTH_SHORT).show());
         builds.setOnClickListener(v -> buildActivity());
         misBuilds.setOnClickListener(v -> misBuildsActivity());
         artefactos.setOnClickListener(v -> artefactosActivity());
@@ -84,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void importarBKP() {
+        showInterstitial();
         try{
             DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(MainActivity.this);
             datosProcesosSqlite.importarBackUp();
@@ -215,6 +225,71 @@ public class MainActivity extends AppCompatActivity {
         if (!rutaBDDatos.exists()) {
             File rutaBDDatosCrear = new File("/sdcard/Genshin Impact Recursos/Genshin Impact Datos/");
             rutaBDDatosCrear.mkdirs();
+        }
+    }
+
+    public void loadAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(
+                this,
+                AD_UNIT_ID,
+                adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        MainActivity.this.interstitialAd = interstitialAd;
+                        Log.i(TAG, "onAdLoaded");
+                        interstitialAd.setFullScreenContentCallback(
+                                new FullScreenContentCallback() {
+                                    @Override
+                                    public void onAdDismissedFullScreenContent() {
+                                        // Called when fullscreen content is dismissed.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        MainActivity.this.interstitialAd = null;
+                                        Log.d("TAG", "The ad was dismissed.");
+                                    }
+
+                                    @Override
+                                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                        // Called when fullscreen content failed to show.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        MainActivity.this.interstitialAd = null;
+                                        Log.d("TAG", "The ad failed to show.");
+                                    }
+
+                                    @Override
+                                    public void onAdShowedFullScreenContent() {
+                                        // Called when fullscreen content is shown.
+                                        Log.d("TAG", "The ad was shown.");
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.i(TAG, loadAdError.getMessage());
+                        interstitialAd = null;
+
+                        String error =
+                                String.format(
+                                        "domain: %s, code: %d, message: %s",
+                                        loadAdError.getDomain(), loadAdError.getCode(), loadAdError.getMessage());
+                        Log.d(TAG, "onAdFailedToLoad: " + error);
+                    }
+                });
+    }
+
+    private void showInterstitial() {
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (interstitialAd != null) {
+            interstitialAd.show(this);
+        } else {
+            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -15,6 +15,7 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -30,11 +31,16 @@ import com.frabasoft.genshinimpactrecursos.MainActivity;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
+import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.master.permissionhelper.PermissionHelper;
 
 import java.io.File;
@@ -68,7 +74,10 @@ public class Builds extends FragmentActivity {
     private String buildsDetalle = "BUILDS DE PERSONAJES: ";
     private DatosProcesosSqlite datosProcesosSqlite;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    //para el ad de la descarga de la imagen
+    private static final String AD_UNIT_ID = "ca-app-pub-4467142756516555/7442029029";
+    private InterstitialAd interstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,10 +86,7 @@ public class Builds extends FragmentActivity {
 
         ejecutar();
 
-        MobileAds.initialize(Builds.this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) { }
-        });
+        MobileAds.initialize(Builds.this, initializationStatus -> { });
         publicidad = (AdView)findViewById(R.id.banerBuild);
         AdRequest adRequest = new AdRequest.Builder().build();
         publicidad.loadAd(adRequest);
@@ -975,6 +981,8 @@ public class Builds extends FragmentActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
+
+        loadAd();
     }
 
     private void toastAnemo(Context actividad, String mensaje){
@@ -1087,6 +1095,7 @@ public class Builds extends FragmentActivity {
     }
 
     private void guardarImagenMedoto(Bitmap bitmap, String nombrePersonaje){
+        showInterstitial();
         File rutaBuilds = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Builds/");
         if (!rutaBuilds.exists()) {
             File rutaBuildsCrear = new File(Environment.getExternalStorageDirectory() + "/Genshin Impact Recursos/Genshin Impact Builds/");
@@ -1117,5 +1126,70 @@ public class Builds extends FragmentActivity {
                 + "Ubicación del archivo: sdcard/Genshin Impact Recursos/Genshin Impact Builds";
         datosProcesosSqlite = new DatosProcesosSqlite(Builds.this);
         datosProcesosSqlite.copiarArchivo(builds + detalleRutaYArchivoDescargado);
+    }
+
+    public void loadAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(
+                this,
+                AD_UNIT_ID,
+                adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        Builds.this.interstitialAd = interstitialAd;
+                        Log.i(TAG, "onAdLoaded");
+                        interstitialAd.setFullScreenContentCallback(
+                                new FullScreenContentCallback() {
+                                    @Override
+                                    public void onAdDismissedFullScreenContent() {
+                                        // Called when fullscreen content is dismissed.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        Builds.this.interstitialAd = null;
+                                        Log.d("TAG", "The ad was dismissed.");
+                                    }
+
+                                    @Override
+                                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                        // Called when fullscreen content failed to show.
+                                        // Make sure to set your reference to null so you don't
+                                        // show it a second time.
+                                        Builds.this.interstitialAd = null;
+                                        Log.d("TAG", "The ad failed to show.");
+                                    }
+
+                                    @Override
+                                    public void onAdShowedFullScreenContent() {
+                                        // Called when fullscreen content is shown.
+                                        Log.d("TAG", "The ad was shown.");
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.i(TAG, loadAdError.getMessage());
+                        interstitialAd = null;
+
+                        String error =
+                                String.format(
+                                        "domain: %s, code: %d, message: %s",
+                                        loadAdError.getDomain(), loadAdError.getCode(), loadAdError.getMessage());
+                        Log.d(TAG, "onAdFailedToLoad: " + error);
+                    }
+                });
+    }
+
+    private void showInterstitial() {
+        // Show the ad if it's ready. Otherwise toast and restart the game.
+        if (interstitialAd != null) {
+            interstitialAd.show(this);
+        } else {
+            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+        }
     }
 }
