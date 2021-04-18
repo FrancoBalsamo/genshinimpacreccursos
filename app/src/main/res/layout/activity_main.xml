@@ -63,23 +63,6 @@
             <Button
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Artefactos"
-                android:textColor="@color/white"
-                android:id="@+id/artefactos"
-                android:fontFamily="@font/sadness"
-                android:background="@color/black"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp">
-            <Button
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
                 android:text="Builds"
                 android:textColor="@color/white"
                 android:id="@+id/builds"
@@ -119,6 +102,37 @@
                 android:id="@+id/misBuilds"
                 android:fontFamily="@font/sadness"
                 android:background="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Ruta Artefactos"
+                android:textColor="@color/white"
+                android:id="@+id/artefactos"
+                android:fontFamily="@font/sadness"
+                android:background="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:layout_gravity="bottom"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+            <pl.droidsonroids.gif.GifImageView
+                android:background="@drawable/amberchibi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

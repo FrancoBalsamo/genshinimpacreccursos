@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frabasoft.genshinimpactrecursos.Actividades.Builds;
@@ -43,6 +44,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite.DB_NAME;
 
@@ -67,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
 
     //para los soniditos
     private MediaPlayer entrar;
+
+    //para los tiempos del banner
+    private String fechaActualBanner, horaActualBanner;
+    private String fechaFinalBanner = "27/04/2021";
+    private String horaFinalBanner = "17:00:00";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -315,12 +324,62 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void anuncio(){
-        LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
-        AlertDialog anuncio = new AlertDialog.Builder(this).create();
-        final View view = layoutInflater.inflate(R.layout.alerta_inicio_app, null);
-        final Button cerrar = view.findViewById(R.id.cerrarAnuncio);
-        cerrar.setOnClickListener(v -> anuncio.dismiss());
-        anuncio.setView(view);
-        anuncio.show();
+        Calendar fechaActual = Calendar.getInstance();
+        int mesActual = fechaActual.get(Calendar.MONTH) + 1;
+        SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm:ss");
+        try{
+            if(fechaActual.get(Calendar.DAY_OF_MONTH) < 10){
+                fechaActualBanner = "0" + fechaActual.get(Calendar.DAY_OF_MONTH)
+                        + "/" + mesActual
+                        + "/" + fechaActual.get(Calendar.YEAR);
+            }else if(mesActual < 10){
+                fechaActualBanner = fechaActual.get(Calendar.DAY_OF_MONTH)
+                        + "/0" + mesActual
+                        + "/" + fechaActual.get(Calendar.YEAR);
+            }else{
+                fechaActualBanner = fechaActual.get(Calendar.DAY_OF_MONTH)
+                        + "/" + mesActual
+                        + "/" + fechaActual.get(Calendar.YEAR);
+            }
+            horaActualBanner = fechaActual.get(Calendar.HOUR_OF_DAY)
+                    + ":" + fechaActual.get(Calendar.MINUTE)
+                    + ":" + fechaActual.get(Calendar.SECOND);
+
+            Date fechaInicio = sdfFecha.parse(fechaActualBanner);
+            Date horaInicio = sdfHora.parse(horaActualBanner);
+            Date fechaFin = sdfFecha.parse(fechaFinalBanner);
+            Date horaFin = sdfHora.parse(horaFinalBanner);
+
+            long obtenerDiferenciaDeDias = fechaFin.getTime() - fechaInicio.getTime();
+            long segundosF = obtenerDiferenciaDeDias / 1000;
+            long minutosF = segundosF / 60;
+            long horasF = minutosF / 60;
+            long diasQueFaltan = horasF / 24;
+
+            long obtenerDiferenciaDeHoras = horaFin.getTime() - horaInicio.getTime();
+            long segundosM = (obtenerDiferenciaDeHoras / 1000)%60;
+            long minutosM = (obtenerDiferenciaDeHoras / (1000*60))%60;
+            long horasM = (obtenerDiferenciaDeHoras / (1000*60*60))%24;
+
+            LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+            AlertDialog anuncio = new AlertDialog.Builder(this).create();
+            final View view = layoutInflater.inflate(R.layout.alerta_inicio_app, null);
+            final TextView tiempoRestante = view.findViewById(R.id.tiempoRestante);
+            final Button cerrar = view.findViewById(R.id.cerrarAnuncio);
+
+            tiempoRestante.setText("Quedan " + diasQueFaltan + " día(s) " +
+                    //+ horasM + " hora(s) "
+                    //+ minutosM + " minuto(s) " +
+                    "para que finalice el banner.");
+            cerrar.setOnClickListener(v -> anuncio.dismiss());
+            anuncio.setView(view);
+            anuncio.show();
+
+            Log.d("COMPACIONFECHAHORA", "\nDías faltantes: " + diasQueFaltan
+                    + "\nHoras faltantes: " + horasM + ":" + minutosM);
+        }catch (Exception exception){
+            Log.d(TAG, "ERROR TIEMPO: " + exception.getMessage());
+        }
     }
 }

@@ -63,7 +63,6 @@ public class VistaPrevia extends AppCompatActivity {
 
     private LinearLayout contenido;
 
-
     private String VistaPreviaDetalle = "VISTA PREVIA DE PERSONAJES: ";
     private DatosProcesosSqlite datosProcesosSqlite;
 
@@ -228,10 +227,11 @@ public class VistaPrevia extends AppCompatActivity {
         //arma
         armasArrayList = datosProcesosSqlite.mostrarDatosDelPjArma(personaje);
         for(int i = 0; i < armasArrayList.size(); i++){
-            if(armasArrayList.get(i).getArma() == 0) {
+            if(armasArrayList.get(i).getRecursoImagen() == 0) {
                 Toast.makeText(this, "¡No has guardado ningún arma!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Array: " + armasArrayList.size());
             }else{
-                int valorImagen = armasArrayList.get(i).getArma();
+                int valorImagen = armasArrayList.get(i).getRecursoImagen();
                 ivArmaVP.setImageResource(valorImagen);
             }
         }

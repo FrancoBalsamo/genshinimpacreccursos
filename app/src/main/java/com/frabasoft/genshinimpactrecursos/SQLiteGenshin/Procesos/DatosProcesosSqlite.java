@@ -1,23 +1,16 @@
 package com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Environment;
 import android.os.FileUtils;
-import android.service.voice.VoiceInteractionSession;
-import android.text.Editable;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-
-import com.frabasoft.genshinimpactrecursos.Actividades.VistaPrevia;
 import com.frabasoft.genshinimpactrecursos.Clases.Armas.Armas;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
@@ -32,21 +25,15 @@ import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.FlorTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.PlumaTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.RelojTablaSqlite;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -477,8 +464,10 @@ public class DatosProcesosSqlite implements Serializable {
     /////////////////////////////////////////////////////////////////////////Arma SAVE DATA SQLITE
     private ContentValues mapeoArma(Armas armas){
         ContentValues contentValues = new ContentValues();
+        contentValues.put(ArmasTablaSqlite.ID_ARMA, armas.getId());
         contentValues.put(ArmasTablaSqlite.NOMBRE_PERSONAJE, armas.getPersonaje());
-        contentValues.put(ArmasTablaSqlite.ARMA_NOMBRE, armas.getArma());
+        contentValues.put(ArmasTablaSqlite.ARMA_NOMBRE, armas.getNombreArma());
+        contentValues.put(ArmasTablaSqlite.RECURSO_IMAGEN, armas.getRecursoImagen());
         return contentValues;
     }
 
@@ -491,8 +480,10 @@ public class DatosProcesosSqlite implements Serializable {
     public void actualizarArma(Armas armas, String nombrePJ){
         this.abrirDBEsccribir();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(ArmasTablaSqlite.ID_ARMA, armas.getId());
         contentValues.put(ArmasTablaSqlite.NOMBRE_PERSONAJE, armas.getPersonaje());
-        contentValues.put(ArmasTablaSqlite.ARMA_NOMBRE, armas.getArma());
+        contentValues.put(ArmasTablaSqlite.ARMA_NOMBRE, armas.getNombreArma());
+        contentValues.put(ArmasTablaSqlite.RECURSO_IMAGEN, armas.getRecursoImagen());
         String[] idValor = {String.valueOf(nombrePJ)};
         sqLiteDatabase.update(ArmasTablaSqlite.TABLA_ARMA, contentValues, ArmasTablaSqlite.NOMBRE_PERSONAJE + " = ? ", idValor);
         sqLiteDatabase.close();
@@ -507,14 +498,12 @@ public class DatosProcesosSqlite implements Serializable {
             cursor.close();
             guardarArma(armas);
             copiarArchivo(guardar + "Corona " + guardarA + personaje);
-            Toast.makeText(actividad, "¡Se ha guardado el arma de " + personaje + "!", Toast.LENGTH_SHORT).show();
             return false;
         }else{
             if(cursor.moveToFirst()){
                 String pj = cursor.getString(cursor.getColumnIndex(ArmasTablaSqlite.NOMBRE_PERSONAJE));
                 actualizarArma(armas, pj);
                 copiarArchivo(actualizar + "Corona " + actualizarA + personaje);
-                Toast.makeText(actividad, "¡Se ha actualizado el arma de: " + personaje + "!", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -527,7 +516,8 @@ public class DatosProcesosSqlite implements Serializable {
         this.abrirDBLeer();
         String[] campos = new String[]{ArmasTablaSqlite.ID_ARMA,
                 ArmasTablaSqlite.NOMBRE_PERSONAJE,
-                ArmasTablaSqlite.NOMBRE_PERSONAJE
+                ArmasTablaSqlite.ARMA_NOMBRE,
+                ArmasTablaSqlite.RECURSO_IMAGEN
                 };
         String where = ArmasTablaSqlite.NOMBRE_PERSONAJE + " IN ('" + nombrePJ + "');";
         Cursor c = sqLiteDatabase.query(ArmasTablaSqlite.TABLA_ARMA, campos, where, null, null, null, null);
@@ -536,7 +526,8 @@ public class DatosProcesosSqlite implements Serializable {
                 Armas armas = new Armas();
                 armas.setId(c.getInt(0));
                 armas.setPersonaje(c.getString(1));
-                armas.setArma(c.getInt(2));
+                armas.setNombreArma(c.getString(2));
+                armas.setRecursoImagen(c.getInt(3));
                 list.add(armas);
             }
         } finally { c.close(); }

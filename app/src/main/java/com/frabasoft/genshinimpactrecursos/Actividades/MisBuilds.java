@@ -100,6 +100,7 @@ public class MisBuilds extends AppCompatActivity {
             "Quartz", "Segadora de la Lluvia", "Sombra Blanca", "Sombra férrea"
     };
 
+    private ArrayList<Armas> armasArrayList;
     private String datoImagenarma = "";
 
     private DecimalFormat df;
@@ -117,6 +118,7 @@ public class MisBuilds extends AppCompatActivity {
     private ArrayList<Corona> coronaArrayList;
     private ImageView ivArmas;
     private ScrollView scrollView;
+    int position;
 
     AdView publicidad;
 
@@ -128,6 +130,8 @@ public class MisBuilds extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mis_builds);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
 
         ejecutar();
 
@@ -201,6 +205,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.albedobuilds);
                     cargarEspadas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -209,6 +214,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.amberbuilds);
                     cargarArcos();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -217,6 +223,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.barbarabuilds);
                     cargarCatalizadores();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -225,6 +232,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.beidoubuilds);
                     cargarMandobles();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -233,6 +241,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.bennetbuilds);
                     cargarEspadas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -241,6 +250,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.chongyunbuilds);
                     cargarMandobles();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -249,6 +259,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.dilucbuilds);
                     cargarMandobles();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -257,6 +268,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.dionabuilds);
                     cargarArcos();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -265,6 +277,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.fischlbuilds);
                     cargarArcos();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -273,6 +286,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.ganyubuilds);
                     cargarArcos();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -281,6 +295,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.hutaobuilds);
                     cargarLanzas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -289,6 +304,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.jeanbuilds);
                     cargarEspadas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -297,6 +313,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.kaeyabuilds);
                     cargarEspadas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -305,6 +322,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.keqingbuilds);
                     cargarEspadas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -313,6 +331,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.kleebuilds);
                     cargarCatalizadores();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -321,6 +340,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.lisabuilds);
                     cargarCatalizadores();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -329,6 +349,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.monabuilds);
                     cargarCatalizadores();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -337,6 +358,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.ningguangbuilds);
                     cargarCatalizadores();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -345,6 +367,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.noellebuilds);
                     cargarMandobles();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -353,6 +376,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.qiqibuilds);
                     cargarEspadas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -361,6 +385,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.razorbuilds);
                     cargarMandobles();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -369,6 +394,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.rosariabuilds);
                     cargarLanzas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -377,6 +403,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.sacarosabuilds);
                     cargarCatalizadores();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -385,6 +412,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.tartagliabuilds);
                     cargarArcos();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -393,6 +421,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.ventibuilds);
                     cargarArcos();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -401,6 +430,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xianlingbuilds);
                     cargarLanzas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -409,6 +439,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xiaobuilds);
                     cargarLanzas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -417,6 +448,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xingqiubuilds);
                     cargarEspadas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -425,6 +457,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xinyanbuilds);
                     cargarMandobles();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -433,6 +466,7 @@ public class MisBuilds extends AppCompatActivity {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.zhonglibuilds);
                     cargarLanzas();
+                    traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -892,6 +926,20 @@ public class MisBuilds extends AppCompatActivity {
         });
     }
 
+    private void traerArmaGuardada(){
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        armasArrayList = datosProcesosSqlite.mostrarDatosDelPjArma(spPJMisBuilds.getSelectedItem().toString());
+        if(armasArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < armasArrayList.size(); i++){
+                spinnerArmas.setSelection(armasArrayList.get(i).getId());
+                ivArmas.setImageResource(armasArrayList.get(i).getRecursoImagen());
+                Log.d("ARRAYIV", "onItemSelected: "+ armasArrayList.get(i).getNombreArma());
+            }
+        }
+    }
+
     private void limpiarET() {
         //limpiar flor
         etFlorPrin.setText("");
@@ -1027,71 +1075,71 @@ public class MisBuilds extends AppCompatActivity {
                 if(position == 0){
                     ivArmas.setImageResource(R.drawable.wallpaper);
                 }else if(position == 1){
-                    ivArmas.setImageResource(R.drawable.agata_del_penasco_oscuro);
-                    guardarArma(R.drawable.agata_del_penasco_oscuro);
-                }else if(position == 2){
                     ivArmas.setImageResource(R.drawable.amber_catalyst);
                     guardarArma(R.drawable.amber_catalyst);
-                }else if(position == 3){
+                }else if(position == 2){
                     ivArmas.setImageResource(R.drawable.apuntes_del_aprendiz);
                     guardarArma(R.drawable.apuntes_del_aprendiz);
-                }else if(position == 4){
+                }else if(position == 3){
                     ivArmas.setImageResource(R.drawable.candado_terrenal);
                     guardarArma(R.drawable.candado_terrenal);
-                }else if(position == 5){
+                }else if(position == 4){
                     ivArmas.setImageResource(R.drawable.carta_nautica);
                     guardarArma(R.drawable.carta_nautica);
+                }else if(position == 5){
+                    ivArmas.setImageResource(R.drawable.cuentos_de_cazadores_de_dragones);
+                    guardarArma(R.drawable.cuentos_de_cazadores_de_dragones);
                 }else if(position == 6){
                     ivArmas.setImageResource(R.drawable.codice_de_favonius);
                     guardarArma(R.drawable.codice_de_favonius);
                 }else if(position == 7){
-                    ivArmas.setImageResource(R.drawable.cuentos_de_cazadores_de_dragones);
-                    guardarArma(R.drawable.cuentos_de_cazadores_de_dragones);
-                }else if(position == 8){
                     ivArmas.setImageResource(R.drawable.frio_eterno);
                     guardarArma(R.drawable.frio_eterno);
+                }else if(position == 8){
+                    ivArmas.setImageResource(R.drawable.grimorio_real);
+                    guardarArma(R.drawable.grimorio_real);
                 }else if(position == 9){
                     ivArmas.setImageResource(R.drawable.grimorio_de_bolsillo);
                     guardarArma(R.drawable.grimorio_de_bolsillo);
                 }else if(position == 10){
-                    ivArmas.setImageResource(R.drawable.grimorio_real);
-                    guardarArma(R.drawable.grimorio_real);
-                }else if(position == 11){
                     ivArmas.setImageResource(R.drawable.guia_magica);
                     guardarArma(R.drawable.guia_magica);
-                }else if(position == 12){
+                }else if(position == 11){
                     ivArmas.setImageResource(R.drawable.historias_de_otros_mundos);
                     guardarArma(R.drawable.historias_de_otros_mundos);
-                }else if(position == 13){
+                }else if(position == 12){
                     ivArmas.setImageResource(R.drawable.memorias_de_sacrificios);
                     guardarArma(R.drawable.memorias_de_sacrificios);
-                }else if(position == 14){
+                }else if(position == 13){
                     ivArmas.setImageResource(R.drawable.nefrita_gemela);
                     guardarArma(R.drawable.nefrita_gemela);
-                }else if(position == 15){
+                }else if(position == 14){
                     ivArmas.setImageResource(R.drawable.ojo_de_la_perspicacia);
                     guardarArma(R.drawable.ojo_de_la_perspicacia);
-                }else if(position == 16){
+                }else if(position == 15){
                     ivArmas.setImageResource(R.drawable.oracion_perdida_a_los_vientos_sagrados);
                     guardarArma(R.drawable.oracion_perdida_a_los_vientos_sagrados);
-                }else if(position == 17){
+                }else if(position == 16){
                     ivArmas.setImageResource(R.drawable.orbe_esmeralda);
                     guardarArma(R.drawable.orbe_esmeralda);
-                }else if(position == 18){
+                }else if(position == 17){
                     ivArmas.setImageResource(R.drawable.pergamino_celestial);
                     guardarArma(R.drawable.pergamino_celestial);
-                }else if(position == 19){
+                }else if(position == 18){
                     ivArmas.setImageResource(R.drawable.perla_solar);
                     guardarArma(R.drawable.perla_solar);
-                }else if(position == 20){
+                }else if(position == 19){
                     ivArmas.setImageResource(R.drawable.prototipo_ambar);
                     guardarArma(R.drawable.prototipo_ambar);
-                }else if(position == 21){
+                }else if(position == 20){
                     ivArmas.setImageResource(R.drawable.sinfonia_de_los_merodeadores);
                     guardarArma(R.drawable.sinfonia_de_los_merodeadores);
-                }else if(position == 22){
+                }else if(position == 21){
                     ivArmas.setImageResource(R.drawable.vino_y_poesia);
                     guardarArma(R.drawable.vino_y_poesia);
+                }else if(position == 22){
+                    ivArmas.setImageResource(R.drawable.agata_del_penasco_oscuro);
+                    guardarArma(R.drawable.agata_del_penasco_oscuro);
                 }
             }
 
@@ -1120,38 +1168,38 @@ public class MisBuilds extends AppCompatActivity {
                     ivArmas.setImageResource(R.drawable.destello_en_la_oscuridad);
                     guardarArma(R.drawable.destello_en_la_oscuridad);
                 }else if(position == 5){
-                    ivArmas.setImageResource(R.drawable.espada_de_favonius);
-                    guardarArma(R.drawable.espada_de_favonius);
-                }else if(position == 6){
-                    ivArmas.setImageResource(R.drawable.espada_de_hierro_oscuro);
-                    guardarArma(R.drawable.espada_de_hierro_oscuro);
-                }else if(position == 7){
-                    ivArmas.setImageResource(R.drawable.espada_de_sacrificio);
-                    guardarArma(R.drawable.espada_de_sacrificio);
-                }else if(position == 8){
-                    ivArmas.setImageResource(R.drawable.espada_del_alba);
-                    guardarArma(R.drawable.espada_del_alba);
-                }else if(position == 9){
-                    ivArmas.setImageResource(R.drawable.espada_del_descenso);
-                    guardarArma(R.drawable.espada_del_descenso);
-                }else if(position == 10){
-                    ivArmas.setImageResource(R.drawable.espada_del_viajero);
-                    guardarArma(R.drawable.espada_del_viajero);
-                }else if(position == 11){
                     ivArmas.setImageResource(R.drawable.espada_larga_del_penasco_oscuro);
                     guardarArma(R.drawable.espada_larga_del_penasco_oscuro);
-                }else if(position == 12){
+                }else if(position == 6){
                     ivArmas.setImageResource(R.drawable.espada_negra);
                     guardarArma(R.drawable.espada_negra);
-                }else if(position == 13){
+                }else if(position == 7){
                     ivArmas.setImageResource(R.drawable.espada_plateada);
                     guardarArma(R.drawable.espada_plateada);
-                }else if(position == 14){
+                }else if(position == 8){
                     ivArmas.setImageResource(R.drawable.espada_real_larga);
                     guardarArma(R.drawable.espada_real_larga);
-                }else if(position == 15){
+                }else if(position == 9){
                     ivArmas.setImageResource(R.drawable.espada_surcacielos);
                     guardarArma(R.drawable.espada_surcacielos);
+                }else if(position == 10){
+                    ivArmas.setImageResource(R.drawable.espada_de_favonius);
+                    guardarArma(R.drawable.espada_de_favonius);
+                }else if(position == 11){
+                    ivArmas.setImageResource(R.drawable.espada_de_hierro_oscuro);
+                    guardarArma(R.drawable.espada_de_hierro_oscuro);
+                }else if(position == 12){
+                    ivArmas.setImageResource(R.drawable.espada_de_sacrificio);
+                    guardarArma(R.drawable.espada_de_sacrificio);
+                }else if(position == 13){
+                    ivArmas.setImageResource(R.drawable.espada_del_alba);
+                    guardarArma(R.drawable.espada_del_alba);
+                }else if(position == 14){
+                    ivArmas.setImageResource(R.drawable.espada_del_descenso);
+                    guardarArma(R.drawable.espada_del_descenso);
+                }else if(position == 15){
+                    ivArmas.setImageResource(R.drawable.espada_del_viajero);
+                    guardarArma(R.drawable.espada_del_viajero);
                 }else if(position == 16){
                     ivArmas.setImageResource(R.drawable.espina_de_hierro);
                     guardarArma(R.drawable.espina_de_hierro);
@@ -1162,14 +1210,14 @@ public class MisBuilds extends AppCompatActivity {
                     ivArmas.setImageResource(R.drawable.hoja_afilada_celestial);
                     guardarArma(R.drawable.hoja_afilada_celestial);
                 }else if(position == 19){
-                    ivArmas.setImageResource(R.drawable.hoja_de_filetear);
-                    guardarArma(R.drawable.hoja_de_filetear);
-                }else if(position == 20){
                     ivArmas.setImageResource(R.drawable.hoja_desafilada);
                     guardarArma(R.drawable.hoja_desafilada);
-                }else if(position == 21){
+                }else if(position == 20){
                     ivArmas.setImageResource(R.drawable.hoja_fria);
                     guardarArma(R.drawable.hoja_fria);
+                }else if(position == 21){
+                    ivArmas.setImageResource(R.drawable.hoja_de_filetear);
+                    guardarArma(R.drawable.hoja_de_filetear);
                 }else if(position == 22){
                     ivArmas.setImageResource(R.drawable.prototipo_rencor);
                     guardarArma(R.drawable.prototipo_rencor);
@@ -1198,41 +1246,41 @@ public class MisBuilds extends AppCompatActivity {
                     ivArmas.setImageResource(R.drawable.alabarda);
                     guardarArma(R.drawable.alabarda);
                 }else if(position == 2){
-                    ivArmas.setImageResource(R.drawable.baculo_de_homa);
-                    guardarArma(R.drawable.baculo_de_homa);
-                }else if(position == 3){
                     ivArmas.setImageResource(R.drawable.borla_blanca);
                     guardarArma(R.drawable.borla_blanca);
-                }else if(position == 4){
+                }else if(position == 3){
                     ivArmas.setImageResource(R.drawable.borla_begra);
                     guardarArma(R.drawable.borla_begra);
+                }else if(position == 4){
+                    ivArmas.setImageResource(R.drawable.baculo_de_homa);
+                    guardarArma(R.drawable.baculo_de_homa);
                 }else if(position == 5){
                     ivArmas.setImageResource(R.drawable.halcon_de_jade);
                     guardarArma(R.drawable.halcon_de_jade);
                 }else if(position == 6){
-                    ivArmas.setImageResource(R.drawable.lanza_de_caza_real);
-                    guardarArma(R.drawable.lanza_de_caza_real);
-                }else if(position == 7){
-                    ivArmas.setImageResource(R.drawable.lanza_de_espinadragon);
-                    guardarArma(R.drawable.lanza_de_espinadragon);
-                }else if(position == 8){
-                    ivArmas.setImageResource(R.drawable.lanza_de_favonius);
-                    guardarArma(R.drawable.lanza_de_favonius);
-                }else if(position == 9){
-                    ivArmas.setImageResource(R.drawable.lanza_del_fuelo);
-                    guardarArma(R.drawable.lanza_del_fuelo);
-                }else if(position == 10){
-                    ivArmas.setImageResource(R.drawable.lanza_del_penasco_oscuro);
-                    guardarArma(R.drawable.lanza_del_penasco_oscuro);
-                }else if(position == 11){
-                    ivArmas.setImageResource(R.drawable.lanza_del_principiante);
-                    guardarArma(R.drawable.lanza_del_principiante);
-                }else if(position == 12){
                     ivArmas.setImageResource(R.drawable.lanza_litica);
                     guardarArma(R.drawable.lanza_litica);
-                }else if(position == 13){
+                }else if(position == 7){
                     ivArmas.setImageResource(R.drawable.lanza_perforanubes);
                     guardarArma(R.drawable.lanza_perforanubes);
+                }else if(position == 8){
+                    ivArmas.setImageResource(R.drawable.lanza_de_caza_real);
+                    guardarArma(R.drawable.lanza_de_caza_real);
+                }else if(position == 9){
+                    ivArmas.setImageResource(R.drawable.lanza_de_espinadragon);
+                    guardarArma(R.drawable.lanza_de_espinadragon);
+                }else if(position == 10){
+                    ivArmas.setImageResource(R.drawable.lanza_de_favonius);
+                    guardarArma(R.drawable.lanza_de_favonius);
+                }else if(position == 11){
+                    ivArmas.setImageResource(R.drawable.lanza_del_fuelo);
+                    guardarArma(R.drawable.lanza_del_fuelo);
+                }else if(position == 12){
+                    ivArmas.setImageResource(R.drawable.lanza_del_penasco_oscuro);
+                    guardarArma(R.drawable.lanza_del_penasco_oscuro);
+                }else if(position == 13){
+                    ivArmas.setImageResource(R.drawable.lanza_del_principiante);
+                    guardarArma(R.drawable.lanza_del_principiante);
                 }else if(position == 14){
                     ivArmas.setImageResource(R.drawable.perdicion_del_dragon);
                     guardarArma(R.drawable.perdicion_del_dragon);
@@ -1243,11 +1291,11 @@ public class MisBuilds extends AppCompatActivity {
                     ivArmas.setImageResource(R.drawable.prototipo_estelar);
                     guardarArma(R.drawable.prototipo_estelar);
                 }else if(position == 17){
-                    ivArmas.setImageResource(R.drawable.pua_celestial);
-                    guardarArma(R.drawable.pua_celestial);
-                }else if(position == 18){
                     ivArmas.setImageResource(R.drawable.punta_de_hierro);
                     guardarArma(R.drawable.punta_de_hierro);
+                }else if(position == 18){
+                    ivArmas.setImageResource(R.drawable.pua_celestial);
+                    guardarArma(R.drawable.pua_celestial);
                 }
             }
 
@@ -1267,41 +1315,41 @@ public class MisBuilds extends AppCompatActivity {
                     ivArmas.setImageResource(R.drawable.argento_estelar_de_las_nieves);
                     guardarArma(R.drawable.argento_estelar_de_las_nieves);
                 }else if(position == 2){
-                    ivArmas.setImageResource(R.drawable.espada_de_hierro_blanco);
-                    guardarArma(R.drawable.espada_de_hierro_blanco);
-                }else if(position == 3){
-                    ivArmas.setImageResource(R.drawable.espada_de_la_desidia);
-                    guardarArma(R.drawable.espada_de_la_desidia);
-                }else if(position == 4){
-                    ivArmas.setImageResource(R.drawable.espada_del_mercenario);
-                    guardarArma(R.drawable.espada_del_mercenario);
-                }else if(position == 5){
-                    ivArmas.setImageResource(R.drawable.espada_del_tiempo);
-                    guardarArma(R.drawable.espada_del_tiempo);
-                }else if(position == 6){
                     ivArmas.setImageResource(R.drawable.espada_litica);
                     guardarArma(R.drawable.espada_litica);
+                }else if(position == 3){
+                    ivArmas.setImageResource(R.drawable.espada_de_hierro_blanco);
+                    guardarArma(R.drawable.espada_de_hierro_blanco);
+                }else if(position == 4){
+                    ivArmas.setImageResource(R.drawable.espada_de_la_desidia);
+                    guardarArma(R.drawable.espada_de_la_desidia);
+                }else if(position == 5){
+                    ivArmas.setImageResource(R.drawable.espada_del_mercenario);
+                    guardarArma(R.drawable.espada_del_mercenario);
+                }else if(position == 6){
+                    ivArmas.setImageResource(R.drawable.espada_del_tiempo);
+                    guardarArma(R.drawable.espada_del_tiempo);
                 }else if(position == 7){
-                    ivArmas.setImageResource(R.drawable.fran_espada_real);
-                    guardarArma(R.drawable.fran_espada_real);
-                }else if(position == 8){
                     ivArmas.setImageResource(R.drawable.garrote_del_debate);
                     guardarArma(R.drawable.garrote_del_debate);
+                }else if(position == 8){
+                    ivArmas.setImageResource(R.drawable.fran_espada_real);
+                    guardarArma(R.drawable.fran_espada_real);
                 }else if(position == 9){
-                    ivArmas.setImageResource(R.drawable.gran_espada_de_sacrificio);
-                    guardarArma(R.drawable.gran_espada_de_sacrificio);
-                }else if(position == 10){
-                    ivArmas.setImageResource(R.drawable.gran_espada_defavonius);
-                    guardarArma(R.drawable.gran_espada_defavonius);
-                }else if(position == 11){
-                    ivArmas.setImageResource(R.drawable.gran_espada_del_guerrero);
-                    guardarArma(R.drawable.gran_espada_del_guerrero);
-                }else if(position == 12){
                     ivArmas.setImageResource(R.drawable.gran_espada_sangrienta);
                     guardarArma(R.drawable.gran_espada_sangrienta);
-                }else if(position == 13){
+                }else if(position == 10){
                     ivArmas.setImageResource(R.drawable.gran_espada_surcacielos);
                     guardarArma(R.drawable.gran_espada_surcacielos);
+                }else if(position == 11){
+                    ivArmas.setImageResource(R.drawable.gran_espada_defavonius);
+                    guardarArma(R.drawable.gran_espada_defavonius);
+                }else if(position == 12){
+                    ivArmas.setImageResource(R.drawable.gran_espada_de_sacrificio);
+                    guardarArma(R.drawable.gran_espada_de_sacrificio);
+                }else if(position == 13){
+                    ivArmas.setImageResource(R.drawable.gran_espada_del_guerrero);
+                    guardarArma(R.drawable.gran_espada_del_guerrero);
                 }else if(position == 14){
                     ivArmas.setImageResource(R.drawable.gran_hoja_del_penasco_oscuro);
                     guardarArma(R.drawable.gran_hoja_del_penasco_oscuro);
@@ -1380,8 +1428,10 @@ public class MisBuilds extends AppCompatActivity {
     private void guardarArma(int res){
         DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
         Armas armas = new Armas();
+        armas.setId(spinnerArmas.getSelectedItemPosition());
         armas.setPersonaje(spPJMisBuilds.getSelectedItem().toString());
-        armas.setArma(res);
+        armas.setNombreArma(spinnerArmas.getSelectedItem().toString());
+        armas.setRecursoImagen(res);
         datosProcesosSqlite.validarUInsertUpdateArma(this, spPJMisBuilds.getSelectedItem().toString(), armas);
     }
 }

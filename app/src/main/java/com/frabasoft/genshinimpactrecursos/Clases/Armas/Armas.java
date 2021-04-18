@@ -3,7 +3,8 @@ package com.frabasoft.genshinimpactrecursos.Clases.Armas;
 public class Armas {
     private int id;
     private String personaje;
-    private int arma;
+    private String nombreArma;
+    private int recursoImagen;
 
     public int getId() {
         return id;
@@ -21,18 +22,27 @@ public class Armas {
         this.personaje = personaje;
     }
 
-    public int getArma() {
-        return arma;
+    public String getNombreArma() {
+        return nombreArma;
     }
 
-    public void setArma(int arma) {
-        this.arma = arma;
+    public void setNombreArma(String nombreArma) {
+        this.nombreArma = nombreArma;
+    }
+
+    public int getRecursoImagen() {
+        return recursoImagen;
+    }
+
+    public void setRecursoImagen(int recursoImagen) {
+        this.recursoImagen = recursoImagen;
     }
 
     public Armas(){}
 
-    public Armas(String personaje, int arma) {
+    public Armas(String personaje, String nombreArma, int recursoImagen) {
         this.personaje = personaje;
-        this.arma = arma;
+        this.nombreArma = nombreArma;
+        this.recursoImagen = recursoImagen;
     }
 }
