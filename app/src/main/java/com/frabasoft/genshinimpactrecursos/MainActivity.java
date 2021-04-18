@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.os.Environment;
 import android.os.FileUtils;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -62,12 +65,18 @@ public class MainActivity extends AppCompatActivity {
     private static final String AD_UNIT_ID = "ca-app-pub-4467142756516555/7442029029";
     private InterstitialAd interstitialAd;
 
+    //para los soniditos
+    private MediaPlayer entrar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        entrar = MediaPlayer.create(getApplicationContext(), R.raw.entrar);
+
+        anuncio();
         crearDirectorio();
         loadAd();
 
@@ -85,10 +94,22 @@ public class MainActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         publicidad.loadAd(adRequest);
 
-        instagram.setOnClickListener(v -> instagramActividad(MainActivity.this));
-        builds.setOnClickListener(v -> buildActivity());
-        misBuilds.setOnClickListener(v -> misBuildsActivity());
-        artefactos.setOnClickListener(v -> artefactosActivity());
+        instagram.setOnClickListener(v -> {
+            entrar.start();
+            instagramActividad(MainActivity.this);
+        });
+        builds.setOnClickListener(v -> {
+            entrar.start();
+            buildActivity();
+        });
+        misBuilds.setOnClickListener(v -> {
+            entrar.start();
+            misBuildsActivity();
+        });
+        artefactos.setOnClickListener(v -> {
+            entrar.start();
+            artefactosActivity();
+        });
         hacerBKP.setOnClickListener(v -> importarBKP());
     }
 
@@ -291,5 +312,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void anuncio(){
+        LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+        AlertDialog anuncio = new AlertDialog.Builder(this).create();
+        final View view = layoutInflater.inflate(R.layout.alerta_inicio_app, null);
+        final Button cerrar = view.findViewById(R.id.cerrarAnuncio);
+        cerrar.setOnClickListener(v -> anuncio.dismiss());
+        anuncio.setView(view);
+        anuncio.show();
     }
 }

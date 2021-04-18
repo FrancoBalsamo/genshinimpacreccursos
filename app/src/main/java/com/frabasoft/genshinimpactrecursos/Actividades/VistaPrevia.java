@@ -7,16 +7,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frabasoft.genshinimpactrecursos.Clases.Armas.Armas;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
@@ -44,12 +47,14 @@ public class VistaPrevia extends AppCompatActivity {
     private ArrayList<Reloj> relojArrayList;
     private ArrayList<Copa> copaArrayList;
     private ArrayList<Corona> coronaArrayList;
+    private ArrayList<Armas> armasArrayList;
 
     private TextView tvf, tvFl, tvFlo, tvFlor, tvFore;
     private TextView P, Pl, Plu, Plum, Pluma;
     private TextView RR, Re, Rel, Relo, Reloj;
     private TextView C, Co, Cop, Copa, Copas;
     private TextView tvC, tvCo, tvCor, tvCoro, tvCoron;
+    private ImageView ivArmaVP;
 
     private String nombrePersonaje = "";
 
@@ -66,11 +71,16 @@ public class VistaPrevia extends AppCompatActivity {
     private static final String AD_UNIT_ID = "ca-app-pub-4467142756516555/7442029029";
     private InterstitialAd interstitialAd;
 
+    //para los soniditos
+    private MediaPlayer salir;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_previa);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        salir = MediaPlayer.create(getApplicationContext(), R.raw.salir);
 
         ejecutar();
 
@@ -110,6 +120,8 @@ public class VistaPrevia extends AppCompatActivity {
         tvCor = (TextView)findViewById(R.id.tvCor);
         tvCoro = (TextView)findViewById(R.id.tvCoro);
         tvCoron = (TextView)findViewById(R.id.tvCoron);
+
+        ivArmaVP = (ImageView)findViewById(R.id.ivArmaVP);
 
         CargarDatosSQLite(nombrePersonaje);
         backgroundPJ(nombrePersonaje);
@@ -211,6 +223,16 @@ public class VistaPrevia extends AppCompatActivity {
                 tvCor.setText(coronaArrayList.get(i).getSecundarioB());
                 tvCoro.setText(coronaArrayList.get(i).getSecundarioC());
                 tvCoron.setText(coronaArrayList.get(i).getSecundarioD());
+            }
+        }
+        //arma
+        armasArrayList = datosProcesosSqlite.mostrarDatosDelPjArma(personaje);
+        for(int i = 0; i < armasArrayList.size(); i++){
+            if(armasArrayList.get(i).getArma() == 0) {
+                Toast.makeText(this, "¡No has guardado ningún arma!", Toast.LENGTH_SHORT).show();
+            }else{
+                int valorImagen = armasArrayList.get(i).getArma();
+                ivArmaVP.setImageResource(valorImagen);
             }
         }
     }
@@ -390,6 +412,7 @@ public class VistaPrevia extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         VistaPrevia.this.finish();
+        salir.start();
     }
 
     private void agregarLineasFicheroTXT(String vistaPrevia, String pj) throws IOException {

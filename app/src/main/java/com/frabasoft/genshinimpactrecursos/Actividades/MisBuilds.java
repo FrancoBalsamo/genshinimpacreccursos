@@ -7,6 +7,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,9 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.frabasoft.genshinimpactrecursos.Clases.Armas.Armas;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
@@ -57,12 +60,44 @@ public class MisBuilds extends AppCompatActivity {
             "Xinyan", "Zhongli"};
 
     private String[] arcosStringArray = {
-            "Seleccione",
+            "Selecciona un arco",
             "Alas Celestiales", "Arco Compuesto", "Arco Real", "Arco Recurvo", "Arco de Amos",
             "Arco de Cuervo", "Arco de Favonius", "Arco de la Cazadora Esmeralda", "Arco del Cazador", "Arco del Cazador Estacional",
             "Arco del Peñasco Oscuro", "Arco del Sacrificio", "Cazador del Callejón", "Ebony Bow", "Elegia del Fin",
             "Herrumbre", "Juramento del Arquero", "Mensajero", "Oda a las Flores de Viento", "Prototipo Luz de Luna",
             "Tirachinas", "Ultimo Acorde"
+    };
+
+    private String[] catalizadorStringArray = {
+            "Selecciona un catalizador",
+            "Amber Catalyst", "Apuntes del Aprendiz", "Candado Terrenal", "Carta Náutica", "Cuentos de Cazadores de Dragones",
+            "Códice de Favonius", "Frío Eterno", "Grimorio Real", "Grimorio de Bolsillo", "Guía Mágica",
+            "Historias de Otros Mundos", "Memorias de Sacrificios", "Nefrita Gemela", "Ojo de la Perspicacia", "Oración Perdida a los Vientos",
+            "Orbe Esmeralda", "Pergamino Celestial", "Perla Solar", "Prototipo Ámbar", "Sinfonía de los Merodeadores",
+            "Vino y Poesía", "Ágata del Peñasco Oscuro"
+    };
+
+    private String[] espadaStringArray = {
+            "Selecciona una espada",
+            "Aquila Favonia", "Cortador de Jade Primordial", "Deseo Ponzoñoso", "Destello en la Oscuridad", "Espada Larga del Peñasco Oscuro", "Espada Negra",
+            "Espada Plateada", "Espada Real Larga", "Espada Surcacielos", "Espada de Favonius", "Espada de Hierro Oscuro", "Espada de Sacrificio",
+            "Espada del Alba", "Espada del Descenso", "Espada del Viajero", "Espina de Hierro", "Flauta", "Hoja Afilada Celestial",
+            "Hoja Desafilada", "Hoja Fría", "Hoja de Filetear", "Prototipo Rencor", "Rompemontañas", "Rugido del León"
+    };
+
+    private String[] lanzaStringArray = {
+            "Selecciona una lanza",
+            "Alabarda", "Borla Blanca", "Borla Negra", "Báculo de Homa", "Halcón de Jade", "Lanza Lítica",
+            "Lanza Perforanubes", "Lanza de Caza Real", "Lanza de Espinadragón", "Lanza de Favonius", "Lanza del Duelo", "Lanza del Peñasco Oscuro",
+            "Lanza del Principiante", "Perdición del Dragón", "Pica Luna Creciente", "Prototipo Estelar", "Punta de Hierro", "Púa Celestial"
+    };
+
+    private String[] mandobleStringArray = {
+            "Selecciona un mandoble",
+            "Argento Estelar de las Nieves", "Espada Lítica", "Espada de Hierro Blanco", "Espada de la Desidia", "Espada del Mercenario", "Espada del Tiempo",
+            "Garrote del Debate", "Gran Espada Real", "Gran Espada Sangrienta", "Gran Espada Surcacielos", "Gran Espada de Favonius", "Gran Espada de Sacrificio",
+            "Gran Espada del Guerrero", "Gran Hoja del Peñasco Oscuro", "Lápida del Lobo", "Médula de la Serpiente Marina", "Orgullo Celestial", "Prototipo Arcaico",
+            "Quartz", "Segadora de la Lluvia", "Sombra Blanca", "Sombra férrea"
     };
 
     private String datoImagenarma = "";
@@ -81,8 +116,12 @@ public class MisBuilds extends AppCompatActivity {
     private ArrayList<Copa> copaArrayList;
     private ArrayList<Corona> coronaArrayList;
     private ImageView ivArmas;
+    private ScrollView scrollView;
 
     AdView publicidad;
+
+    //para los soniditos
+    private MediaPlayer entrar, salir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +130,9 @@ public class MisBuilds extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         ejecutar();
+
+        entrar = MediaPlayer.create(getApplicationContext(), R.raw.entrar);
+        salir = MediaPlayer.create(getApplicationContext(), R.raw.salir);
 
         MobileAds.initialize(MisBuilds.this, new OnInitializationCompleteListener() {
             @Override
@@ -142,12 +184,12 @@ public class MisBuilds extends AppCompatActivity {
         guardarTodo = (Button) findViewById(R.id.guardarTodo);
         vistaPrevia = (Button) findViewById(R.id.vistaprevia);
         ivArmas = (ImageView)findViewById(R.id.ivArmas);
+        scrollView = (ScrollView)findViewById(R.id.scroll);
 
         df = new DecimalFormat("#.##");
 
         spPJMisBuilds.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, personajesString));
         spPJMisBuilds.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
@@ -158,6 +200,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 1) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.albedobuilds);
+                    cargarEspadas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -173,6 +216,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 3) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.barbarabuilds);
+                    cargarCatalizadores();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -180,6 +224,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 4) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.beidoubuilds);
+                    cargarMandobles();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -187,6 +232,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 5) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.bennetbuilds);
+                    cargarEspadas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -194,6 +240,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 6) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.chongyunbuilds);
+                    cargarMandobles();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -201,6 +248,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 7) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.dilucbuilds);
+                    cargarMandobles();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -232,6 +280,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 11) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.hutaobuilds);
+                    cargarLanzas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -239,6 +288,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 12) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.jeanbuilds);
+                    cargarEspadas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -246,6 +296,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 13) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.kaeyabuilds);
+                    cargarEspadas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -253,6 +304,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 14) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.keqingbuilds);
+                    cargarEspadas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -260,6 +312,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 15) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.kleebuilds);
+                    cargarCatalizadores();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -267,6 +320,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 16) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.lisabuilds);
+                    cargarCatalizadores();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -274,6 +328,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 17) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.monabuilds);
+                    cargarCatalizadores();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -281,6 +336,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 18) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.ningguangbuilds);
+                    cargarCatalizadores();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -288,6 +344,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 19) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.noellebuilds);
+                    cargarMandobles();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -295,6 +352,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 20) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.qiqibuilds);
+                    cargarEspadas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -302,6 +360,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 21) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.razorbuilds);
+                    cargarMandobles();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -309,6 +368,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 22) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.rosariabuilds);
+                    cargarLanzas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -316,6 +376,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 23) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.sacarosabuilds);
+                    cargarCatalizadores();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -339,6 +400,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 26) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xianlingbuilds);
+                    cargarLanzas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -346,6 +408,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 27) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xiaobuilds);
+                    cargarLanzas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -353,6 +416,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 28) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xingqiubuilds);
+                    cargarEspadas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -360,6 +424,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 29) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.xinyanbuilds);
+                    cargarMandobles();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -367,6 +432,7 @@ public class MisBuilds extends AppCompatActivity {
                 } else if (position == 30) {
                     limpiarET();
                     imgPJMisBuilds.setImageResource(R.drawable.zhonglibuilds);
+                    cargarLanzas();
                     CargarDatosSQLite();
                     GuardarIndividuales();
                     GuardarTodos();
@@ -863,6 +929,7 @@ public class MisBuilds extends AppCompatActivity {
         vistaPrevia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                entrar.start();
                 Intent vista = new Intent(MisBuilds.this, VistaPrevia.class);
                 vista.putExtra("pj", spPJMisBuilds.getSelectedItem().toString());
                 startActivity(vista);
@@ -880,48 +947,388 @@ public class MisBuilds extends AppCompatActivity {
                     ivArmas.setImageResource(R.drawable.wallpaper);
                 }else if(position == 1){
                     ivArmas.setImageResource(R.drawable.alas_celestiales);
+                    guardarArma(R.drawable.alas_celestiales);
                 }else if(position == 2){
                     ivArmas.setImageResource(R.drawable.arco_compuesto);
+                    guardarArma(R.drawable.arco_compuesto);
                 }else if(position == 3){
                     ivArmas.setImageResource(R.drawable.arco_real);
+                    guardarArma(R.drawable.arco_real);
                 }else if(position == 4){
                     ivArmas.setImageResource(R.drawable.arco_recurvo);
+                    guardarArma(R.drawable.arco_recurvo);
                 }else if(position == 5){
                     ivArmas.setImageResource(R.drawable.arco_de_amos);
+                    guardarArma(R.drawable.arco_de_amos);
                 }else if(position == 6){
                     ivArmas.setImageResource(R.drawable.arco_de_cuervo);
+                    guardarArma(R.drawable.arco_de_cuervo);
                 }else if(position == 7){
                     ivArmas.setImageResource(R.drawable.arco_de_favonius);
+                    guardarArma(R.drawable.arco_de_favonius);
                 }else if(position == 8){
                     ivArmas.setImageResource(R.drawable.arco_de_la_cazadora_esmeralda);
+                    guardarArma(R.drawable.arco_de_la_cazadora_esmeralda);
                 }else if(position == 9){
                     ivArmas.setImageResource(R.drawable.arco_del_cazador);
+                    guardarArma(R.drawable.arco_del_cazador);
                 }else if(position == 10){
                     ivArmas.setImageResource(R.drawable.arco_del_cazador_estacional);
+                    guardarArma(R.drawable.arco_del_cazador_estacional);
                 }else if(position == 11){
                     ivArmas.setImageResource(R.drawable.arco_del_penasco_oscuro);
+                    guardarArma(R.drawable.arco_del_penasco_oscuro);
                 }else if(position == 12){
                     ivArmas.setImageResource(R.drawable.arco_del_sacrificio);
+                    guardarArma(R.drawable.arco_del_sacrificio);
                 }else if(position == 13){
                     ivArmas.setImageResource(R.drawable.cazador_del_callejon);
+                    guardarArma(R.drawable.cazador_del_callejon);
                 }else if(position == 14){
                     ivArmas.setImageResource(R.drawable.ebony_bow);
+                    guardarArma(R.drawable.ebony_bow);
                 }else if(position == 15){
                     ivArmas.setImageResource(R.drawable.elegia_del_fin);
+                    guardarArma(R.drawable.elegia_del_fin);
                 }else if(position == 16){
                     ivArmas.setImageResource(R.drawable.herrumbre);
+                    guardarArma(R.drawable.herrumbre);
                 }else if(position == 17){
                     ivArmas.setImageResource(R.drawable.juramento_del_arquero);
+                    guardarArma(R.drawable.juramento_del_arquero);
                 }else if(position == 18){
                     ivArmas.setImageResource(R.drawable.mensajero);
+                    guardarArma(R.drawable.mensajero);
                 }else if(position == 19){
                     ivArmas.setImageResource(R.drawable.oda_a_las_flores_de_viento);
+                    guardarArma(R.drawable.oda_a_las_flores_de_viento);
                 }else if(position == 20){
                     ivArmas.setImageResource(R.drawable.prototipo_luz_de_luna);
+                    guardarArma(R.drawable.prototipo_luz_de_luna);
                 }else if(position == 21){
                     ivArmas.setImageResource(R.drawable.tirachinas);
+                    guardarArma(R.drawable.tirachinas);
                 }else if(position == 22){
                     ivArmas.setImageResource(R.drawable.ultimo_acorde);
+                    guardarArma(R.drawable.ultimo_acorde);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+    }
+
+    private void cargarCatalizadores(){
+        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, catalizadorStringArray));
+        spinnerArmas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){
+                    ivArmas.setImageResource(R.drawable.wallpaper);
+                }else if(position == 1){
+                    ivArmas.setImageResource(R.drawable.agata_del_penasco_oscuro);
+                    guardarArma(R.drawable.agata_del_penasco_oscuro);
+                }else if(position == 2){
+                    ivArmas.setImageResource(R.drawable.amber_catalyst);
+                    guardarArma(R.drawable.amber_catalyst);
+                }else if(position == 3){
+                    ivArmas.setImageResource(R.drawable.apuntes_del_aprendiz);
+                    guardarArma(R.drawable.apuntes_del_aprendiz);
+                }else if(position == 4){
+                    ivArmas.setImageResource(R.drawable.candado_terrenal);
+                    guardarArma(R.drawable.candado_terrenal);
+                }else if(position == 5){
+                    ivArmas.setImageResource(R.drawable.carta_nautica);
+                    guardarArma(R.drawable.carta_nautica);
+                }else if(position == 6){
+                    ivArmas.setImageResource(R.drawable.codice_de_favonius);
+                    guardarArma(R.drawable.codice_de_favonius);
+                }else if(position == 7){
+                    ivArmas.setImageResource(R.drawable.cuentos_de_cazadores_de_dragones);
+                    guardarArma(R.drawable.cuentos_de_cazadores_de_dragones);
+                }else if(position == 8){
+                    ivArmas.setImageResource(R.drawable.frio_eterno);
+                    guardarArma(R.drawable.frio_eterno);
+                }else if(position == 9){
+                    ivArmas.setImageResource(R.drawable.grimorio_de_bolsillo);
+                    guardarArma(R.drawable.grimorio_de_bolsillo);
+                }else if(position == 10){
+                    ivArmas.setImageResource(R.drawable.grimorio_real);
+                    guardarArma(R.drawable.grimorio_real);
+                }else if(position == 11){
+                    ivArmas.setImageResource(R.drawable.guia_magica);
+                    guardarArma(R.drawable.guia_magica);
+                }else if(position == 12){
+                    ivArmas.setImageResource(R.drawable.historias_de_otros_mundos);
+                    guardarArma(R.drawable.historias_de_otros_mundos);
+                }else if(position == 13){
+                    ivArmas.setImageResource(R.drawable.memorias_de_sacrificios);
+                    guardarArma(R.drawable.memorias_de_sacrificios);
+                }else if(position == 14){
+                    ivArmas.setImageResource(R.drawable.nefrita_gemela);
+                    guardarArma(R.drawable.nefrita_gemela);
+                }else if(position == 15){
+                    ivArmas.setImageResource(R.drawable.ojo_de_la_perspicacia);
+                    guardarArma(R.drawable.ojo_de_la_perspicacia);
+                }else if(position == 16){
+                    ivArmas.setImageResource(R.drawable.oracion_perdida_a_los_vientos_sagrados);
+                    guardarArma(R.drawable.oracion_perdida_a_los_vientos_sagrados);
+                }else if(position == 17){
+                    ivArmas.setImageResource(R.drawable.orbe_esmeralda);
+                    guardarArma(R.drawable.orbe_esmeralda);
+                }else if(position == 18){
+                    ivArmas.setImageResource(R.drawable.pergamino_celestial);
+                    guardarArma(R.drawable.pergamino_celestial);
+                }else if(position == 19){
+                    ivArmas.setImageResource(R.drawable.perla_solar);
+                    guardarArma(R.drawable.perla_solar);
+                }else if(position == 20){
+                    ivArmas.setImageResource(R.drawable.prototipo_ambar);
+                    guardarArma(R.drawable.prototipo_ambar);
+                }else if(position == 21){
+                    ivArmas.setImageResource(R.drawable.sinfonia_de_los_merodeadores);
+                    guardarArma(R.drawable.sinfonia_de_los_merodeadores);
+                }else if(position == 22){
+                    ivArmas.setImageResource(R.drawable.vino_y_poesia);
+                    guardarArma(R.drawable.vino_y_poesia);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+    }
+
+    private void cargarEspadas(){
+        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, espadaStringArray));
+        spinnerArmas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){
+                    ivArmas.setImageResource(R.drawable.wallpaper);
+                }else if(position == 1){
+                    ivArmas.setImageResource(R.drawable.aquila_favonia);
+                    guardarArma(R.drawable.aquila_favonia);
+                }else if(position == 2){
+                    ivArmas.setImageResource(R.drawable.cortador_de_jade_primordial);
+                    guardarArma(R.drawable.cortador_de_jade_primordial);
+                }else if(position == 3){
+                    ivArmas.setImageResource(R.drawable.deseo_ponzonoso);
+                    guardarArma(R.drawable.deseo_ponzonoso);
+                }else if(position == 4){
+                    ivArmas.setImageResource(R.drawable.destello_en_la_oscuridad);
+                    guardarArma(R.drawable.destello_en_la_oscuridad);
+                }else if(position == 5){
+                    ivArmas.setImageResource(R.drawable.espada_de_favonius);
+                    guardarArma(R.drawable.espada_de_favonius);
+                }else if(position == 6){
+                    ivArmas.setImageResource(R.drawable.espada_de_hierro_oscuro);
+                    guardarArma(R.drawable.espada_de_hierro_oscuro);
+                }else if(position == 7){
+                    ivArmas.setImageResource(R.drawable.espada_de_sacrificio);
+                    guardarArma(R.drawable.espada_de_sacrificio);
+                }else if(position == 8){
+                    ivArmas.setImageResource(R.drawable.espada_del_alba);
+                    guardarArma(R.drawable.espada_del_alba);
+                }else if(position == 9){
+                    ivArmas.setImageResource(R.drawable.espada_del_descenso);
+                    guardarArma(R.drawable.espada_del_descenso);
+                }else if(position == 10){
+                    ivArmas.setImageResource(R.drawable.espada_del_viajero);
+                    guardarArma(R.drawable.espada_del_viajero);
+                }else if(position == 11){
+                    ivArmas.setImageResource(R.drawable.espada_larga_del_penasco_oscuro);
+                    guardarArma(R.drawable.espada_larga_del_penasco_oscuro);
+                }else if(position == 12){
+                    ivArmas.setImageResource(R.drawable.espada_negra);
+                    guardarArma(R.drawable.espada_negra);
+                }else if(position == 13){
+                    ivArmas.setImageResource(R.drawable.espada_plateada);
+                    guardarArma(R.drawable.espada_plateada);
+                }else if(position == 14){
+                    ivArmas.setImageResource(R.drawable.espada_real_larga);
+                    guardarArma(R.drawable.espada_real_larga);
+                }else if(position == 15){
+                    ivArmas.setImageResource(R.drawable.espada_surcacielos);
+                    guardarArma(R.drawable.espada_surcacielos);
+                }else if(position == 16){
+                    ivArmas.setImageResource(R.drawable.espina_de_hierro);
+                    guardarArma(R.drawable.espina_de_hierro);
+                }else if(position == 17){
+                    ivArmas.setImageResource(R.drawable.flauta);
+                    guardarArma(R.drawable.flauta);
+                }else if(position == 18){
+                    ivArmas.setImageResource(R.drawable.hoja_afilada_celestial);
+                    guardarArma(R.drawable.hoja_afilada_celestial);
+                }else if(position == 19){
+                    ivArmas.setImageResource(R.drawable.hoja_de_filetear);
+                    guardarArma(R.drawable.hoja_de_filetear);
+                }else if(position == 20){
+                    ivArmas.setImageResource(R.drawable.hoja_desafilada);
+                    guardarArma(R.drawable.hoja_desafilada);
+                }else if(position == 21){
+                    ivArmas.setImageResource(R.drawable.hoja_fria);
+                    guardarArma(R.drawable.hoja_fria);
+                }else if(position == 22){
+                    ivArmas.setImageResource(R.drawable.prototipo_rencor);
+                    guardarArma(R.drawable.prototipo_rencor);
+                }else if(position == 23){
+                    ivArmas.setImageResource(R.drawable.rompemontanas);
+                    guardarArma(R.drawable.rompemontanas);
+                }else if(position == 24){
+                    ivArmas.setImageResource(R.drawable.rugido_del_leon);
+                    guardarArma(R.drawable.rugido_del_leon);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+    }
+
+    private void cargarLanzas(){
+        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, lanzaStringArray));
+        spinnerArmas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){
+                    ivArmas.setImageResource(R.drawable.wallpaper);
+                }else if(position == 1){
+                    ivArmas.setImageResource(R.drawable.alabarda);
+                    guardarArma(R.drawable.alabarda);
+                }else if(position == 2){
+                    ivArmas.setImageResource(R.drawable.baculo_de_homa);
+                    guardarArma(R.drawable.baculo_de_homa);
+                }else if(position == 3){
+                    ivArmas.setImageResource(R.drawable.borla_blanca);
+                    guardarArma(R.drawable.borla_blanca);
+                }else if(position == 4){
+                    ivArmas.setImageResource(R.drawable.borla_begra);
+                    guardarArma(R.drawable.borla_begra);
+                }else if(position == 5){
+                    ivArmas.setImageResource(R.drawable.halcon_de_jade);
+                    guardarArma(R.drawable.halcon_de_jade);
+                }else if(position == 6){
+                    ivArmas.setImageResource(R.drawable.lanza_de_caza_real);
+                    guardarArma(R.drawable.lanza_de_caza_real);
+                }else if(position == 7){
+                    ivArmas.setImageResource(R.drawable.lanza_de_espinadragon);
+                    guardarArma(R.drawable.lanza_de_espinadragon);
+                }else if(position == 8){
+                    ivArmas.setImageResource(R.drawable.lanza_de_favonius);
+                    guardarArma(R.drawable.lanza_de_favonius);
+                }else if(position == 9){
+                    ivArmas.setImageResource(R.drawable.lanza_del_fuelo);
+                    guardarArma(R.drawable.lanza_del_fuelo);
+                }else if(position == 10){
+                    ivArmas.setImageResource(R.drawable.lanza_del_penasco_oscuro);
+                    guardarArma(R.drawable.lanza_del_penasco_oscuro);
+                }else if(position == 11){
+                    ivArmas.setImageResource(R.drawable.lanza_del_principiante);
+                    guardarArma(R.drawable.lanza_del_principiante);
+                }else if(position == 12){
+                    ivArmas.setImageResource(R.drawable.lanza_litica);
+                    guardarArma(R.drawable.lanza_litica);
+                }else if(position == 13){
+                    ivArmas.setImageResource(R.drawable.lanza_perforanubes);
+                    guardarArma(R.drawable.lanza_perforanubes);
+                }else if(position == 14){
+                    ivArmas.setImageResource(R.drawable.perdicion_del_dragon);
+                    guardarArma(R.drawable.perdicion_del_dragon);
+                }else if(position == 15){
+                    ivArmas.setImageResource(R.drawable.pica_luna_creciente);
+                    guardarArma(R.drawable.pica_luna_creciente);
+                }else if(position == 16){
+                    ivArmas.setImageResource(R.drawable.prototipo_estelar);
+                    guardarArma(R.drawable.prototipo_estelar);
+                }else if(position == 17){
+                    ivArmas.setImageResource(R.drawable.pua_celestial);
+                    guardarArma(R.drawable.pua_celestial);
+                }else if(position == 18){
+                    ivArmas.setImageResource(R.drawable.punta_de_hierro);
+                    guardarArma(R.drawable.punta_de_hierro);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
+    }
+
+    private void cargarMandobles(){
+        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, mandobleStringArray));
+        spinnerArmas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){
+                    ivArmas.setImageResource(R.drawable.wallpaper);
+                }else if(position == 1){
+                    ivArmas.setImageResource(R.drawable.argento_estelar_de_las_nieves);
+                    guardarArma(R.drawable.argento_estelar_de_las_nieves);
+                }else if(position == 2){
+                    ivArmas.setImageResource(R.drawable.espada_de_hierro_blanco);
+                    guardarArma(R.drawable.espada_de_hierro_blanco);
+                }else if(position == 3){
+                    ivArmas.setImageResource(R.drawable.espada_de_la_desidia);
+                    guardarArma(R.drawable.espada_de_la_desidia);
+                }else if(position == 4){
+                    ivArmas.setImageResource(R.drawable.espada_del_mercenario);
+                    guardarArma(R.drawable.espada_del_mercenario);
+                }else if(position == 5){
+                    ivArmas.setImageResource(R.drawable.espada_del_tiempo);
+                    guardarArma(R.drawable.espada_del_tiempo);
+                }else if(position == 6){
+                    ivArmas.setImageResource(R.drawable.espada_litica);
+                    guardarArma(R.drawable.espada_litica);
+                }else if(position == 7){
+                    ivArmas.setImageResource(R.drawable.fran_espada_real);
+                    guardarArma(R.drawable.fran_espada_real);
+                }else if(position == 8){
+                    ivArmas.setImageResource(R.drawable.garrote_del_debate);
+                    guardarArma(R.drawable.garrote_del_debate);
+                }else if(position == 9){
+                    ivArmas.setImageResource(R.drawable.gran_espada_de_sacrificio);
+                    guardarArma(R.drawable.gran_espada_de_sacrificio);
+                }else if(position == 10){
+                    ivArmas.setImageResource(R.drawable.gran_espada_defavonius);
+                    guardarArma(R.drawable.gran_espada_defavonius);
+                }else if(position == 11){
+                    ivArmas.setImageResource(R.drawable.gran_espada_del_guerrero);
+                    guardarArma(R.drawable.gran_espada_del_guerrero);
+                }else if(position == 12){
+                    ivArmas.setImageResource(R.drawable.gran_espada_sangrienta);
+                    guardarArma(R.drawable.gran_espada_sangrienta);
+                }else if(position == 13){
+                    ivArmas.setImageResource(R.drawable.gran_espada_surcacielos);
+                    guardarArma(R.drawable.gran_espada_surcacielos);
+                }else if(position == 14){
+                    ivArmas.setImageResource(R.drawable.gran_hoja_del_penasco_oscuro);
+                    guardarArma(R.drawable.gran_hoja_del_penasco_oscuro);
+                }else if(position == 15){
+                    ivArmas.setImageResource(R.drawable.lapida_del_lobo);
+                    guardarArma(R.drawable.lapida_del_lobo);
+                }else if(position == 16){
+                    ivArmas.setImageResource(R.drawable.medula_de_laserpiente_marina);
+                    guardarArma(R.drawable.medula_de_laserpiente_marina);
+                }else if(position == 17){
+                    ivArmas.setImageResource(R.drawable.orgullo_celestial);
+                    guardarArma(R.drawable.orgullo_celestial);
+                }else if(position == 18){
+                    ivArmas.setImageResource(R.drawable.prototipo_arcaico);
+                    guardarArma(R.drawable.prototipo_arcaico);
+                }else if(position == 19){
+                    ivArmas.setImageResource(R.drawable.quartz);
+                    guardarArma(R.drawable.quartz);
+                }else if(position == 20){
+                    ivArmas.setImageResource(R.drawable.segadora_de_la_lluvia);
+                    guardarArma(R.drawable.segadora_de_la_lluvia);
+                }else if(position == 21){
+                    ivArmas.setImageResource(R.drawable.sombra_blanca);
+                    guardarArma(R.drawable.sombra_blanca);
+                }else if(position == 22){
+                    ivArmas.setImageResource(R.drawable.sombra_ferrea);
+                    guardarArma(R.drawable.sombra_ferrea);
                 }
             }
 
@@ -934,6 +1341,7 @@ public class MisBuilds extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         MisBuilds.this.finish();
+        salir.start();
     }
 
     /**
@@ -967,5 +1375,13 @@ public class MisBuilds extends AppCompatActivity {
             publicidad.destroy();
         }
         super.onDestroy();
+    }
+
+    private void guardarArma(int res){
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        Armas armas = new Armas();
+        armas.setPersonaje(spPJMisBuilds.getSelectedItem().toString());
+        armas.setArma(res);
+        datosProcesosSqlite.validarUInsertUpdateArma(this, spPJMisBuilds.getSelectedItem().toString(), armas);
     }
 }

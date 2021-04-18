@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -78,11 +79,16 @@ public class Builds extends FragmentActivity {
     private static final String AD_UNIT_ID = "ca-app-pub-4467142756516555/7442029029";
     private InterstitialAd interstitialAd;
 
+    //para los soniditos
+    private MediaPlayer salir;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_builds);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        salir = MediaPlayer.create(getApplicationContext(), R.raw.salir);
 
         ejecutar();
 
@@ -1031,6 +1037,7 @@ public class Builds extends FragmentActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        salir.start();
         Builds.this.finish();
     }
 

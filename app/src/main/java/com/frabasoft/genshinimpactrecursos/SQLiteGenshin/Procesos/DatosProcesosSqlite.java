@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Environment;
 import android.os.FileUtils;
+import android.service.voice.VoiceInteractionSession;
 import android.text.Editable;
 import android.util.Log;
 import android.widget.Toast;
@@ -17,12 +18,14 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.frabasoft.genshinimpactrecursos.Actividades.VistaPrevia;
+import com.frabasoft.genshinimpactrecursos.Clases.Armas.Armas;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Pluma;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Reloj;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite;
+import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.ArmasTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.CopaTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.CoronaTablaSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.FlorTablaSqlite;
@@ -471,6 +474,76 @@ public class DatosProcesosSqlite implements Serializable {
         return list;
     }
 
+    /////////////////////////////////////////////////////////////////////////Arma SAVE DATA SQLITE
+    private ContentValues mapeoArma(Armas armas){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ArmasTablaSqlite.NOMBRE_PERSONAJE, armas.getPersonaje());
+        contentValues.put(ArmasTablaSqlite.ARMA_NOMBRE, armas.getArma());
+        return contentValues;
+    }
+
+    public long guardarArma(Armas armas){//insertar registro
+        this.abrirDBEsccribir();
+        long filaID = sqLiteDatabase.insert(ArmasTablaSqlite.TABLA_ARMA, null, mapeoArma(armas));
+        return filaID;
+    }
+
+    public void actualizarArma(Armas armas, String nombrePJ){
+        this.abrirDBEsccribir();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ArmasTablaSqlite.NOMBRE_PERSONAJE, armas.getPersonaje());
+        contentValues.put(ArmasTablaSqlite.ARMA_NOMBRE, armas.getArma());
+        String[] idValor = {String.valueOf(nombrePJ)};
+        sqLiteDatabase.update(ArmasTablaSqlite.TABLA_ARMA, contentValues, ArmasTablaSqlite.NOMBRE_PERSONAJE + " = ? ", idValor);
+        sqLiteDatabase.close();
+    }
+
+    public boolean validarUInsertUpdateArma(Context actividad, String personaje, Armas armas){//meétodo para validar el estado no visible del manga
+        this.abrirDBEsccribir();
+        String[] nom = {String.valueOf(personaje)};
+        String consulta = "SELECT * FROM " + ArmasTablaSqlite.TABLA_ARMA + " WHERE " + ArmasTablaSqlite.NOMBRE_PERSONAJE + " = ?";
+        Cursor cursor = sqLiteDatabase.rawQuery(consulta, nom);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            guardarArma(armas);
+            copiarArchivo(guardar + "Corona " + guardarA + personaje);
+            Toast.makeText(actividad, "¡Se ha guardado el arma de " + personaje + "!", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            if(cursor.moveToFirst()){
+                String pj = cursor.getString(cursor.getColumnIndex(ArmasTablaSqlite.NOMBRE_PERSONAJE));
+                actualizarArma(armas, pj);
+                copiarArchivo(actualizar + "Corona " + actualizarA + personaje);
+                Toast.makeText(actividad, "¡Se ha actualizado el arma de: " + personaje + "!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        cursor.close();
+        return true;
+    }
+
+    public ArrayList mostrarDatosDelPjArma(String nombrePJ) {
+        ArrayList list = new ArrayList<>();
+        this.abrirDBLeer();
+        String[] campos = new String[]{ArmasTablaSqlite.ID_ARMA,
+                ArmasTablaSqlite.NOMBRE_PERSONAJE,
+                ArmasTablaSqlite.NOMBRE_PERSONAJE
+                };
+        String where = ArmasTablaSqlite.NOMBRE_PERSONAJE + " IN ('" + nombrePJ + "');";
+        Cursor c = sqLiteDatabase.query(ArmasTablaSqlite.TABLA_ARMA, campos, where, null, null, null, null);
+        try {
+            while (c.moveToNext()) {
+                Armas armas = new Armas();
+                armas.setId(c.getInt(0));
+                armas.setPersonaje(c.getString(1));
+                armas.setArma(c.getInt(2));
+                list.add(armas);
+            }
+        } finally { c.close(); }
+        this.cerrarBD();
+        return list;
+    }
+
     /////////////////////////////////////////////////////////////////////////Creación de TXT y copia de bd
     public void copiarArchivo(String detalles){
         //para el archivo txt
@@ -576,6 +649,7 @@ public class DatosProcesosSqlite implements Serializable {
             db.execSQL(FlorTablaSqlite.TABLA_FLOR_SQL);
             db.execSQL(PlumaTablaSqlite.TABLA_PLUMA_SQL);
             db.execSQL(RelojTablaSqlite.TABLA_RELOJ_SQL);
+            db.execSQL(ArmasTablaSqlite.TABLA_ARMA_SQL);
         }
 
         @Override
