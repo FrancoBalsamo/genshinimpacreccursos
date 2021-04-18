@@ -5,22 +5,14 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +22,6 @@ import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Pluma;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Reloj;
-import com.frabasoft.genshinimpactrecursos.MainActivity;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.google.android.gms.ads.AdError;
@@ -38,19 +29,14 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.master.permissionhelper.PermissionHelper;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class VistaPrevia extends AppCompatActivity {
     private ArrayList<Flor> florArrayList;
@@ -264,65 +250,65 @@ public class VistaPrevia extends AppCompatActivity {
 
     private void backgroundPJ(String nombre){
         if(nombre == "Albedo" || nombre.equals("Albedo")){
-            contenido.setBackgroundResource(R.drawable.albedobuilds);
+            contenido.setBackgroundResource(R.drawable.albedovp);
         } else if(nombre == "Amber" || nombre.equals("Amber")){
-            contenido.setBackgroundResource(R.drawable.amberbuilds);
+            contenido.setBackgroundResource(R.drawable.ambervp);
         } else if(nombre == "Barbara" || nombre.equals("Barbara")){
-            contenido.setBackgroundResource(R.drawable.barbarabuilds);
+            contenido.setBackgroundResource(R.drawable.barbaravp);
         } else if(nombre == "Beidou" || nombre.equals("Beidou")){
-            contenido.setBackgroundResource(R.drawable.beidoubuilds);
+            contenido.setBackgroundResource(R.drawable.beidouvp);
         } else if(nombre == "Bennet" || nombre.equals("Bennet")){
-            contenido.setBackgroundResource(R.drawable.bennetbuilds);
+            contenido.setBackgroundResource(R.drawable.bennetvp);
         } else if(nombre == "Chongyun" || nombre.equals("Chongyun")){
-            contenido.setBackgroundResource(R.drawable.chongyunbuilds);
+            contenido.setBackgroundResource(R.drawable.chongyunvp);
         } else if(nombre == "Diluc" || nombre.equals("Diluc")){
-            contenido.setBackgroundResource(R.drawable.dilucbuilds);
+            contenido.setBackgroundResource(R.drawable.dilucvp);
         } else if(nombre == "Diona" || nombre.equals("Diona")){
-            contenido.setBackgroundResource(R.drawable.dionabuilds);
+            contenido.setBackgroundResource(R.drawable.dionavp);
         } else if(nombre == "Fischl" || nombre.equals("Fischl")){
-            contenido.setBackgroundResource(R.drawable.fischlbuilds);
+            contenido.setBackgroundResource(R.drawable.fischlvp);
         } else if(nombre == "Ganyu" || nombre.equals("Ganyu")){
-            contenido.setBackgroundResource(R.drawable.ganyubuilds);
+            contenido.setBackgroundResource(R.drawable.ganyuvp);
         } else if(nombre == "Hu Tao" || nombre.equals("Hu Tao")){
-            contenido.setBackgroundResource(R.drawable.hutaobuilds);
+            contenido.setBackgroundResource(R.drawable.hutaovp);
         } else if(nombre == "Jean" || nombre.equals("Jean")){
-            contenido.setBackgroundResource(R.drawable.jeanbuilds);
+            contenido.setBackgroundResource(R.drawable.jeanvp);
         } else if(nombre == "Kaeya" || nombre.equals("Kaeya")){
-            contenido.setBackgroundResource(R.drawable.kaeyabuilds);
+            contenido.setBackgroundResource(R.drawable.kaeyavp);
         } else if(nombre == "Keqing" || nombre.equals("Keqing")){
-            contenido.setBackgroundResource(R.drawable.keqingbuilds);
+            contenido.setBackgroundResource(R.drawable.kekingvp);
         } else if(nombre == "Klee" || nombre.equals("Klee")){
-            contenido.setBackgroundResource(R.drawable.kleebuilds);
+            contenido.setBackgroundResource(R.drawable.kleevp);
         } else if(nombre == "Lisa" || nombre.equals("Lisa")){
-            contenido.setBackgroundResource(R.drawable.lisabuilds);
+            contenido.setBackgroundResource(R.drawable.lisavp);
         } else if(nombre == "Mona" || nombre.equals("Mona")){
-            contenido.setBackgroundResource(R.drawable.monabuilds);
+            contenido.setBackgroundResource(R.drawable.monavp);
         } else if(nombre == "Ninguang" || nombre.equals("Ninguang")){
-            contenido.setBackgroundResource(R.drawable.ningguangbuilds);
+            contenido.setBackgroundResource(R.drawable.ningguangvp);
         } else if(nombre == "Noelle" || nombre.equals("Noelle")){
-            contenido.setBackgroundResource(R.drawable.noellebuilds);
+            contenido.setBackgroundResource(R.drawable.noellevp);
         } else if(nombre == "Qiqi" || nombre.equals("Qiqi")){
-            contenido.setBackgroundResource(R.drawable.qiqibuilds);
+            contenido.setBackgroundResource(R.drawable.qiqivp);
         } else if(nombre == "Razor" || nombre.equals("Razor")){
-            contenido.setBackgroundResource(R.drawable.razorbuilds);
+            contenido.setBackgroundResource(R.drawable.razorvp);
         } else if(nombre == "Rosaria" || nombre.equals("Rosaria")){
-            contenido.setBackgroundResource(R.drawable.rosariabuilds);
+            contenido.setBackgroundResource(R.drawable.rosariavp);
         } else if(nombre == "Sucrose" || nombre.equals("Sucrose")){
-            contenido.setBackgroundResource(R.drawable.sacarosabuilds);
+            contenido.setBackgroundResource(R.drawable.sucrosevp);
         } else if(nombre == "Tartaglia" || nombre.equals("Tartaglia")){
-            contenido.setBackgroundResource(R.drawable.tartagliabuilds);
+            contenido.setBackgroundResource(R.drawable.tartagliavp);
         } else if(nombre == "Venti" || nombre.equals("Venti")){
-            contenido.setBackgroundResource(R.drawable.ventibuilds);
+            contenido.setBackgroundResource(R.drawable.ventivp);
         } else if(nombre == "Xianling" || nombre.equals("Xianling")){
-            contenido.setBackgroundResource(R.drawable.xianlingbuilds);
+            contenido.setBackgroundResource(R.drawable.xianglingvp);
         } else if(nombre == "Xiao" || nombre.equals("Xiao")){
-            contenido.setBackgroundResource(R.drawable.xiaobuilds);
+            contenido.setBackgroundResource(R.drawable.xiaovp);
         } else if(nombre == "Xingqiu" || nombre.equals("Xingqiu")){
-            contenido.setBackgroundResource(R.drawable.xingqiubuilds);
+            contenido.setBackgroundResource(R.drawable.xingqiuvp);
         } else if(nombre == "Xinyan" || nombre.equals("Xinyan")){
-            contenido.setBackgroundResource(R.drawable.xinyanbuilds);
+            contenido.setBackgroundResource(R.drawable.xinyanvp);
         } else if(nombre == "Zhongli" || nombre.equals("Zhongli")){
-            contenido.setBackgroundResource(R.drawable.zhonglibuilds);
+            contenido.setBackgroundResource(R.drawable.zhonglivp);
         }
     }
 

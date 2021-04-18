@@ -503,6 +503,30 @@
                             android:layout_height="50dp"
                             android:background="@drawable/save"/>
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:gravity="center">
+                        <Spinner
+                            android:id="@+id/spinnerArmas"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/black"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:gravity="center">
+                        <ImageView
+                            android:id="@+id/ivArmas"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@color/black"/>
+                    </LinearLayout>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
