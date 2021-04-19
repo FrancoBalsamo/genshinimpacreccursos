@@ -13,9 +13,11 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.FileUtils;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite.DB_NAME;
 
@@ -74,8 +77,10 @@ public class MainActivity extends AppCompatActivity {
 
     //para los tiempos del banner
     private String fechaActualBanner, horaActualBanner;
-    private String fechaFinalBanner = "27/04/2021";
+    private String fechaFinalBanner = "27/04/2021 17:00:00";
     private String horaFinalBanner = "17:00:00";
+    private long initialTime;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -326,8 +331,7 @@ public class MainActivity extends AppCompatActivity {
     private void anuncio(){
         Calendar fechaActual = Calendar.getInstance();
         int mesActual = fechaActual.get(Calendar.MONTH) + 1;
-        SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdfHora = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try{
             if(fechaActual.get(Calendar.DAY_OF_MONTH) < 10){
                 fechaActualBanner = "0" + fechaActual.get(Calendar.DAY_OF_MONTH)
@@ -346,38 +350,45 @@ public class MainActivity extends AppCompatActivity {
                     + ":" + fechaActual.get(Calendar.MINUTE)
                     + ":" + fechaActual.get(Calendar.SECOND);
 
-            Date fechaInicio = sdfFecha.parse(fechaActualBanner);
-            Date horaInicio = sdfHora.parse(horaActualBanner);
-            Date fechaFin = sdfFecha.parse(fechaFinalBanner);
-            Date horaFin = sdfHora.parse(horaFinalBanner);
+            String resultadoFechaHoraSO = fechaActualBanner + " " + horaActualBanner;
+            Date fechaResultadoString = sdfFecha.parse(resultadoFechaHoraSO);
+            Date b = sdfFecha.parse(fechaFinalBanner);
 
-            long obtenerDiferenciaDeDias = fechaFin.getTime() - fechaInicio.getTime();
-            long segundosF = obtenerDiferenciaDeDias / 1000;
-            long minutosF = segundosF / 60;
-            long horasF = minutosF / 60;
-            long diasQueFaltan = horasF / 24;
+            long resultado = b.getTime() - fechaResultadoString.getTime();
+            long segundos =(resultado/1000)%60;
+            long minutos=(resultado/(1000*60))%60;
+            long horas=(resultado/(1000*60*60))%24;
+            long dias=(resultado/(1000*60*60*24))%365;
+            Log.d(TAG, "anuncio: " + dias + "/" + horas+":"+minutos);
 
-            long obtenerDiferenciaDeHoras = horaFin.getTime() - horaInicio.getTime();
-            long segundosM = (obtenerDiferenciaDeHoras / 1000)%60;
-            long minutosM = (obtenerDiferenciaDeHoras / (1000*60))%60;
-            long horasM = (obtenerDiferenciaDeHoras / (1000*60*60))%24;
+            initialTime = resultado;
 
             LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
             AlertDialog anuncio = new AlertDialog.Builder(this).create();
             final View view = layoutInflater.inflate(R.layout.alerta_inicio_app, null);
             final TextView tiempoRestante = view.findViewById(R.id.tiempoRestante);
-            final Button cerrar = view.findViewById(R.id.cerrarAnuncio);
+            countDownTimer = new CountDownTimer(initialTime, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    int dias = (int) ((millisUntilFinished / 1000) / 86400);
+                    int horas = (int) (((millisUntilFinished / 1000)
+                            - (dias * 86400)) / 3600);
+                    int minutos = (int) (((millisUntilFinished / 1000)
+                            - (dias * 86400) - (horas * 3600)) / 60);
+                    int segundos = (int) ((millisUntilFinished / 1000) % 60);
+                    String countDownText = String.format("Faltan %2d Dia(s) %2d Hr(s) %2d Min %2d Seg para que finalice el banner.", dias, horas, minutos, segundos);
+                    tiempoRestante.setText(countDownText);
+                }
 
-            tiempoRestante.setText("Quedan " + diasQueFaltan + " día(s) " +
-                    //+ horasM + " hora(s) "
-                    //+ minutosM + " minuto(s) " +
-                    "para que finalice el banner.");
+                @Override
+                public void onFinish() {
+                    tiempoRestante.setText(DateUtils.formatElapsedTime(0));
+                }
+            }.start();
+            final Button cerrar = view.findViewById(R.id.cerrarAnuncio);
             cerrar.setOnClickListener(v -> anuncio.dismiss());
             anuncio.setView(view);
             anuncio.show();
-
-            Log.d("COMPACIONFECHAHORA", "\nDías faltantes: " + diasQueFaltan
-                    + "\nHoras faltantes: " + horasM + ":" + minutosM);
         }catch (Exception exception){
             Log.d(TAG, "ERROR TIEMPO: " + exception.getMessage());
         }
