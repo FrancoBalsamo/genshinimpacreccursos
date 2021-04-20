@@ -635,17 +635,11 @@ public class DatosProcesosSqlite implements Serializable {
 
         @Override
         public void onCreate(SQLiteDatabase db){
-            db.execSQL("DROP TABLE IF EXISTS " + FlorTablaSqlite.TABLA_FLOR);
             db.execSQL(FlorTablaSqlite.TABLA_FLOR_SQL);
-            db.execSQL("DROP TABLE IF EXISTS " + CoronaTablaSqlite.TABLA_CORONA);
             db.execSQL(CoronaTablaSqlite.TABLA_CORONA_SQL);
-            db.execSQL("DROP TABLE IF EXISTS " + CopaTablaSqlite.TABLA_COPA);
             db.execSQL(CopaTablaSqlite.TABLA_COPA_SQL);
-            db.execSQL("DROP TABLE IF EXISTS " + PlumaTablaSqlite.TABLA_PLUMA);
             db.execSQL(PlumaTablaSqlite.TABLA_PLUMA_SQL);
-            db.execSQL("DROP TABLE IF EXISTS " + RelojTablaSqlite.TABLA_RELOJ);
             db.execSQL(RelojTablaSqlite.TABLA_RELOJ_SQL);
-            db.execSQL("DROP TABLE IF EXISTS " + CoronaTablaSqlite.TABLA_CORONA);
             db.execSQL(ArmasTablaSqlite.TABLA_ARMA_SQL);
         }
 
@@ -653,18 +647,12 @@ public class DatosProcesosSqlite implements Serializable {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
             switch(oldVersion){
                 case  1:
-                    db.execSQL("DROP TABLE IF EXISTS " + FlorTablaSqlite.TABLA_FLOR);
                     db.execSQL(FlorTablaSqlite.TABLA_FLOR_SQL);
-                    db.execSQL("DROP TABLE IF EXISTS " + CoronaTablaSqlite.TABLA_CORONA);
                     db.execSQL(CoronaTablaSqlite.TABLA_CORONA_SQL);
-                    db.execSQL("DROP TABLE IF EXISTS " + CopaTablaSqlite.TABLA_COPA);
                     db.execSQL(CopaTablaSqlite.TABLA_COPA_SQL);
-                    db.execSQL("DROP TABLE IF EXISTS " + PlumaTablaSqlite.TABLA_PLUMA);
                     db.execSQL(PlumaTablaSqlite.TABLA_PLUMA_SQL);
-                    db.execSQL("DROP TABLE IF EXISTS " + RelojTablaSqlite.TABLA_RELOJ);
                     db.execSQL(RelojTablaSqlite.TABLA_RELOJ_SQL);
                 case 2:
-                    db.execSQL("DROP TABLE IF EXISTS " + CoronaTablaSqlite.TABLA_CORONA);
                     db.execSQL(ArmasTablaSqlite.TABLA_ARMA_SQL);
             }
         }
