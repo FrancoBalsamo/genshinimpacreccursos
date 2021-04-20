@@ -15,7 +15,7 @@ public class RelojTablaSqlite {
 
     //String con el create
     public static final String TABLA_RELOJ_SQL =
-            "CREATE TABLE  " + TABLA_RELOJ + "(" +
+            "CREATE TABLE  IF NOT EXISTS " + TABLA_RELOJ + "(" +
                     ID_STAT_RELOJ + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NOMBRE_PERSONAJE + " TEXT NOT NULL," +
                     STAT_PRINC + " TEXT NOT NULL," +

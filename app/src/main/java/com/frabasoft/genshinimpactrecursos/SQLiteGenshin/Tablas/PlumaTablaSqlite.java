@@ -15,7 +15,7 @@ public class PlumaTablaSqlite {
 
     //String con el create
     public static final String TABLA_PLUMA_SQL =
-            "CREATE TABLE  " + TABLA_PLUMA + "(" +
+            "CREATE TABLE  IF NOT EXISTS " + TABLA_PLUMA + "(" +
                     ID_STAT_PLUMA + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NOMBRE_PERSONAJE + " TEXT NOT NULL," +
                     STAT_PRINC + " TEXT NOT NULL," +

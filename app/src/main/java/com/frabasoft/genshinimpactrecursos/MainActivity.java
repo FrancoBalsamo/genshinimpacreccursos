@@ -11,11 +11,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
-import android.os.FileUtils;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -36,20 +34,14 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.master.permissionhelper.PermissionHelper;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import static com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite.DB_NAME;
 
@@ -78,9 +70,8 @@ public class MainActivity extends AppCompatActivity {
     //para los tiempos del banner
     private String fechaActualBanner, horaActualBanner;
     private String fechaFinalBanner = "27/04/2021 17:00:00";
-    private String horaFinalBanner = "17:00:00";
-    private long initialTime;
-    private CountDownTimer countDownTimer;
+    private long tiempoInicial;
+    private CountDownTimer conteoRegresivo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -361,13 +352,13 @@ public class MainActivity extends AppCompatActivity {
             long dias=(resultado/(1000*60*60*24))%365;
             Log.d(TAG, "anuncio: " + dias + "/" + horas+":"+minutos);
 
-            initialTime = resultado;
+            tiempoInicial = resultado;
 
             LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
             AlertDialog anuncio = new AlertDialog.Builder(this).create();
             final View view = layoutInflater.inflate(R.layout.alerta_inicio_app, null);
             final TextView tiempoRestante = view.findViewById(R.id.tiempoRestante);
-            countDownTimer = new CountDownTimer(initialTime, 1000) {
+            conteoRegresivo = new CountDownTimer(tiempoInicial, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     int dias = (int) ((millisUntilFinished / 1000) / 86400);

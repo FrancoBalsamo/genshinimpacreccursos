@@ -15,7 +15,7 @@ public class CopaTablaSqlite {
 
     //String con el create
     public static final String TABLA_COPA_SQL =
-            "CREATE TABLE  " + TABLA_COPA + "(" +
+            "CREATE TABLE  IF NOT EXISTS " + TABLA_COPA + "(" +
                     ID_STAT_COPA + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NOMBRE_PERSONAJE + " TEXT NOT NULL," +
                     STAT_PRINC + " TEXT NOT NULL," +

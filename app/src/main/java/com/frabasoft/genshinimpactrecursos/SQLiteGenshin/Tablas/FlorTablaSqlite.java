@@ -15,7 +15,7 @@ public class FlorTablaSqlite {
 
     //String con el create
     public static final String TABLA_FLOR_SQL =
-            "CREATE TABLE  " + TABLA_FLOR + "(" +
+            "CREATE TABLE  IF NOT EXISTS " + TABLA_FLOR + "(" +
                     ID_STAT_FLOR + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NOMBRE_PERSONAJE + " TEXT NOT NULL," +
                     STAT_PRINC + " TEXT NOT NULL," +

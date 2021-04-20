@@ -15,7 +15,7 @@ public class CoronaTablaSqlite {
 
     //String con el create
     public static final String TABLA_CORONA_SQL =
-            "CREATE TABLE  " + TABLA_CORONA + "(" +
+            "CREATE TABLE  IF NOT EXISTS " + TABLA_CORONA + "(" +
                     ID_STAT_CORONA + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NOMBRE_PERSONAJE + " TEXT NOT NULL," +
                     STAT_PRINC + " TEXT NOT NULL," +

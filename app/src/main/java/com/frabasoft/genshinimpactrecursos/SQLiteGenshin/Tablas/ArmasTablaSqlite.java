@@ -12,7 +12,7 @@ public class ArmasTablaSqlite {
 
     //String con el create
     public static final String TABLA_ARMA_SQL =
-            "CREATE TABLE  " + TABLA_ARMA + "(" +
+            "CREATE TABLE  IF NOT EXISTS " + TABLA_ARMA + "(" +
                     ID_ARMA + " INTEGER, " +
                     NOMBRE_PERSONAJE + " TEXT NOT NULL, " +
                     ARMA_NOMBRE + " TEXT NOT NULL, " +
