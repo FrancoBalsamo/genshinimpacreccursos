@@ -129,9 +129,9 @@
                             android:layout_height="250dp"
                             android:gravity="center_horizontal"
                             android:background="@drawable/borde_layout_artefactos">
-                            <ImageView
+                            <Spinner
+                                android:id="@+id/spinnerFlorArtefacto"
                                 android:layout_gravity="center"
-                                android:background="@drawable/florico"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"/>
                         </LinearLayout>
