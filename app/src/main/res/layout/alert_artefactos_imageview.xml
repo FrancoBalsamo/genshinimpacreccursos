@@ -9,17 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
         <ImageView
-            android:layout_marginStart="15dp"
+            android:paddingLeft="15dp"
             android:id="@+id/ivArtefactosAlert"
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/relico"/>
+            android:layout_height="50dp"/>
         <TextView
             android:gravity="center_vertical"
             android:id="@+id/tvArtefactosAlert"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:textColor="@color/white"
-            android:text="@string/estrella"/>
+            android:textColor="@color/white"/>
     </LinearLayout>
 </RelativeLayout>

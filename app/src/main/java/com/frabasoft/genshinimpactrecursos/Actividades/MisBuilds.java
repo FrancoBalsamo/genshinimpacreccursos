@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewAlert;
 import com.frabasoft.genshinimpactrecursos.Clases.Armas.Armas;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
@@ -48,6 +50,8 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.master.permissionhelper.PermissionHelper;
 
 import java.io.IOException;
+import java.nio.charset.IllegalCharsetNameException;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -157,11 +161,6 @@ public class MisBuilds extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         publicidad.loadAd(adRequest);
 
-        florArtefactoArrayList =new ArrayList<FlorArtefacto>();
-        florArtefactoArrayList.add(new FlorArtefacto(0, "Flor del Afortunado"));
-        florArtefactoArrayList.add(new FlorArtefacto(1, "Flor del Aventurero"));
-        florArtefactoArrayList.add(new FlorArtefacto(2, "Flor Curativa"));
-
         etFlorPrin = (EditText) findViewById(R.id.etFlorPrin);
         etFlorSecA = (EditText) findViewById(R.id.etFlorSecA);
         etFlorSecB = (EditText) findViewById(R.id.etFlorSecB);
@@ -206,9 +205,11 @@ public class MisBuilds extends AppCompatActivity {
         scrollView = (ScrollView)findViewById(R.id.scroll);
         ivFlorArtefacto = (ImageView)findViewById(R.id.ivFlorArtefacto);
 
+        ivFlorArtefacto.setImageResource(R.drawable.flor_afortunado);
+
         df = new DecimalFormat("#.##");
 
-        spPJMisBuilds.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, personajesString));
+        spPJMisBuilds.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, personajesString));
         spPJMisBuilds.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1005,7 +1006,7 @@ public class MisBuilds extends AppCompatActivity {
     }
 
     private void cargarArcos(){
-        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, arcosStringArray));
+        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, arcosStringArray));
         spinnerArmas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1086,7 +1087,7 @@ public class MisBuilds extends AppCompatActivity {
     }
 
     private void cargarCatalizadores(){
-        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, catalizadorStringArray));
+        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, catalizadorStringArray));
         spinnerArmas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1167,7 +1168,7 @@ public class MisBuilds extends AppCompatActivity {
     }
 
     private void cargarEspadas(){
-        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, espadaStringArray));
+        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, espadaStringArray));
         spinnerArmas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1254,7 +1255,7 @@ public class MisBuilds extends AppCompatActivity {
     }
 
     private void cargarLanzas(){
-        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, lanzaStringArray));
+        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, lanzaStringArray));
         spinnerArmas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1323,7 +1324,7 @@ public class MisBuilds extends AppCompatActivity {
     }
 
     private void cargarMandobles(){
-        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, mandobleStringArray));
+        spinnerArmas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, mandobleStringArray));
         spinnerArmas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1454,43 +1455,56 @@ public class MisBuilds extends AppCompatActivity {
     }
 
     private void alertArtefactos(){
+        florArtefactoArrayList = new ArrayList<FlorArtefacto>();
+        florArtefactoArrayList.add(new FlorArtefacto(0, "Flor del Afortunado"));
+        florArtefactoArrayList.add(new FlorArtefacto(1, "Flor del Aventurero"));
+        florArtefactoArrayList.add(new FlorArtefacto(2, "Flor Curativa"));
+
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        FlorArtefacto florArtefacto = new FlorArtefacto();
         try{
             LayoutInflater layoutInflater = LayoutInflater.from(MisBuilds.this);
             AlertDialog anuncio = new AlertDialog.Builder(this).create();
             final View view = layoutInflater.inflate(R.layout.alert_artefactos_listview, null);
             final ListView lvAlertArtefactos = view.findViewById(R.id.lvAlertArtefactos);
-            lvAlertArtefactos.setAdapter(new AdaptadorImagenesTextViewEnAlertFlor(MisBuilds.this));
             anuncio.setView(view);
             anuncio.show();
+            lvAlertArtefactos.setAdapter(new AdaptadorListViewAlert(MisBuilds.this, florArtefactoArrayList));
+            lvAlertArtefactos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(position == 0){
+                        florArtefacto.setSeleccionFlor(position);
+                        florArtefacto.setNombreFlor(florArtefactoArrayList.get(position).getNombreFlor());
+                        florArtefacto.setRecursoFlor(R.drawable.flor_afortunado);
+                        try{
+                            datosProcesosSqlite.validarUInsertUpdateFlorArtefacto(florArtefactoArrayList.get(position).getNombreFlor(), florArtefacto);
+                        }catch (SQLiteException sqlException){
+                            Log.d("SQLite", "onItemClick: " + sqlException.getMessage());
+                        }
+                        anuncio.dismiss();
+                    }else if(position == 1){
+                        florArtefacto.setSeleccionFlor(position);
+                        florArtefacto.setNombreFlor(florArtefactoArrayList.get(position).getNombreFlor());
+                        florArtefacto.setRecursoFlor(R.drawable.flor_aventurero);
+                        datosProcesosSqlite.validarUInsertUpdateFlorArtefacto(florArtefactoArrayList.get(position).getNombreFlor(), florArtefacto);
+
+                    }else if(position == 2){
+                        florArtefacto.setSeleccionFlor(position);
+                        florArtefacto.setNombreFlor(florArtefactoArrayList.get(position).getNombreFlor());
+                        florArtefacto.setRecursoFlor(R.drawable.flor_aventurero);
+                        datosProcesosSqlite.validarUInsertUpdateFlorArtefacto(florArtefactoArrayList.get(position).getNombreFlor(), florArtefacto);
+                        Log.d("LISTVIEW", "\nPosición: " + position
+                                + "\nNombre: " + florArtefactoArrayList.get(position).getNombreFlor()
+                                + "\nRecurso: " + R.drawable.flor_aventurero);
+                    }
+                }
+            });
         }catch (Exception exception){
             Log.d("AlertArtefactos", "ERROR TIEMPO: " + exception.getMessage());
         }
     }
 
-    class AdaptadorImagenesTextViewEnAlertFlor extends ArrayAdapter<FlorArtefacto> {
-        AppCompatActivity appCompatActivity;
-
-        AdaptadorImagenesTextViewEnAlertFlor(AppCompatActivity context) {
-            super(context, R.layout.alert_artefactos_listview, florArtefactoArrayList);
-            appCompatActivity = context;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = appCompatActivity.getLayoutInflater();
-            View item = inflater.inflate(R.layout.alert_artefactos_listview, null);
-
-            ImageView ivArtefactosAlert = item.findViewById(R.id.ivArtefactosAlert);
-            final TextView tvArtefactosAlert = item.findViewById(R.id.tvArtefactosAlert);
-            tvArtefactosAlert.setText(R.string.estrella + "" + R.string.estrella + R.string.estrella);
-
-            if (florArtefactoArrayList.get(position).getSeleccionFlor() == 0){
-                ivArtefactosAlert.setImageResource(R.drawable.flor_afortunado);
-            }else if (florArtefactoArrayList.get(position).getSeleccionFlor() == 1){
-                ivArtefactosAlert.setImageResource(R.drawable.flor_aventurero);
-            }else if (florArtefactoArrayList.get(position).getSeleccionFlor() == 2){
-                ivArtefactosAlert.setImageResource(R.drawable.flor_curativa);
-            }
-            return(item);
-        }
+    private void guardarRecursoImagenFlor(Context context, int posicion){
     }
 }

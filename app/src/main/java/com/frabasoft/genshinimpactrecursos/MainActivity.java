@@ -322,7 +322,6 @@ public class MainActivity extends AppCompatActivity {
     private void anuncio(){
         Calendar fechaActual = Calendar.getInstance();
         int mesActual = fechaActual.get(Calendar.MONTH) + 1;
-        String abrirCerrarAnuncio = "28/04/2021";
         SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try{
             if(fechaActual.get(Calendar.DAY_OF_MONTH) < 10){
@@ -345,18 +344,17 @@ public class MainActivity extends AppCompatActivity {
             String resultadoFechaHoraSO = fechaActualBanner + " " + horaActualBanner;
             Date fechaResultadoString = sdfFecha.parse(resultadoFechaHoraSO);
             Date fechaFinalString = sdfFecha.parse(fechaFinalBanner);
-            Date fechaComparativaAbrirCerrarString = sdfFecha.parse(abrirCerrarAnuncio);
 
             long resultado = fechaFinalString.getTime() - fechaResultadoString.getTime();
             long segundos =(resultado/1000)%60;
             long minutos=(resultado/(1000*60))%60;
             long horas=(resultado/(1000*60*60))%24;
             long dias=(resultado/(1000*60*60*24))%365;
-            Log.d(TAG, "anuncio: " + dias + "/" + horas+":"+minutos);
 
             tiempoInicial = resultado;
 
-            if(fechaComparativaAbrirCerrarString.after(fechaFinalString)) {
+            if(fechaResultadoString.before(fechaFinalString)) {
+                Log.d("COMPARATIVA", "anuncio: " + fechaFinalString.after(fechaResultadoString));
                 LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
                 AlertDialog anuncio = new AlertDialog.Builder(this).create();
                 final View view = layoutInflater.inflate(R.layout.alerta_inicio_app, null);

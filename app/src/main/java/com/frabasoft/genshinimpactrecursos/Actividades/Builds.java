@@ -104,7 +104,7 @@ public class Builds extends FragmentActivity {
         df = new DecimalFormat("#.##");
         imgPJ = (TouchImageView) findViewById(R.id.imgPJ);
 
-        personajes.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, personajesString));
+        personajes.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, personajesString));
         personajes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {

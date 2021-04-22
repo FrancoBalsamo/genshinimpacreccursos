@@ -92,7 +92,7 @@ public class RutaArtefactos extends AppCompatActivity {
         df = new DecimalFormat("#.##");
         imgRutas = (TouchImageView) findViewById(R.id.imgRutas);
 
-        spinnerRutas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, rutasString));
+        spinnerRutas.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, rutasString));
         spinnerRutas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

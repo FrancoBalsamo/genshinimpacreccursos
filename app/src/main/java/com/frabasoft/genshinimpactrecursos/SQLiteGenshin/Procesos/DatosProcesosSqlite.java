@@ -17,12 +17,18 @@ import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Pluma;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Reloj;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.FlorArtefacto;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.ArmasTablaSqlite;
+import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.CopaImagenSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.CopaTablaSqlite;
+import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.CoronaImagenSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.CoronaTablaSqlite;
+import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.FlorImagenSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.FlorTablaSqlite;
+import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.PlumaImagenSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.PlumaTablaSqlite;
+import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.RelojImagenSqlite;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Tablas.RelojTablaSqlite;
 
 import java.io.BufferedWriter;
@@ -535,6 +541,79 @@ public class DatosProcesosSqlite implements Serializable {
         return list;
     }
 
+    /////////////////////////////////////////////////////////////////////////FLOR IMAGEN SAVE DATA SQLITE
+    private ContentValues mapeoFlorArtefacto(FlorArtefacto florArtefacto){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FlorImagenSqlite.ID_SELECCION_FLOR, florArtefacto.getSeleccionFlor());
+        contentValues.put(FlorImagenSqlite.FLOR_ARTEFACTO, florArtefacto.getNombreFlor());
+        contentValues.put(FlorImagenSqlite.RECURSO_ARTEFACTO_FLOR, florArtefacto.getRecursoFlor());
+        return contentValues;
+    }
+
+    public long guardarFlorArtefacto(FlorArtefacto florArtefacto){//insertar registro
+        this.abrirDBEsccribir();
+        long filaID = sqLiteDatabase.insert(FlorImagenSqlite.TABLA_FLOR_IMAGEN, null, mapeoFlorArtefacto(florArtefacto));
+        return filaID;
+    }
+
+    public void actualizarFlorArtefacto(FlorArtefacto florArtefacto, String valor){
+        this.abrirDBEsccribir();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FlorImagenSqlite.ID_SELECCION_FLOR, florArtefacto.getSeleccionFlor());
+        contentValues.put(FlorImagenSqlite.FLOR_ARTEFACTO, florArtefacto.getNombreFlor());
+        contentValues.put(FlorImagenSqlite.RECURSO_ARTEFACTO_FLOR, florArtefacto.getRecursoFlor());
+        String[] idValor = {String.valueOf(valor)};
+        sqLiteDatabase.update(FlorImagenSqlite.TABLA_FLOR_IMAGEN, contentValues, FlorImagenSqlite.ID_PK_ARTEFACTO_FLOR + " = ? ", idValor);
+        sqLiteDatabase.close();
+    }
+
+    public boolean validarUInsertUpdateFlorArtefacto(String nombreArtef, FlorArtefacto florArtefacto){//meétodo para validar el estado no visible del manga
+        this.abrirDBEsccribir();
+        String[] nom = {String.valueOf(1)};
+        String consulta = "SELECT * FROM " + FlorImagenSqlite.TABLA_FLOR_IMAGEN + " WHERE "
+                + FlorImagenSqlite.ID_PK_ARTEFACTO_FLOR + " = ?";
+        Cursor cursor = sqLiteDatabase.rawQuery(consulta, nom);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            guardarFlorArtefacto(florArtefacto);
+            copiarArchivo(guardar + "Flor " + guardarA + nombreArtef);
+            return false;
+        }else{
+            if(cursor.moveToFirst()){
+                String pj = cursor.getString(cursor.getColumnIndex(FlorImagenSqlite.ID_PK_ARTEFACTO_FLOR));
+                actualizarFlorArtefacto(florArtefacto, pj);
+                copiarArchivo(actualizar + "Flor " + actualizarA + nombreArtef);
+                return false;
+            }
+        }
+        cursor.close();
+        return true;
+    }
+
+    public ArrayList mostrarSeleccionFlorArtefacto(String artefNom) {
+        ArrayList list = new ArrayList<>();
+        this.abrirDBLeer();
+        String[] campos = new String[]{FlorImagenSqlite.ID_PK_ARTEFACTO_FLOR,
+                FlorImagenSqlite.ID_SELECCION_FLOR,
+                FlorImagenSqlite.FLOR_ARTEFACTO,
+                FlorImagenSqlite.RECURSO_ARTEFACTO_FLOR
+        };
+        String where = FlorImagenSqlite.FLOR_ARTEFACTO + " IN ('" + artefNom + "');";
+        Cursor c = sqLiteDatabase.query(FlorImagenSqlite.TABLA_FLOR_IMAGEN, campos, where, null, null, null, null);
+        try {
+            while (c.moveToNext()) {
+                FlorArtefacto florArtefacto = new FlorArtefacto();
+                florArtefacto.setIdPK(c.getInt(0));
+                florArtefacto.setSeleccionFlor(c.getInt(1));
+                florArtefacto.setNombreFlor(c.getString(2));
+                florArtefacto.setRecursoFlor(c.getInt(3));
+                list.add(florArtefacto);
+            }
+        } finally { c.close(); }
+        this.cerrarBD();
+        return list;
+    }
+
     /////////////////////////////////////////////////////////////////////////Creación de TXT y copia de bd
     public void copiarArchivo(String detalles){
         //para el archivo txt
@@ -641,6 +720,11 @@ public class DatosProcesosSqlite implements Serializable {
             db.execSQL(PlumaTablaSqlite.TABLA_PLUMA_SQL);
             db.execSQL(RelojTablaSqlite.TABLA_RELOJ_SQL);
             db.execSQL(ArmasTablaSqlite.TABLA_ARMA_SQL);
+            db.execSQL(FlorImagenSqlite.TABLA_FLOR_RECURSO_ARTEFACTO_SQL);
+            db.execSQL(PlumaImagenSqlite.TABLA_PLUMA_RECURSO_ARTEFACTO_SQL);
+            db.execSQL(RelojImagenSqlite.TABLA_RELOJ_RECURSO_ARTEFACTO_SQL);
+            db.execSQL(CopaImagenSqlite.TABLA_COPA_RECURSO_ARTEFACTO_SQL);
+            db.execSQL(CoronaImagenSqlite.TABLA_COPA_RECURSO_ARTEFACTO_SQL);
         }
 
         @Override
@@ -654,6 +738,23 @@ public class DatosProcesosSqlite implements Serializable {
                     db.execSQL(RelojTablaSqlite.TABLA_RELOJ_SQL);
                 case 2:
                     db.execSQL(ArmasTablaSqlite.TABLA_ARMA_SQL);
+                case 3:
+                    db.execSQL(FlorImagenSqlite.TABLA_FLOR_RECURSO_ARTEFACTO_SQL);
+                    db.execSQL(PlumaImagenSqlite.TABLA_PLUMA_RECURSO_ARTEFACTO_SQL);
+                    db.execSQL(RelojImagenSqlite.TABLA_RELOJ_RECURSO_ARTEFACTO_SQL);
+                    db.execSQL(CopaImagenSqlite.TABLA_COPA_RECURSO_ARTEFACTO_SQL);
+                    db.execSQL(CoronaImagenSqlite.TABLA_COPA_RECURSO_ARTEFACTO_SQL);
+                case 4:
+                    db.execSQL("DROP TABLE IF EXISTS " + FlorImagenSqlite.TABLA_FLOR_IMAGEN);
+                    db.execSQL("DROP TABLE IF EXISTS " + PlumaImagenSqlite.TABLA_PLUMA_IMAGEN);
+                    db.execSQL("DROP TABLE IF EXISTS " + RelojImagenSqlite.TABLA_RELOJ_IMAGEN);
+                    db.execSQL("DROP TABLE IF EXISTS " + CopaImagenSqlite.TABLA_COPA_IMAGEN);
+                    db.execSQL("DROP TABLE IF EXISTS " + CoronaImagenSqlite.TABLA_CORONA_IMAGEN);
+                    db.execSQL(FlorImagenSqlite.TABLA_FLOR_RECURSO_ARTEFACTO_SQL);
+                    db.execSQL(PlumaImagenSqlite.TABLA_PLUMA_RECURSO_ARTEFACTO_SQL);
+                    db.execSQL(RelojImagenSqlite.TABLA_RELOJ_RECURSO_ARTEFACTO_SQL);
+                    db.execSQL(CopaImagenSqlite.TABLA_COPA_RECURSO_ARTEFACTO_SQL);
+                    db.execSQL(CoronaImagenSqlite.TABLA_COPA_RECURSO_ARTEFACTO_SQL);
             }
         }
     }
