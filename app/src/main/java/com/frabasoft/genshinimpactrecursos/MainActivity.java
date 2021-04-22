@@ -322,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
     private void anuncio(){
         Calendar fechaActual = Calendar.getInstance();
         int mesActual = fechaActual.get(Calendar.MONTH) + 1;
+        String abrirCerrarAnuncio = "28/04/2021";
         SimpleDateFormat sdfFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try{
             if(fechaActual.get(Calendar.DAY_OF_MONTH) < 10){
@@ -343,9 +344,10 @@ public class MainActivity extends AppCompatActivity {
 
             String resultadoFechaHoraSO = fechaActualBanner + " " + horaActualBanner;
             Date fechaResultadoString = sdfFecha.parse(resultadoFechaHoraSO);
-            Date b = sdfFecha.parse(fechaFinalBanner);
+            Date fechaFinalString = sdfFecha.parse(fechaFinalBanner);
+            Date fechaComparativaAbrirCerrarString = sdfFecha.parse(abrirCerrarAnuncio);
 
-            long resultado = b.getTime() - fechaResultadoString.getTime();
+            long resultado = fechaFinalString.getTime() - fechaResultadoString.getTime();
             long segundos =(resultado/1000)%60;
             long minutos=(resultado/(1000*60))%60;
             long horas=(resultado/(1000*60*60))%24;
@@ -354,32 +356,36 @@ public class MainActivity extends AppCompatActivity {
 
             tiempoInicial = resultado;
 
-            LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
-            AlertDialog anuncio = new AlertDialog.Builder(this).create();
-            final View view = layoutInflater.inflate(R.layout.alerta_inicio_app, null);
-            final TextView tiempoRestante = view.findViewById(R.id.tiempoRestante);
-            conteoRegresivo = new CountDownTimer(tiempoInicial, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    int dias = (int) ((millisUntilFinished / 1000) / 86400);
-                    int horas = (int) (((millisUntilFinished / 1000)
-                            - (dias * 86400)) / 3600);
-                    int minutos = (int) (((millisUntilFinished / 1000)
-                            - (dias * 86400) - (horas * 3600)) / 60);
-                    int segundos = (int) ((millisUntilFinished / 1000) % 60);
-                    String countDownText = String.format("Faltan %2d Dia(s) %2d Hr(s) %2d Min %2d Seg para que finalice el banner.", dias, horas, minutos, segundos);
-                    tiempoRestante.setText(countDownText);
-                }
+            if(fechaComparativaAbrirCerrarString.after(fechaFinalString)) {
+                LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+                AlertDialog anuncio = new AlertDialog.Builder(this).create();
+                final View view = layoutInflater.inflate(R.layout.alerta_inicio_app, null);
+                final TextView tiempoRestante = view.findViewById(R.id.tiempoRestante);
+                conteoRegresivo = new CountDownTimer(tiempoInicial, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        int dias = (int) ((millisUntilFinished / 1000) / 86400);
+                        int horas = (int) (((millisUntilFinished / 1000)
+                                - (dias * 86400)) / 3600);
+                        int minutos = (int) (((millisUntilFinished / 1000)
+                                - (dias * 86400) - (horas * 3600)) / 60);
+                        int segundos = (int) ((millisUntilFinished / 1000) % 60);
+                        String countDownText = String.format("Faltan %2d Dia(s) %2d Hr(s) %2d Min %2d Seg para que finalice el banner.", dias, horas, minutos, segundos);
+                        tiempoRestante.setText(countDownText);
+                    }
 
-                @Override
-                public void onFinish() {
-                    tiempoRestante.setText(DateUtils.formatElapsedTime(0));
-                }
-            }.start();
-            final Button cerrar = view.findViewById(R.id.cerrarAnuncio);
-            cerrar.setOnClickListener(v -> anuncio.dismiss());
-            anuncio.setView(view);
-            anuncio.show();
+                    @Override
+                    public void onFinish() {
+                        tiempoRestante.setText(DateUtils.formatElapsedTime(0));
+                    }
+                }.start();
+                final Button cerrar = view.findViewById(R.id.cerrarAnuncio);
+                cerrar.setOnClickListener(v -> anuncio.dismiss());
+                anuncio.setView(view);
+                anuncio.show();
+            }else{
+                Toast.makeText(this, "El banner de Tartaglia, ¡Ha terminado! Pronto iniciará una nueva actualización. ¡No olvides descargarla!", Toast.LENGTH_SHORT).show();
+            }
         }catch (Exception exception){
             Log.d(TAG, "ERROR TIEMPO: " + exception.getMessage());
         }
