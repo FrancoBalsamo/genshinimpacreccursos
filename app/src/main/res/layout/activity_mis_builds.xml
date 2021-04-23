@@ -211,8 +211,8 @@
                             android:gravity="center_horizontal"
                             android:background="@drawable/borde_layout_artefactos">
                             <ImageView
+                                android:id="@+id/ivPluma"
                                 android:layout_gravity="center"
-                                android:background="@drawable/plumico"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"/>
                         </LinearLayout>
@@ -293,7 +293,7 @@
                             android:background="@drawable/borde_layout_artefactos">
                             <ImageView
                                 android:layout_gravity="center"
-                                android:background="@drawable/relico"
+                                android:id="@+id/ivRelojArtefacto"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"/>
                         </LinearLayout>

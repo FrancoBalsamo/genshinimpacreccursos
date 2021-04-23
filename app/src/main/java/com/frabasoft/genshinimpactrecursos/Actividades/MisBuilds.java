@@ -24,14 +24,20 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewAlert;
+import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewAlertFlor;
+import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewPluma;
+import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewReloj;
 import com.frabasoft.genshinimpactrecursos.Clases.Armas.Armas;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Copa;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Pluma;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Reloj;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.CopaArtefacto;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.CoronaArtefacto;
 import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.FlorArtefacto;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.PlumaArtefacto;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.RelojArtefacto;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
@@ -106,7 +112,11 @@ public class MisBuilds extends AppCompatActivity {
     };
 
     private ArrayList<Armas> armasArrayList;
-    private ArrayList<FlorArtefacto> florArtefactoArrayList;
+    private ArrayList<FlorArtefacto> florArtefactoArrayList = new ArrayList<FlorArtefacto>();
+    private ArrayList<PlumaArtefacto> plumaArtefactoArrayList;
+    private ArrayList<RelojArtefacto> relojArtefactoArrayList;
+    private ArrayList<CopaArtefacto> copaArtefactoArrayList;
+    private ArrayList<CoronaArtefacto> coronaArtefactoArrayList;
 
     private DecimalFormat df;
     PermissionHelper permissionHelper;
@@ -121,7 +131,7 @@ public class MisBuilds extends AppCompatActivity {
     private ArrayList<Reloj> relojArrayList;
     private ArrayList<Copa> copaArrayList;
     private ArrayList<Corona> coronaArrayList;
-    private ImageView ivArmas, ivFlorArtefacto;
+    private ImageView ivArmas, ivFlorArtefacto, ivPluma, ivRelojArtefacto;
     private ScrollView scrollView;
     String nombrePJ = "";
 
@@ -146,59 +156,63 @@ public class MisBuilds extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        publicidad = (AdView) findViewById(R.id.banerMisBuilds);
+        publicidad = findViewById(R.id.banerMisBuilds);
         AdRequest adRequest = new AdRequest.Builder().build();
         publicidad.loadAd(adRequest);
 
-        etFlorPrin = (EditText) findViewById(R.id.etFlorPrin);
-        etFlorSecA = (EditText) findViewById(R.id.etFlorSecA);
-        etFlorSecB = (EditText) findViewById(R.id.etFlorSecB);
-        etFlorSecC = (EditText) findViewById(R.id.etFlorSecC);
-        etFlorSecD = (EditText) findViewById(R.id.etFlorSecD);
+        etFlorPrin = findViewById(R.id.etFlorPrin);
+        etFlorSecA = findViewById(R.id.etFlorSecA);
+        etFlorSecB = findViewById(R.id.etFlorSecB);
+        etFlorSecC = findViewById(R.id.etFlorSecC);
+        etFlorSecD = findViewById(R.id.etFlorSecD);
 
-        etPlumPrin = (EditText) findViewById(R.id.etPlumPrin);
-        etPlumSecA = (EditText) findViewById(R.id.etPlumSecA);
-        etPlumSecB = (EditText) findViewById(R.id.etPlumSecB);
-        etPlumSecC = (EditText) findViewById(R.id.etPlumSecC);
-        etPlumSecD = (EditText) findViewById(R.id.etPlumSecD);
+        etPlumPrin = findViewById(R.id.etPlumPrin);
+        etPlumSecA = findViewById(R.id.etPlumSecA);
+        etPlumSecB = findViewById(R.id.etPlumSecB);
+        etPlumSecC = findViewById(R.id.etPlumSecC);
+        etPlumSecD = findViewById(R.id.etPlumSecD);
 
-        etRelPrin = (EditText) findViewById(R.id.etRelPrin);
-        etRelSecA = (EditText) findViewById(R.id.etRelSecA);
-        etRelSecB = (EditText) findViewById(R.id.etRelSecB);
-        etRelSecC = (EditText) findViewById(R.id.etRelSecC);
-        etRelSecD = (EditText) findViewById(R.id.etRelSecD);
+        etRelPrin = findViewById(R.id.etRelPrin);
+        etRelSecA = findViewById(R.id.etRelSecA);
+        etRelSecB = findViewById(R.id.etRelSecB);
+        etRelSecC = findViewById(R.id.etRelSecC);
+        etRelSecD = findViewById(R.id.etRelSecD);
 
-        etCopPrin = (EditText) findViewById(R.id.etCopPrin);
-        etCopSecA = (EditText) findViewById(R.id.etCopSecA);
-        etCopSecB = (EditText) findViewById(R.id.etCopSecB);
-        etCopSecC = (EditText) findViewById(R.id.etCopSecC);
-        etCopSecD = (EditText) findViewById(R.id.etCopSecD);
+        etCopPrin = findViewById(R.id.etCopPrin);
+        etCopSecA = findViewById(R.id.etCopSecA);
+        etCopSecB = findViewById(R.id.etCopSecB);
+        etCopSecC = findViewById(R.id.etCopSecC);
+        etCopSecD = findViewById(R.id.etCopSecD);
 
-        etCorPrin = (EditText) findViewById(R.id.etCorPrin);
-        etCorSecA = (EditText) findViewById(R.id.etCorSecA);
-        etCorSecB = (EditText) findViewById(R.id.etCorSecB);
-        etCorSecC = (EditText) findViewById(R.id.etCorSecC);
-        etCorSecD = (EditText) findViewById(R.id.etCorSecD);
+        etCorPrin = findViewById(R.id.etCorPrin);
+        etCorSecA = findViewById(R.id.etCorSecA);
+        etCorSecB = findViewById(R.id.etCorSecB);
+        etCorSecC = findViewById(R.id.etCorSecC);
+        etCorSecD = findViewById(R.id.etCorSecD);
 
-        spPJMisBuilds = (Spinner) findViewById(R.id.spPJMisBuilds);
-        spinnerArmas = (Spinner)findViewById(R.id.spinnerArmas);
-        imgPJMisBuilds = (TouchImageView) findViewById(R.id.imgPJMisBuilds);
-        guardarFlor = (Button) findViewById(R.id.guardarFlor);
-        guardarPluma = (Button) findViewById(R.id.guardarPluma);
-        guardarReloj = (Button) findViewById(R.id.guardarReloj);
-        guardarCopa = (Button) findViewById(R.id.guardarCopa);
-        guardarCorona = (Button) findViewById(R.id.guardarCorona);
-        guardarTodo = (Button) findViewById(R.id.guardarTodo);
-        vistaPrevia = (Button) findViewById(R.id.vistaprevia);
-        ivArmas = (ImageView)findViewById(R.id.ivArmas);
-        scrollView = (ScrollView)findViewById(R.id.scroll);
-        ivFlorArtefacto = (ImageView)findViewById(R.id.ivFlorArtefacto);
+        spPJMisBuilds = findViewById(R.id.spPJMisBuilds);
+        spinnerArmas = findViewById(R.id.spinnerArmas);
+        imgPJMisBuilds = findViewById(R.id.imgPJMisBuilds);
+        guardarFlor = findViewById(R.id.guardarFlor);
+        guardarPluma = findViewById(R.id.guardarPluma);
+        guardarReloj = findViewById(R.id.guardarReloj);
+        guardarCopa = findViewById(R.id.guardarCopa);
+        guardarCorona = findViewById(R.id.guardarCorona);
+        guardarTodo = findViewById(R.id.guardarTodo);
+        vistaPrevia = findViewById(R.id.vistaprevia);
+        ivArmas = findViewById(R.id.ivArmas);
+        scrollView = findViewById(R.id.scroll);
+        ivFlorArtefacto = findViewById(R.id.ivFlorArtefacto);
+        ivPluma = findViewById(R.id.ivPluma);
+        ivRelojArtefacto = findViewById(R.id.ivRelojArtefacto);
 
         ivFlorArtefacto.setImageResource(R.drawable.flor_afortunado);
+        ivPluma.setImageResource(R.drawable.pluma_afortunado);
+        ivRelojArtefacto.setImageResource(R.drawable.reloj_afortunado);
 
         df = new DecimalFormat("#.##");
 
-        spPJMisBuilds.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, personajesString));
+        spPJMisBuilds.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_color_text, personajesString));
         spPJMisBuilds.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -216,7 +230,9 @@ public class MisBuilds extends AppCompatActivity {
                     scrollView.setEnabled(true);
                     scrollView.setVisibility(View.VISIBLE);
                     cargarEspadas();
-                    traerArtefactosGuardados();
+                    traerArtefactosGuardadosFlor();
+                    traerArtefactosGuardadosPluma();
+                    traerArtefactosGuardadosReloj();
                     traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
@@ -491,10 +507,9 @@ public class MisBuilds extends AppCompatActivity {
             }
         });
 
-        ivFlorArtefacto.setOnClickListener(v -> {
-            alertArtefactos();
-        });
-
+        ivFlorArtefacto.setOnClickListener(v ->alertArtefactosFlor());
+        ivPluma.setOnClickListener(v -> alertArtefactosPluma());
+        ivRelojArtefacto.setOnClickListener(v -> alertArtefactosReloj());
     }
 
     private void ejecutar() {
@@ -1452,8 +1467,8 @@ public class MisBuilds extends AppCompatActivity {
         datosProcesosSqlite.validarUInsertUpdateArma(this, spPJMisBuilds.getSelectedItem().toString(), armas);
     }
 
-    private void alertArtefactos(){
-        florArtefactoArrayList = new ArrayList<FlorArtefacto>();
+    private void alertArtefactosFlor(){
+        florArtefactoArrayList = new ArrayList<>();
         florArtefactoArrayList.add(new FlorArtefacto(0, "Flor del Afortunado"));
         florArtefactoArrayList.add(new FlorArtefacto(1, "Flor del Aventurero"));
         florArtefactoArrayList.add(new FlorArtefacto(2, "Flor Curativa"));
@@ -1467,7 +1482,7 @@ public class MisBuilds extends AppCompatActivity {
             final ListView lvAlertArtefactos = view.findViewById(R.id.lvAlertArtefactos);
             anuncio.setView(view);
             anuncio.show();
-            lvAlertArtefactos.setAdapter(new AdaptadorListViewAlert(MisBuilds.this, florArtefactoArrayList));
+            lvAlertArtefactos.setAdapter(new AdaptadorListViewAlertFlor(MisBuilds.this, florArtefactoArrayList));
             lvAlertArtefactos.setOnItemClickListener((parent, view1, position, id) -> {
                 if(position == 0){
                     florArtefacto.setNombrePJ(nombrePJ);
@@ -1475,7 +1490,7 @@ public class MisBuilds extends AppCompatActivity {
                     florArtefacto.setNombreArtefacto(florArtefactoArrayList.get(position).getNombreArtefacto());
                     florArtefacto.setRecursoArtefacto(R.drawable.flor_afortunado);
                     datosProcesosSqlite.validarUInsertUpdateFlorArtefacto(florArtefactoArrayList.get(position).getNombreArtefacto(), florArtefacto);
-                    traerArtefactosGuardados();
+                    traerArtefactosGuardadosFlor();
                     anuncio.dismiss();
                 }else if(position == 1){
                     florArtefacto.setNombrePJ(nombrePJ);
@@ -1483,7 +1498,7 @@ public class MisBuilds extends AppCompatActivity {
                     florArtefacto.setNombreArtefacto(florArtefactoArrayList.get(position).getNombreArtefacto());
                     florArtefacto.setRecursoArtefacto(R.drawable.flor_aventurero);
                     datosProcesosSqlite.validarUInsertUpdateFlorArtefacto(florArtefactoArrayList.get(position).getNombreArtefacto(), florArtefacto);
-                    traerArtefactosGuardados();
+                    traerArtefactosGuardadosFlor();
                     anuncio.dismiss();
                 }else if(position == 2){
                     florArtefacto.setNombrePJ(nombrePJ);
@@ -1491,25 +1506,146 @@ public class MisBuilds extends AppCompatActivity {
                     florArtefacto.setNombreArtefacto(florArtefactoArrayList.get(position).getNombreArtefacto());
                     florArtefacto.setRecursoArtefacto(R.drawable.flor_curativa);
                     datosProcesosSqlite.validarUInsertUpdateFlorArtefacto(florArtefactoArrayList.get(position).getNombreArtefacto(), florArtefacto);
-                    traerArtefactosGuardados();
+                    traerArtefactosGuardadosFlor();
                     anuncio.dismiss();
                 }
             });
         }catch (Exception exception){
-            Log.d("AlertArtefactos", "ERROR ALERT GUARDAR: " + exception.getMessage());
+            Log.d("AlertArtefactosFlor", "ERROR ALERT GUARDAR: " + exception.getMessage());
         }
     }
 
-    private void traerArtefactosGuardados(){
+    private void traerArtefactosGuardadosFlor(){
         DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
         florArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionFlorArtefacto(nombrePJ);
         if(florArtefactoArrayList.size() <= 0){
             //nada
         }else{
             for(int i = 0; i < florArtefactoArrayList.size(); i++){
-                spinnerArmas.setSelection(florArtefactoArrayList.get(i).getSeleccionDatoSpiner());
                 ivFlorArtefacto.setImageResource(florArtefactoArrayList.get(i).getRecursoArtefacto());
-                Log.d("traerArtefactos", "traerArtefactosGuardados: "+ florArtefactoArrayList.get(i).getNombreArtefacto());
+                Log.d("traerArtefactosFlor", "traerArtefactosGuardados: "+ florArtefactoArrayList.get(i).getNombreArtefacto());
+            }
+        }
+    }
+
+    private void alertArtefactosPluma(){
+        plumaArtefactoArrayList = new ArrayList<>();
+        plumaArtefactoArrayList.add(new PlumaArtefacto(0, "Pluma del Afortunado"));
+        plumaArtefactoArrayList.add(new PlumaArtefacto(1, "Pluma del Aventurero"));
+        plumaArtefactoArrayList.add(new PlumaArtefacto(2, "Pluma Curativa"));
+
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        PlumaArtefacto plumaArtefacto = new PlumaArtefacto();
+        try{
+            LayoutInflater layoutInflater = LayoutInflater.from(MisBuilds.this);
+            AlertDialog anuncio = new AlertDialog.Builder(this).create();
+            final View view = layoutInflater.inflate(R.layout.alert_artefactos_listview, null);
+            final ListView lvAlertArtefactos = view.findViewById(R.id.lvAlertArtefactos);
+            anuncio.setView(view);
+            anuncio.show();
+            lvAlertArtefactos.setAdapter(new AdaptadorListViewPluma(MisBuilds.this, plumaArtefactoArrayList));
+            lvAlertArtefactos.setOnItemClickListener((parent, view1, position, id) -> {
+                if(position == 0){
+                    plumaArtefacto.setNombrePJ(nombrePJ);
+                    plumaArtefacto.setSeleccionDatoSpiner(position);
+                    plumaArtefacto.setNombreArtefacto(plumaArtefactoArrayList.get(position).getNombreArtefacto());
+                    plumaArtefacto.setRecursoArtefacto(R.drawable.pluma_afortunado);
+                    datosProcesosSqlite.validarUInsertUpdatePlumaArtefacto(plumaArtefactoArrayList.get(position).getNombreArtefacto(), plumaArtefacto);
+                    traerArtefactosGuardadosPluma();
+                    anuncio.dismiss();
+                }else if(position == 1){
+                    plumaArtefacto.setNombrePJ(nombrePJ);
+                    plumaArtefacto.setSeleccionDatoSpiner(position);
+                    plumaArtefacto.setNombreArtefacto(plumaArtefactoArrayList.get(position).getNombreArtefacto());
+                    plumaArtefacto.setRecursoArtefacto(R.drawable.pluma_aventurero);
+                    datosProcesosSqlite.validarUInsertUpdatePlumaArtefacto(plumaArtefactoArrayList.get(position).getNombreArtefacto(), plumaArtefacto);
+                    traerArtefactosGuardadosPluma();
+                    anuncio.dismiss();
+                }else if(position == 2){
+                    plumaArtefacto.setNombrePJ(nombrePJ);
+                    plumaArtefacto.setSeleccionDatoSpiner(position);
+                    plumaArtefacto.setNombreArtefacto(plumaArtefactoArrayList.get(position).getNombreArtefacto());
+                    plumaArtefacto.setRecursoArtefacto(R.drawable.pluma_curativa);
+                    datosProcesosSqlite.validarUInsertUpdatePlumaArtefacto(plumaArtefactoArrayList.get(position).getNombreArtefacto(), plumaArtefacto);
+                    traerArtefactosGuardadosPluma();
+                    anuncio.dismiss();
+                }
+            });
+        }catch (Exception exception){
+            Log.d("AlertArtefactosPluma", "ERROR ALERT GUARDAR: " + exception.getMessage());
+        }
+    }
+
+    private void traerArtefactosGuardadosPluma(){
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        plumaArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionPlumaArtefacto(nombrePJ);
+        if(plumaArtefactoArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < plumaArtefactoArrayList.size(); i++){
+                ivPluma.setImageResource(plumaArtefactoArrayList.get(i).getRecursoArtefacto());
+                Log.d("traerArtefactosPluma", "traerArtefactosGuardados: "+ plumaArtefactoArrayList.get(i).getNombreArtefacto());
+            }
+        }
+    }
+
+    private void alertArtefactosReloj(){
+        relojArtefactoArrayList = new ArrayList<>();
+        relojArtefactoArrayList.add(new RelojArtefacto(0, "Reloj del Afortunado"));
+        relojArtefactoArrayList.add(new RelojArtefacto(1, "Reloj del Aventurero"));
+        relojArtefactoArrayList.add(new RelojArtefacto(2, "Reloj Curativo"));
+
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        RelojArtefacto relojArtefacto = new RelojArtefacto();
+        try{
+            LayoutInflater layoutInflater = LayoutInflater.from(MisBuilds.this);
+            AlertDialog anuncio = new AlertDialog.Builder(this).create();
+            final View view = layoutInflater.inflate(R.layout.alert_artefactos_listview, null);
+            final ListView lvAlertArtefactos = view.findViewById(R.id.lvAlertArtefactos);
+            anuncio.setView(view);
+            anuncio.show();
+            lvAlertArtefactos.setAdapter(new AdaptadorListViewReloj(MisBuilds.this, relojArtefactoArrayList));
+            lvAlertArtefactos.setOnItemClickListener((parent, view1, position, id) -> {
+                if(position == 0){
+                    relojArtefacto.setNombrePJ(nombrePJ);
+                    relojArtefacto.setSeleccionDatoSpiner(position);
+                    relojArtefacto.setNombreArtefacto(relojArtefactoArrayList.get(position).getNombreArtefacto());
+                    relojArtefacto.setRecursoArtefacto(R.drawable.reloj_afortunado);
+                    datosProcesosSqlite.validarUInsertUpdateRelojArtefacto(relojArtefactoArrayList.get(position).getNombreArtefacto(), relojArtefacto);
+                    traerArtefactosGuardadosReloj();
+                    anuncio.dismiss();
+                }else if(position == 1){
+                    relojArtefacto.setNombrePJ(nombrePJ);
+                    relojArtefacto.setSeleccionDatoSpiner(position);
+                    relojArtefacto.setNombreArtefacto(relojArtefactoArrayList.get(position).getNombreArtefacto());
+                    relojArtefacto.setRecursoArtefacto(R.drawable.reloj_aventurero);
+                    datosProcesosSqlite.validarUInsertUpdateRelojArtefacto(relojArtefactoArrayList.get(position).getNombreArtefacto(), relojArtefacto);
+                    traerArtefactosGuardadosReloj();
+                    anuncio.dismiss();
+                }else if(position == 2){
+                    relojArtefacto.setNombrePJ(nombrePJ);
+                    relojArtefacto.setSeleccionDatoSpiner(position);
+                    relojArtefacto.setNombreArtefacto(relojArtefactoArrayList.get(position).getNombreArtefacto());
+                    relojArtefacto.setRecursoArtefacto(R.drawable.reloj_curativa);
+                    datosProcesosSqlite.validarUInsertUpdateRelojArtefacto(relojArtefactoArrayList.get(position).getNombreArtefacto(), relojArtefacto);
+                    traerArtefactosGuardadosReloj();
+                    anuncio.dismiss();
+                }
+            });
+        }catch (Exception exception){
+            Log.d("AlertArtefactosPluma", "ERROR ALERT GUARDAR: " + exception.getMessage());
+        }
+    }
+
+    private void traerArtefactosGuardadosReloj(){
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        relojArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionRelojArtefacto(nombrePJ);
+        if(relojArtefactoArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < relojArtefactoArrayList.size(); i++){
+                ivRelojArtefacto.setImageResource(relojArtefactoArrayList.get(i).getRecursoArtefacto());
+                Log.d("traerArtefactosPluma", "traerArtefactosGuardados: "+ relojArtefactoArrayList.get(i).getNombreArtefacto());
             }
         }
     }

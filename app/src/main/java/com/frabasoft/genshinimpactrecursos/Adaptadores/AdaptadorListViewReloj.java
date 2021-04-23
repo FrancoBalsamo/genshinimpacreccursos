@@ -8,27 +8,28 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.FlorArtefacto;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.PlumaArtefacto;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.RelojArtefacto;
 import com.frabasoft.genshinimpactrecursos.R;
 
 import java.util.ArrayList;
 
-public class AdaptadorListViewAlert extends BaseAdapter {
+public class AdaptadorListViewReloj extends BaseAdapter {
     private Context context;//el contexto para la clase
-    ArrayList<FlorArtefacto> florArtefactoArrayList = new ArrayList<>();//el array de datos
+    ArrayList<RelojArtefacto> relojArtefactoArrayList = new ArrayList<>();//el array de datos
 
     //clase con parámetros
-    public AdaptadorListViewAlert(Context context,  ArrayList<FlorArtefacto> clientes){
+    public AdaptadorListViewReloj(Context context, ArrayList<RelojArtefacto> relojArtefactoArrayList){
         this.context = context;
-        this.florArtefactoArrayList.addAll(clientes); // Crea una copia de los contactos
+        this.relojArtefactoArrayList.addAll(relojArtefactoArrayList); // Crea una copia de los contactos
     }
     @Override
     public int getCount() {
-        return this.florArtefactoArrayList.size();
+        return this.relojArtefactoArrayList.size();
     }
     @Override
     public Object getItem(int position) {
-        return this.florArtefactoArrayList.get(position);
+        return this.relojArtefactoArrayList.get(position);
     }
     @Override
     public long getItemId(int position) {
@@ -52,15 +53,15 @@ public class AdaptadorListViewAlert extends BaseAdapter {
         TextView tvArtefactosAlert = rowView.findViewById(R.id.tvArtefactosAlert); //creamos el textview
         ImageView ivArtefactosAlert = rowView.findViewById(R.id.ivArtefactosAlert);
 
-        FlorArtefacto florArtefacto = this.florArtefactoArrayList.get(position);
-        if (florArtefacto.getSeleccionDatoSpiner() == 0){
-            ivArtefactosAlert.setImageResource(R.drawable.flor_afortunado);
+        RelojArtefacto relojArtefacto = this.relojArtefactoArrayList.get(position);
+        if (relojArtefacto.getSeleccionDatoSpiner() == 0){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_afortunado);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
-        }else if (florArtefacto.getSeleccionDatoSpiner() == 1){
-            ivArtefactosAlert.setImageResource(R.drawable.flor_aventurero);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 1){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_aventurero);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
-        }else if (florArtefacto.getSeleccionDatoSpiner() == 2){
-            ivArtefactosAlert.setImageResource(R.drawable.flor_curativa);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 2){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_curativa);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
         }
         return rowView; //retornamos los datos
