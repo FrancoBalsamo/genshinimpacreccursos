@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.FlorArtefacto;
 import com.frabasoft.genshinimpactrecursos.R;
-import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 
 import java.util.ArrayList;
 
@@ -54,13 +53,13 @@ public class AdaptadorListViewAlert extends BaseAdapter {
         ImageView ivArtefactosAlert = rowView.findViewById(R.id.ivArtefactosAlert);
 
         FlorArtefacto florArtefacto = this.florArtefactoArrayList.get(position);
-        if (florArtefacto.getSeleccionFlor() == 0){
+        if (florArtefacto.getSeleccionDatoSpiner() == 0){
             ivArtefactosAlert.setImageResource(R.drawable.flor_afortunado);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
-        }else if (florArtefacto.getSeleccionFlor() == 1){
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 1){
             ivArtefactosAlert.setImageResource(R.drawable.flor_aventurero);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
-        }else if (florArtefacto.getSeleccionFlor() == 2){
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 2){
             ivArtefactosAlert.setImageResource(R.drawable.flor_curativa);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
         }

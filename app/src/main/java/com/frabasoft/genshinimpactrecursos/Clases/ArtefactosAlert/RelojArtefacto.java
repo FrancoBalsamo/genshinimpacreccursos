@@ -1,6 +1,6 @@
 package com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert;
 
-public class FlorArtefacto {
+public class RelojArtefacto {
     private int idPK;
     private String nombrePJ;
     private int seleccionDatoSpiner;
@@ -43,17 +43,17 @@ public class FlorArtefacto {
         this.recursoArtefacto = recursoArtefacto;
     }
 
-    public FlorArtefacto(){}
+    public RelojArtefacto(){}
 
-    public FlorArtefacto(String nombrePJ, int seleccionDatoSpiner, String nombreArtefacto, int recursoArtefacto) {
+    public RelojArtefacto(int seleccionDatoSpiner, String nombreArtefacto){
+        this.seleccionDatoSpiner = seleccionDatoSpiner;
+        this.nombreArtefacto = nombreArtefacto;
+    }
+
+    public RelojArtefacto(String nombrePJ, int seleccionDatoSpiner, String nombreArtefacto, int recursoArtefacto) {
         this.nombrePJ = nombrePJ;
         this.seleccionDatoSpiner = seleccionDatoSpiner;
         this.nombreArtefacto = nombreArtefacto;
         this.recursoArtefacto = recursoArtefacto;
-    }
-
-    public FlorArtefacto(int seleccionDatoSpiner, String nombreArtefacto){
-        this.seleccionDatoSpiner = seleccionDatoSpiner;
-        this.nombreArtefacto = nombreArtefacto;
     }
 }
