@@ -25,6 +25,11 @@ import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Corona;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Flor;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Pluma;
 import com.frabasoft.genshinimpactrecursos.Clases.Artefactos.Reloj;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.CopaArtefacto;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.CoronaArtefacto;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.FlorArtefacto;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.PlumaArtefacto;
+import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.RelojArtefacto;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.google.android.gms.ads.AdError;
@@ -48,13 +53,18 @@ public class VistaPrevia extends AppCompatActivity {
     private ArrayList<Copa> copaArrayList;
     private ArrayList<Corona> coronaArrayList;
     private ArrayList<Armas> armasArrayList;
+    private ArrayList<FlorArtefacto> florArtefactoArrayList;
+    private ArrayList<PlumaArtefacto> plumaArtefactoArrayList;
+    private ArrayList<RelojArtefacto> relojArtefactoArrayList;
+    private ArrayList<CopaArtefacto> copaArtefactoArrayList;
+    private ArrayList<CoronaArtefacto> coronaArtefactoArrayList;
 
     private TextView tvf, tvFl, tvFlo, tvFlor, tvFore;
     private TextView P, Pl, Plu, Plum, Pluma;
     private TextView RR, Re, Rel, Relo, Reloj;
     private TextView C, Co, Cop, Copa, Copas;
     private TextView tvC, tvCo, tvCor, tvCoro, tvCoron;
-    private ImageView ivArmaVP;
+    private ImageView ivArmaVP, ivFlorVP, ivPlumaVP, ivRelojVP, ivCopaVP, ivCoronaVP;
 
     private String nombrePersonaje = "";
 
@@ -121,11 +131,15 @@ public class VistaPrevia extends AppCompatActivity {
         tvCoron = (TextView)findViewById(R.id.tvCoron);
 
         ivArmaVP = (ImageView)findViewById(R.id.ivArmaVP);
+        ivFlorVP = findViewById(R.id.ivFlorVP);
+        ivPlumaVP = findViewById(R.id.ivPlumaVP);
+        ivRelojVP = findViewById(R.id.ivRelojVP);
+        ivCopaVP = findViewById(R.id.ivCopaVP);
+        ivCoronaVP = findViewById(R.id.ivCoronaVP);
 
         CargarDatosSQLite(nombrePersonaje);
         backgroundPJ(nombrePersonaje);
         contenido.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 if(permissionHelper.hasPermission()){
@@ -233,6 +247,67 @@ public class VistaPrevia extends AppCompatActivity {
             }else{
                 int valorImagen = armasArrayList.get(i).getRecursoImagen();
                 ivArmaVP.setImageResource(valorImagen);
+            }
+        }
+
+        //artefactos guardados
+        //Flor
+        datosProcesosSqlite = new DatosProcesosSqlite(this);
+        florArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionFlorArtefacto(nombrePersonaje);
+        if(florArtefactoArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < florArtefactoArrayList.size(); i++){
+                ivFlorVP.setImageResource(florArtefactoArrayList.get(i).getRecursoArtefacto());
+                Log.d("traerArtefactosFlor", "traerArtefactosGuardados: "+ florArtefactoArrayList.get(i).getNombreArtefacto());
+            }
+        }
+
+        //Pluma
+        datosProcesosSqlite = new DatosProcesosSqlite(this);
+        plumaArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionPlumaArtefacto(nombrePersonaje);
+        if(plumaArtefactoArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < plumaArtefactoArrayList.size(); i++){
+                ivPlumaVP.setImageResource(plumaArtefactoArrayList.get(i).getRecursoArtefacto());
+                Log.d("traerArtefactosPluma", "traerArtefactosGuardados: "+ plumaArtefactoArrayList.get(i).getNombreArtefacto());
+            }
+        }
+
+        //Reloj
+        datosProcesosSqlite = new DatosProcesosSqlite(this);
+        relojArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionRelojArtefacto(nombrePersonaje);
+        if(relojArtefactoArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < relojArtefactoArrayList.size(); i++){
+                ivRelojVP.setImageResource(relojArtefactoArrayList.get(i).getRecursoArtefacto());
+                Log.d("traerArtefactosReloj", "traerArtefactosGuardados: "+ relojArtefactoArrayList.get(i).getNombreArtefacto());
+            }
+        }
+
+        //Copa
+        datosProcesosSqlite = new DatosProcesosSqlite(this);
+        copaArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionCopaArtefacto(nombrePersonaje);
+        if(copaArtefactoArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < copaArtefactoArrayList.size(); i++){
+                ivCopaVP.setImageResource(copaArtefactoArrayList.get(i).getRecursoArtefacto());
+                Log.d("traerArtefactosPluma", "traerArtefactosGuardados: "+ copaArtefactoArrayList.get(i).getNombreArtefacto());
+            }
+        }
+
+        //Corona
+        datosProcesosSqlite = new DatosProcesosSqlite(this);
+        coronaArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionCoronaArtefacto(nombrePersonaje);
+        if(coronaArtefactoArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < coronaArtefactoArrayList.size(); i++){
+                ivCoronaVP.setImageResource(coronaArtefactoArrayList.get(i).getRecursoArtefacto());
+                Log.d("traerArtefactosCorona", "traerArtefactosGuardados: "+ coronaArtefactoArrayList.get(i).getNombreArtefacto());
             }
         }
     }

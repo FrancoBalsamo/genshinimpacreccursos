@@ -374,7 +374,7 @@
                             android:background="@drawable/borde_layout_artefactos">
                             <ImageView
                                 android:layout_gravity="center"
-                                android:background="@drawable/copico"
+                                android:id="@+id/ivCopaArtefacto"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"/>
                         </LinearLayout>
@@ -455,7 +455,7 @@
                             android:background="@drawable/borde_layout_artefactos">
                             <ImageView
                                 android:layout_gravity="center"
-                                android:background="@drawable/corico"
+                                android:id="@+id/ivCoronaArtefacto"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"/>
                         </LinearLayout>

@@ -25,6 +25,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewAlertFlor;
+import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewCopa;
+import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewCorona;
 import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewPluma;
 import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorListViewReloj;
 import com.frabasoft.genshinimpactrecursos.Clases.Armas.Armas;
@@ -118,7 +120,6 @@ public class MisBuilds extends AppCompatActivity {
     private ArrayList<CopaArtefacto> copaArtefactoArrayList;
     private ArrayList<CoronaArtefacto> coronaArtefactoArrayList;
 
-    private DecimalFormat df;
     PermissionHelper permissionHelper;
     private Button guardarFlor, guardarPluma, guardarReloj, guardarCopa, guardarCorona, guardarTodo, vistaPrevia;
     private EditText etFlorPrin, etFlorSecA, etFlorSecB, etFlorSecC, etFlorSecD;
@@ -131,7 +132,7 @@ public class MisBuilds extends AppCompatActivity {
     private ArrayList<Reloj> relojArrayList;
     private ArrayList<Copa> copaArrayList;
     private ArrayList<Corona> coronaArrayList;
-    private ImageView ivArmas, ivFlorArtefacto, ivPluma, ivRelojArtefacto;
+    private ImageView ivArmas, ivFlorArtefacto, ivPluma, ivRelojArtefacto, ivCopaArtefacto, ivCoronaArtefacto;
     private ScrollView scrollView;
     String nombrePJ = "";
 
@@ -205,12 +206,14 @@ public class MisBuilds extends AppCompatActivity {
         ivFlorArtefacto = findViewById(R.id.ivFlorArtefacto);
         ivPluma = findViewById(R.id.ivPluma);
         ivRelojArtefacto = findViewById(R.id.ivRelojArtefacto);
+        ivCopaArtefacto = findViewById(R.id.ivCopaArtefacto);
+        ivCoronaArtefacto = findViewById(R.id.ivCoronaArtefacto);
 
         ivFlorArtefacto.setImageResource(R.drawable.flor_afortunado);
         ivPluma.setImageResource(R.drawable.pluma_afortunado);
         ivRelojArtefacto.setImageResource(R.drawable.reloj_afortunado);
-
-        df = new DecimalFormat("#.##");
+        ivCopaArtefacto.setImageResource(R.drawable.copa_afortunado);
+        ivCoronaArtefacto.setImageResource(R.drawable.corona_afortunado);
 
         spPJMisBuilds.setAdapter(new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_color_text, personajesString));
         spPJMisBuilds.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -233,6 +236,8 @@ public class MisBuilds extends AppCompatActivity {
                     traerArtefactosGuardadosFlor();
                     traerArtefactosGuardadosPluma();
                     traerArtefactosGuardadosReloj();
+                    traerArtefactosGuardadosCopa();
+                    traerArtefactosGuardadosCorona();
                     traerArmaGuardada();
                     CargarDatosSQLite();
                     GuardarIndividuales();
@@ -510,6 +515,8 @@ public class MisBuilds extends AppCompatActivity {
         ivFlorArtefacto.setOnClickListener(v ->alertArtefactosFlor());
         ivPluma.setOnClickListener(v -> alertArtefactosPluma());
         ivRelojArtefacto.setOnClickListener(v -> alertArtefactosReloj());
+        ivCopaArtefacto.setOnClickListener(v -> alertArtefactosCopa());
+        ivCoronaArtefacto.setOnClickListener(v ->alertArtefactosCorona());
     }
 
     private void ejecutar() {
@@ -1633,7 +1640,7 @@ public class MisBuilds extends AppCompatActivity {
                 }
             });
         }catch (Exception exception){
-            Log.d("AlertArtefactosPluma", "ERROR ALERT GUARDAR: " + exception.getMessage());
+            Log.d("AlertArtefactosReloj", "ERROR ALERT GUARDAR: " + exception.getMessage());
         }
     }
 
@@ -1645,7 +1652,129 @@ public class MisBuilds extends AppCompatActivity {
         }else{
             for(int i = 0; i < relojArtefactoArrayList.size(); i++){
                 ivRelojArtefacto.setImageResource(relojArtefactoArrayList.get(i).getRecursoArtefacto());
-                Log.d("traerArtefactosPluma", "traerArtefactosGuardados: "+ relojArtefactoArrayList.get(i).getNombreArtefacto());
+                Log.d("traerArtefactosReloj", "traerArtefactosGuardados: "+ relojArtefactoArrayList.get(i).getNombreArtefacto());
+            }
+        }
+    }
+
+    private void alertArtefactosCopa(){
+        copaArtefactoArrayList = new ArrayList<>();
+        copaArtefactoArrayList.add(new CopaArtefacto(0, "Copa del Afortunado"));
+        copaArtefactoArrayList.add(new CopaArtefacto(1, "Copa del Aventurero"));
+        copaArtefactoArrayList.add(new CopaArtefacto(2, "Copa Curativo"));
+
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        CopaArtefacto copaArtefacto = new CopaArtefacto();
+        try{
+            LayoutInflater layoutInflater = LayoutInflater.from(MisBuilds.this);
+            AlertDialog anuncio = new AlertDialog.Builder(this).create();
+            final View view = layoutInflater.inflate(R.layout.alert_artefactos_listview, null);
+            final ListView lvAlertArtefactos = view.findViewById(R.id.lvAlertArtefactos);
+            anuncio.setView(view);
+            anuncio.show();
+            lvAlertArtefactos.setAdapter(new AdaptadorListViewCopa(MisBuilds.this, copaArtefactoArrayList));
+            lvAlertArtefactos.setOnItemClickListener((parent, view1, position, id) -> {
+                if(position == 0){
+                    copaArtefacto.setNombrePJ(nombrePJ);
+                    copaArtefacto.setSeleccionDatoSpiner(position);
+                    copaArtefacto.setNombreArtefacto(copaArtefactoArrayList.get(position).getNombreArtefacto());
+                    copaArtefacto.setRecursoArtefacto(R.drawable.copa_afortunado);
+                    datosProcesosSqlite.validarUInsertUpdateCopaArtefacto(copaArtefactoArrayList.get(position).getNombreArtefacto(), copaArtefacto);
+                    traerArtefactosGuardadosCopa();
+                    anuncio.dismiss();
+                }else if(position == 1){
+                    copaArtefacto.setNombrePJ(nombrePJ);
+                    copaArtefacto.setSeleccionDatoSpiner(position);
+                    copaArtefacto.setNombreArtefacto(copaArtefactoArrayList.get(position).getNombreArtefacto());
+                    copaArtefacto.setRecursoArtefacto(R.drawable.copa_aventurero);
+                    datosProcesosSqlite.validarUInsertUpdateCopaArtefacto(copaArtefactoArrayList.get(position).getNombreArtefacto(), copaArtefacto);
+                    traerArtefactosGuardadosCopa();
+                    anuncio.dismiss();
+                }else if(position == 2){
+                    copaArtefacto.setNombrePJ(nombrePJ);
+                    copaArtefacto.setSeleccionDatoSpiner(position);
+                    copaArtefacto.setNombreArtefacto(copaArtefactoArrayList.get(position).getNombreArtefacto());
+                    copaArtefacto.setRecursoArtefacto(R.drawable.copa_curativa);
+                    datosProcesosSqlite.validarUInsertUpdateCopaArtefacto(copaArtefactoArrayList.get(position).getNombreArtefacto(), copaArtefacto);
+                    traerArtefactosGuardadosCopa();
+                    anuncio.dismiss();
+                }
+            });
+        }catch (Exception exception){
+            Log.d("AlertArtefactosCopa", "ERROR ALERT GUARDAR: " + exception.getMessage());
+        }
+    }
+
+    private void traerArtefactosGuardadosCopa(){
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        copaArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionCopaArtefacto(nombrePJ);
+        if(copaArtefactoArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < copaArtefactoArrayList.size(); i++){
+                ivCopaArtefacto.setImageResource(copaArtefactoArrayList.get(i).getRecursoArtefacto());
+                Log.d("traerArtefactosPluma", "traerArtefactosGuardados: "+ copaArtefactoArrayList.get(i).getNombreArtefacto());
+            }
+        }
+    }
+
+    private void alertArtefactosCorona(){
+        coronaArtefactoArrayList = new ArrayList<>();
+        coronaArtefactoArrayList.add(new CoronaArtefacto(0, "Corona del Afortunado"));
+        coronaArtefactoArrayList.add(new CoronaArtefacto(1, "Corona del Aventurero"));
+        coronaArtefactoArrayList.add(new CoronaArtefacto(2, "Corona Curativo"));
+
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        CoronaArtefacto coronaArtefacto = new CoronaArtefacto();
+        try{
+            LayoutInflater layoutInflater = LayoutInflater.from(MisBuilds.this);
+            AlertDialog anuncio = new AlertDialog.Builder(this).create();
+            final View view = layoutInflater.inflate(R.layout.alert_artefactos_listview, null);
+            final ListView lvAlertArtefactos = view.findViewById(R.id.lvAlertArtefactos);
+            anuncio.setView(view);
+            anuncio.show();
+            lvAlertArtefactos.setAdapter(new AdaptadorListViewCorona(MisBuilds.this, coronaArtefactoArrayList));
+            lvAlertArtefactos.setOnItemClickListener((parent, view1, position, id) -> {
+                if(position == 0){
+                    coronaArtefacto.setNombrePJ(nombrePJ);
+                    coronaArtefacto.setSeleccionDatoSpiner(position);
+                    coronaArtefacto.setNombreArtefacto(coronaArtefactoArrayList.get(position).getNombreArtefacto());
+                    coronaArtefacto.setRecursoArtefacto(R.drawable.corona_afortunado);
+                    datosProcesosSqlite.validarUInsertUpdateCoronaArtefacto(coronaArtefactoArrayList.get(position).getNombreArtefacto(), coronaArtefacto);
+                    traerArtefactosGuardadosCorona();
+                    anuncio.dismiss();
+                }else if(position == 1){
+                    coronaArtefacto.setNombrePJ(nombrePJ);
+                    coronaArtefacto.setSeleccionDatoSpiner(position);
+                    coronaArtefacto.setNombreArtefacto(coronaArtefactoArrayList.get(position).getNombreArtefacto());
+                    coronaArtefacto.setRecursoArtefacto(R.drawable.corona_aventurero);
+                    datosProcesosSqlite.validarUInsertUpdateCoronaArtefacto(coronaArtefactoArrayList.get(position).getNombreArtefacto(), coronaArtefacto);
+                    traerArtefactosGuardadosCorona();
+                    anuncio.dismiss();
+                }else if(position == 2){
+                    coronaArtefacto.setNombrePJ(nombrePJ);
+                    coronaArtefacto.setSeleccionDatoSpiner(position);
+                    coronaArtefacto.setNombreArtefacto(coronaArtefactoArrayList.get(position).getNombreArtefacto());
+                    coronaArtefacto.setRecursoArtefacto(R.drawable.corona_curativa);
+                    datosProcesosSqlite.validarUInsertUpdateCoronaArtefacto(coronaArtefactoArrayList.get(position).getNombreArtefacto(), coronaArtefacto);
+                    traerArtefactosGuardadosCorona();
+                    anuncio.dismiss();
+                }
+            });
+        }catch (Exception exception){
+            Log.d("AlertArtefactosCorona", "ERROR ALERT GUARDAR: " + exception.getMessage());
+        }
+    }
+
+    private void traerArtefactosGuardadosCorona(){
+        DatosProcesosSqlite datosProcesosSqlite = new DatosProcesosSqlite(this);
+        coronaArtefactoArrayList = datosProcesosSqlite.mostrarSeleccionCoronaArtefacto(nombrePJ);
+        if(coronaArtefactoArrayList.size() <= 0){
+            //nada
+        }else{
+            for(int i = 0; i < coronaArtefactoArrayList.size(); i++){
+                ivCoronaArtefacto.setImageResource(coronaArtefactoArrayList.get(i).getRecursoArtefacto());
+                Log.d("traerArtefactosCorona", "traerArtefactosGuardados: "+ coronaArtefactoArrayList.get(i).getNombreArtefacto());
             }
         }
     }
