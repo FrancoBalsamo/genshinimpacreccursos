@@ -62,6 +62,78 @@ public class AdaptadorListViewAlertFlor extends BaseAdapter {
         }else if (florArtefacto.getSeleccionDatoSpiner() == 2){
             ivArtefactosAlert.setImageResource(R.drawable.flor_curativa);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 3){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_instructor);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 4){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_berseker);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 5){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_exiliado);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 6){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_viajero);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 7){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_marcial);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 8){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_guardian);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 9){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_milagro);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 10){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_guerrero);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 11){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_jugadora);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 12){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_erudita);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 13){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_gladiador);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 14){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_doncella);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 15){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_nobleza);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 16){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_sangui);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 17){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_errante);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 18){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_esmeralda);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 19){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_furiatrueno);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 20){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_domtrueno);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 21){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_bruja);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 22){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_corredor);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 23){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_petra);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 24){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_meteoro);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 25){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_nomada);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (florArtefacto.getSeleccionDatoSpiner() == 26){
+            ivArtefactosAlert.setImageResource(R.drawable.flor_profundidades);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
         }
         return rowView; //retornamos los datos
     }

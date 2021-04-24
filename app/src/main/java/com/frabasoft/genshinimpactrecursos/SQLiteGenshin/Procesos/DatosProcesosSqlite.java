@@ -568,26 +568,26 @@ public class DatosProcesosSqlite implements Serializable {
         contentValues.put(FlorImagenSqlite.FLOR_ARTEFACTO, florArtefacto.getNombreArtefacto());
         contentValues.put(FlorImagenSqlite.RECURSO_ARTEFACTO_FLOR, florArtefacto.getRecursoArtefacto());
         String[] idValor = {String.valueOf(valor)};
-        sqLiteDatabase.update(FlorImagenSqlite.TABLA_FLOR_IMAGEN, contentValues, FlorImagenSqlite.ID_PK_ARTEFACTO_FLOR + " = ? ", idValor);
+        sqLiteDatabase.update(FlorImagenSqlite.TABLA_FLOR_IMAGEN, contentValues, FlorImagenSqlite.NOMBRE_PERSONAJE + " = ? ", idValor);
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdateFlorArtefacto(String nombreArtef, FlorArtefacto florArtefacto){//meétodo para validar el estado no visible del manga
+    public boolean validarUInsertUpdateFlorArtefacto(String nombrePersonaje, FlorArtefacto florArtefacto){//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
-        String[] nom = {String.valueOf(1)};
+        String[] nom = {String.valueOf(nombrePersonaje)};
         String consulta = "SELECT * FROM " + FlorImagenSqlite.TABLA_FLOR_IMAGEN + " WHERE "
-                + FlorImagenSqlite.ID_PK_ARTEFACTO_FLOR + " = ?";
+                + FlorImagenSqlite.NOMBRE_PERSONAJE + " = ?";
         Cursor cursor = sqLiteDatabase.rawQuery(consulta, nom);
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarFlorArtefacto(florArtefacto);
-            copiarArchivo(guardar + "Flor " + guardarA + nombreArtef);
+            copiarArchivo(guardar + "Flor " + guardarA + nombrePersonaje);
             return false;
         }else{
             if(cursor.moveToFirst()){
-                String pj = cursor.getString(cursor.getColumnIndex(FlorImagenSqlite.ID_PK_ARTEFACTO_FLOR));
+                String pj = cursor.getString(cursor.getColumnIndex(FlorImagenSqlite.NOMBRE_PERSONAJE));
                 actualizarFlorArtefacto(florArtefacto, pj);
-                copiarArchivo(actualizar + "Flor " + actualizarA + nombreArtef);
+                copiarArchivo(actualizar + "Flor " + actualizarA + nombrePersonaje);
                 return false;
             }
         }
@@ -646,26 +646,26 @@ public class DatosProcesosSqlite implements Serializable {
         contentValues.put(PlumaImagenSqlite.RECURSO_ARTEFACTO_PLUMA, PlumaArtefacto.getRecursoArtefacto());
         String[] idValor = {String.valueOf(valor)};
         sqLiteDatabase.update(PlumaImagenSqlite.TABLA_PLUMA_IMAGEN, contentValues,
-                PlumaImagenSqlite.ID_PK_ARTEFACTO_PLUMA + " = ? ", idValor);
+                PlumaImagenSqlite.NOMBRE_PERSONAJE + " = ? ", idValor);
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdatePlumaArtefacto(String nombreArtef, PlumaArtefacto PlumaArtefacto){//meétodo para validar el estado no visible del manga
+    public boolean validarUInsertUpdatePlumaArtefacto(String nombrePersonaje, PlumaArtefacto PlumaArtefacto){//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
-        String[] nom = {String.valueOf(1)};
+        String[] nom = {String.valueOf(nombrePersonaje)};
         String consulta = "SELECT * FROM " + PlumaImagenSqlite.TABLA_PLUMA_IMAGEN + " WHERE "
-                + PlumaImagenSqlite.ID_PK_ARTEFACTO_PLUMA + " = ?";
+                + PlumaImagenSqlite.NOMBRE_PERSONAJE + " = ?";
         Cursor cursor = sqLiteDatabase.rawQuery(consulta, nom);
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarPlumaArtefacto(PlumaArtefacto);
-            copiarArchivo(guardar + "Pluma " + guardarA + nombreArtef);
+            copiarArchivo(guardar + "Pluma " + guardarA + nombrePersonaje);
             return false;
         }else{
             if(cursor.moveToFirst()){
-                String pj = cursor.getString(cursor.getColumnIndex(PlumaImagenSqlite.ID_PK_ARTEFACTO_PLUMA));
+                String pj = cursor.getString(cursor.getColumnIndex(PlumaImagenSqlite.NOMBRE_PERSONAJE));
                 actualizarPlumaArtefacto(PlumaArtefacto, pj);
-                copiarArchivo(actualizar + "Pluma " + actualizarA + nombreArtef);
+                copiarArchivo(actualizar + "Pluma " + actualizarA + nombrePersonaje);
                 return false;
             }
         }
@@ -724,26 +724,26 @@ public class DatosProcesosSqlite implements Serializable {
         contentValues.put(RelojImagenSqlite.RECURSO_ARTEFACTO_RELOJ, RelojArtefacto.getRecursoArtefacto());
         String[] idValor = {String.valueOf(valor)};
         sqLiteDatabase.update(RelojImagenSqlite.TABLA_RELOJ_IMAGEN, contentValues,
-                RelojImagenSqlite.ID_PK_ARTEFACTO_RELOJ + " = ? ", idValor);
+                RelojImagenSqlite.NOMBRE_PERSONAJE + " = ? ", idValor);
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdateRelojArtefacto(String nombreArtef, RelojArtefacto RelojArtefacto){//meétodo para validar el estado no visible del manga
+    public boolean validarUInsertUpdateRelojArtefacto(String nombrePersonaje, RelojArtefacto RelojArtefacto){//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
-        String[] nom = {String.valueOf(1)};
+        String[] nom = {String.valueOf(nombrePersonaje)};
         String consulta = "SELECT * FROM " + RelojImagenSqlite.TABLA_RELOJ_IMAGEN + " WHERE "
-                + RelojImagenSqlite.ID_PK_ARTEFACTO_RELOJ + " = ?";
+                + RelojImagenSqlite.NOMBRE_PERSONAJE + " = ?";
         Cursor cursor = sqLiteDatabase.rawQuery(consulta, nom);
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarRelojArtefacto(RelojArtefacto);
-            copiarArchivo(guardar + "Reloj " + guardarA + nombreArtef);
+            copiarArchivo(guardar + "Reloj " + guardarA + nombrePersonaje);
             return false;
         }else{
             if(cursor.moveToFirst()){
-                String pj = cursor.getString(cursor.getColumnIndex(RelojImagenSqlite.ID_PK_ARTEFACTO_RELOJ));
+                String pj = cursor.getString(cursor.getColumnIndex(RelojImagenSqlite.NOMBRE_PERSONAJE));
                 actualizarRelojArtefacto(RelojArtefacto, pj);
-                copiarArchivo(actualizar + "Reloj " + actualizarA + nombreArtef);
+                copiarArchivo(actualizar + "Reloj " + actualizarA + nombrePersonaje);
                 return false;
             }
         }
@@ -802,26 +802,26 @@ public class DatosProcesosSqlite implements Serializable {
         contentValues.put(CopaImagenSqlite.RECURSO_ARTEFACTO_COPA, copaArtefacto.getRecursoArtefacto());
         String[] idValor = {String.valueOf(valor)};
         sqLiteDatabase.update(CopaImagenSqlite.TABLA_COPA_IMAGEN, contentValues, 
-                CopaImagenSqlite.ID_PK_ARTEFACTO_COPA + " = ? ", idValor);
+                CopaImagenSqlite.NOMBRE_PERSONAJE + " = ? ", idValor);
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdateCopaArtefacto(String nombreArtef, CopaArtefacto copaArtefacto){//meétodo para validar el estado no visible del manga
+    public boolean validarUInsertUpdateCopaArtefacto(String nombrePersonaje, CopaArtefacto copaArtefacto){//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
-        String[] nom = {String.valueOf(1)};
+        String[] nom = {String.valueOf(nombrePersonaje)};
         String consulta = "SELECT * FROM " + CopaImagenSqlite.TABLA_COPA_IMAGEN + " WHERE "
-                + CopaImagenSqlite.ID_PK_ARTEFACTO_COPA + " = ?";
+                + CopaImagenSqlite.NOMBRE_PERSONAJE + " = ?";
         Cursor cursor = sqLiteDatabase.rawQuery(consulta, nom);
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarCopaArtefacto(copaArtefacto);
-            copiarArchivo(guardar + "Copa " + guardarA + nombreArtef);
+            copiarArchivo(guardar + "Copa " + guardarA + nombrePersonaje);
             return false;
         }else{
             if(cursor.moveToFirst()){
-                String pj = cursor.getString(cursor.getColumnIndex(CopaImagenSqlite.ID_PK_ARTEFACTO_COPA));
+                String pj = cursor.getString(cursor.getColumnIndex(CopaImagenSqlite.NOMBRE_PERSONAJE));
                 actualizarCopaArtefacto(copaArtefacto, pj);
-                copiarArchivo(actualizar + "Copa " + actualizarA + nombreArtef);
+                copiarArchivo(actualizar + "Copa " + actualizarA + nombrePersonaje);
                 return false;
             }
         }
@@ -880,26 +880,26 @@ public class DatosProcesosSqlite implements Serializable {
         contentValues.put(CoronaImagenSqlite.RECURSO_ARTEFACTO_CORONA, CoronaArtefacto.getRecursoArtefacto());
         String[] idValor = {String.valueOf(valor)};
         sqLiteDatabase.update(CoronaImagenSqlite.TABLA_CORONA_IMAGEN, contentValues,
-                CoronaImagenSqlite.ID_PK_ARTEFACTO_CORONA + " = ? ", idValor);
+                CoronaImagenSqlite.NOMBRE_PERSONAJE + " = ? ", idValor);
         sqLiteDatabase.close();
     }
 
-    public boolean validarUInsertUpdateCoronaArtefacto(String nombreArtef, CoronaArtefacto CoronaArtefacto){//meétodo para validar el estado no visible del manga
+    public boolean validarUInsertUpdateCoronaArtefacto(String nombrePersonaje, CoronaArtefacto CoronaArtefacto){//meétodo para validar el estado no visible del manga
         this.abrirDBEsccribir();
-        String[] nom = {String.valueOf(1)};
+        String[] nom = {String.valueOf(nombrePersonaje)};
         String consulta = "SELECT * FROM " + CoronaImagenSqlite.TABLA_CORONA_IMAGEN + " WHERE "
-                + CoronaImagenSqlite.ID_PK_ARTEFACTO_CORONA + " = ?";
+                + CoronaImagenSqlite.NOMBRE_PERSONAJE + " = ?";
         Cursor cursor = sqLiteDatabase.rawQuery(consulta, nom);
         if(cursor.getCount() <= 0){
             cursor.close();
             guardarCoronaArtefacto(CoronaArtefacto);
-            copiarArchivo(guardar + "Corona " + guardarA + nombreArtef);
+            copiarArchivo(guardar + "Corona " + guardarA + nombrePersonaje);
             return false;
         }else{
             if(cursor.moveToFirst()){
-                String pj = cursor.getString(cursor.getColumnIndex(CoronaImagenSqlite.ID_PK_ARTEFACTO_CORONA));
+                String pj = cursor.getString(cursor.getColumnIndex(CoronaImagenSqlite.NOMBRE_PERSONAJE));
                 actualizarCoronaArtefacto(CoronaArtefacto, pj);
-                copiarArchivo(actualizar + "Corona " + actualizarA + nombreArtef);
+                copiarArchivo(actualizar + "Corona " + actualizarA + nombrePersonaje);
                 return false;
             }
         }

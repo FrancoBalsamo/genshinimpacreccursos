@@ -63,6 +63,78 @@ public class AdaptadorListViewCorona extends BaseAdapter {
         }else if (coronaArtefacto.getSeleccionDatoSpiner() == 2){
             ivArtefactosAlert.setImageResource(R.drawable.corona_curativa);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 3){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_instructor);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() ==4){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_berseker);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 5){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_exiliado);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 6){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_viajero);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 7){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_marcial);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 8){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_guardian);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 9){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_milagro);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 10){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_guerrero);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 11){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_jugadora);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 12){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_erudita);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 13){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_gladiador);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 14){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_doncella);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 15){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_nobleza);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 16){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_sangui);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 17){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_errante);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 18){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_esmeralda);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 19){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_furiatrueno);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 20){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_domtrueno);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 21){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_bruja);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 22){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_corredor);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 23){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_petra);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 24){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_meteoro);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 25){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_nomada);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (coronaArtefacto.getSeleccionDatoSpiner() == 26){
+            ivArtefactosAlert.setImageResource(R.drawable.corona_profundidades);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
         }
         return rowView; //retornamos los datos
     }

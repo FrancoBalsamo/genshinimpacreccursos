@@ -62,6 +62,78 @@ public class AdaptadorListViewCopa extends BaseAdapter {
         }else if (CopaArtefacto.getSeleccionDatoSpiner() == 2){
             ivArtefactosAlert.setImageResource(R.drawable.copa_curativa);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 3){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_instructor);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 4){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_berseker);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 5){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_exiliado);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 6){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_viajero);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 7){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_marcial);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 8){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_guardian);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 9){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_milagro);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 10){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_guerrero);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 11){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_jugadora);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 12){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_erudita);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 13){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_gladiador);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 14){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_doncella);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 15){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_nobleza);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 16){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_sangui);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 17){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_errante);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 18){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_esmeralda);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 19){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_furiatrueno);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 20){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_domtrueno);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 21){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_bruja);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 22){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_corredor);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 23){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_petra);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 24){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_meteoro);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 25){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_nomada);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (CopaArtefacto.getSeleccionDatoSpiner() == 26){
+            ivArtefactosAlert.setImageResource(R.drawable.copa_profundidades);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
         }
         return rowView; //retornamos los datos
     }
