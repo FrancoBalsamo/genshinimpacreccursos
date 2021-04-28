@@ -93,16 +93,16 @@ public class Builds extends FragmentActivity {
         ejecutar();
 
         MobileAds.initialize(Builds.this, initializationStatus -> { });
-        publicidad = (AdView)findViewById(R.id.banerBuild);
+        publicidad = findViewById(R.id.banerBuild);
         AdRequest adRequest = new AdRequest.Builder().build();
         publicidad.loadAd(adRequest);
 
-        personajes = (Spinner)findViewById(R.id.personajes);
-        descargaBuild = (TextView)findViewById(R.id.descargaBuilds);
+        personajes = findViewById(R.id.personajes);
+        descargaBuild = findViewById(R.id.descargaBuilds);
         descargaBuild.setText("**Puedes descargar las imágenes presionando por unos segundos sobre la misma.");
 
         df = new DecimalFormat("#.##");
-        imgPJ = (TouchImageView) findViewById(R.id.imgPJ);
+        imgPJ = findViewById(R.id.imgPJ);
 
         personajes.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_color_text, personajesString));
         personajes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -113,881 +113,742 @@ public class Builds extends FragmentActivity {
                 }else if(position == 1){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.albedo);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 2){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.amber);
 
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 3){
                     toastHydro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.barbara);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 4){
                     toastElectro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.beidou);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 5){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.bennet_v1);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 6){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.bennet_v2);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 7){
                     toastCryo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.chongyun);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 8){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.diluc);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 9){
                     toastCryo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.diona);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 10){
                     toastElectro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.fischl);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 11){
                     toastCryo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.ganyu);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 12){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.hutao);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 13){
                     toastAnemo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.jean);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 14){
                     toastCryo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.kaeya);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 15){
                     imgPJ.setImageResource(R.drawable.keqing);
                     toastElectro(Builds.this, personajes.getSelectedItem().toString());
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
 
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 16){
                     imgPJ.setImageResource(R.drawable.kekingv2);
                     toastElectro(Builds.this, personajes.getSelectedItem().toString());
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 17){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.klee);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 18){
                     toastElectro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.lisa);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 19){
                     toastHydro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.mona_v1);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 20){
                     toastHydro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.mona_v2);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 21){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.ningguang);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 22){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.noelle);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 23){
                     toastCryo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.qiqi);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 24){
                     toastElectro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.razor);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 25){
                     toastCryo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.rosaria);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 26){
                     toastAnemo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.sucrose);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 27){
                     toastHydro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.tartaglia);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 28){
                     toastAnemo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.traveler_anemo);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 29){
                     toastAnemo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.venti);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 30){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xiangling_v1);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 31){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xiangling_v2);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 32){
                     toastAnemo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xiao);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 33){
                     toastHydro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xingqiu_v1);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 34){
                     toastHydro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xingqiu_v2);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 35){
                     toastPyro(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.xinyan);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 36){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.zhongli_v1);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 37){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.zhongli_v2);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }else if(position == 38){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.zhongli_v3);
-                    imgPJ.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if(permissionHelper.hasPermission()){
-                                //convertir imagen a bitmap
-                                imgPJ.buildDrawingCache();
-                                Bitmap bmap = imgPJ.getDrawingCache();
-                                guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
-
-                                try {
-                                    agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
-                                } catch (IOException ioException) {
-                                    ioException.printStackTrace();
-                                }
-                            }else{
-                                ejecutar();
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
-                            return true;
+                        }else{
+                            ejecutar();
                         }
+                        return true;
                     });
                 }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
-
         loadAd();
     }
 
