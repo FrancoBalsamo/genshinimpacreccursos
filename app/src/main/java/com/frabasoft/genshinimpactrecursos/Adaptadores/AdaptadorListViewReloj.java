@@ -63,6 +63,78 @@ public class AdaptadorListViewReloj extends BaseAdapter {
         }else if (relojArtefacto.getSeleccionDatoSpiner() == 2){
             ivArtefactosAlert.setImageResource(R.drawable.reloj_curativa);
             tvArtefactosAlert.setText(" " + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 3){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_instructor);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 4){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_berseker);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 5){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_exiliado);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 6){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_viajero);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 7){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_marcial);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 8){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_guardian);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 9){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_milagro);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 10){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_guerrero);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 11){
+            ivArtefactosAlert.setImageResource(R.drawable.reloja_jugadora);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 12){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_erudita);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 13){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_gladiador);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 14){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_doncella);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 15){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_nobleza);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 16){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_sangui);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 17){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_errante);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 18){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_esmeralda);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 19){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_furiatrueno);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 20){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_domtrueno);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 21){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_bruja);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 22){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_corredor);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 23){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_petra);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 24){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_meteoro);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 25){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_nomada);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
+        }else if (relojArtefacto.getSeleccionDatoSpiner() == 26){
+            ivArtefactosAlert.setImageResource(R.drawable.reloj_profundidades);
+            tvArtefactosAlert.setText(" " + estrella + estrella + estrella + estrella + estrella);
         }
         return rowView; //retornamos los datos
     }
