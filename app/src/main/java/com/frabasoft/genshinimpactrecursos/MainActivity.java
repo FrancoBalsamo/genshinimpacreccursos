@@ -48,7 +48,7 @@ import static com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSql
 public class MainActivity extends AppCompatActivity {
     ImageView instagram;
     AdView publicidad;
-    Button builds, artefactos, misBuilds, hacerBKP;
+    Button builds, artefactos, misBuilds, hacerBKP, bannerTemporal;
     private DatosProcesosSqlite datosProcesosSqlite;
     private String primerStringTxt = "Archivo de instalación: " +
             "\n-Se ha creado por primera vez el archivo. " +
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     //para los tiempos del banner
     private String fechaActualBanner, horaActualBanner;
-    private String fechaFinalBanner = "27/04/2021 17:00:00";
+    private String fechaFinalBanner = "18/05/2021 20:00:00";
     private long tiempoInicial;
     private CountDownTimer conteoRegresivo;
 
@@ -81,21 +81,21 @@ public class MainActivity extends AppCompatActivity {
 
         entrar = MediaPlayer.create(getApplicationContext(), R.raw.entrar);
 
-        anuncio();
         crearDirectorio();
         loadAd();
 
         ejecutar();
 
-        instagram = (ImageView) findViewById(R.id.instagram);
-        builds = (Button) findViewById(R.id.builds);
-        artefactos = (Button) findViewById(R.id.artefactos);
-        misBuilds = (Button) findViewById(R.id.misBuilds);
-        hacerBKP = (Button)findViewById(R.id.hacerBKP);
+        instagram = findViewById(R.id.instagram);
+        bannerTemporal = findViewById(R.id.bannerTemporal);
+        builds = findViewById(R.id.builds);
+        artefactos = findViewById(R.id.artefactos);
+        misBuilds = findViewById(R.id.misBuilds);
+        hacerBKP = findViewById(R.id.hacerBKP);
 
         MobileAds.initialize(MainActivity.this, initializationStatus -> {
         });
-        publicidad = (AdView) findViewById(R.id.banerMainActivity);
+        publicidad = findViewById(R.id.banerMainActivity);
         AdRequest adRequest = new AdRequest.Builder().build();
         publicidad.loadAd(adRequest);
 
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             entrar.start();
             instagramActividad(MainActivity.this);
         });
+        bannerTemporal.setOnClickListener(v -> anuncio());
         builds.setOnClickListener(v -> {
             entrar.start();
             buildActivity();
@@ -382,7 +383,7 @@ public class MainActivity extends AppCompatActivity {
                 anuncio.setView(view);
                 anuncio.show();
             }else{
-                Toast.makeText(this, "El banner de Tartaglia, ¡Ha terminado! Pronto iniciará una nueva actualización. ¡No olvides descargarla!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "El banner de Zonghli, ¡Ha terminado! Pronto iniciará el de Eula.", Toast.LENGTH_SHORT).show();
             }
         }catch (Exception exception){
             Log.d(TAG, "ERROR TIEMPO: " + exception.getMessage());
