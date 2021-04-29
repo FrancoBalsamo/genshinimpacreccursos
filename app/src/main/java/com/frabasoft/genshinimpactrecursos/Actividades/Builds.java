@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frabasoft.genshinimpactrecursos.MainActivity;
+import com.frabasoft.genshinimpactrecursos.Preferencias.PreferenciaSonidosEntrar;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
@@ -898,7 +899,9 @@ public class Builds extends FragmentActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        salir.start();
+        if(traerValorChk(this) == 1){
+            salir.start();
+        }
         Builds.this.finish();
     }
 
@@ -1019,7 +1022,6 @@ public class Builds extends FragmentActivity {
                                         Builds.this.interstitialAd = null;
                                         Log.d("TAG", "The ad was dismissed.");
                                     }
-
                                     @Override
                                     public void onAdFailedToShowFullScreenContent(AdError adError) {
                                         // Called when fullscreen content failed to show.
@@ -1028,7 +1030,6 @@ public class Builds extends FragmentActivity {
                                         Builds.this.interstitialAd = null;
                                         Log.d("TAG", "The ad failed to show.");
                                     }
-
                                     @Override
                                     public void onAdShowedFullScreenContent() {
                                         // Called when fullscreen content is shown.
@@ -1036,13 +1037,11 @@ public class Builds extends FragmentActivity {
                                     }
                                 });
                     }
-
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                         // Handle the error
                         Log.i(TAG, loadAdError.getMessage());
                         interstitialAd = null;
-
                         String error =
                                 String.format(
                                         "domain: %s, code: %d, message: %s",
@@ -1059,5 +1058,15 @@ public class Builds extends FragmentActivity {
         } else {
             Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private int traerValorChk(Context context){
+        int valor;
+        if(new PreferenciaSonidosEntrar(context).traerValorGuardado() == 0){
+            valor = 0;
+        }else{
+            valor = 1;
+        }
+        return valor;
     }
 }

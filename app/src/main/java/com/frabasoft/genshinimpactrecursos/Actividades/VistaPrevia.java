@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
@@ -30,6 +31,8 @@ import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.CoronaArtefact
 import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.FlorArtefacto;
 import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.PlumaArtefacto;
 import com.frabasoft.genshinimpactrecursos.Clases.ArtefactosAlert.RelojArtefacto;
+import com.frabasoft.genshinimpactrecursos.MainActivity;
+import com.frabasoft.genshinimpactrecursos.Preferencias.PreferenciaSonidosEntrar;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.google.android.gms.ads.AdError;
@@ -486,8 +489,11 @@ public class VistaPrevia extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        MainActivity mainActivity = new MainActivity();
+        if(traerValorChk(this) == 1){
+            salir.start();
+        }
         VistaPrevia.this.finish();
-        salir.start();
     }
 
     private void agregarLineasFicheroTXT(String vistaPrevia, String pj) throws IOException {
@@ -561,5 +567,15 @@ public class VistaPrevia extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No se ha cargado la publicidad.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private int traerValorChk(Context context){
+        int valor;
+        if(new PreferenciaSonidosEntrar(context).traerValorGuardado() == 0){
+            valor = 0;
+        }else{
+            valor = 1;
+        }
+        return valor;
     }
 }

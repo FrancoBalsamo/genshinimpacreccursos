@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.frabasoft.genshinimpactrecursos.Actividades.Builds;
 import com.frabasoft.genshinimpactrecursos.Actividades.MisBuilds;
 import com.frabasoft.genshinimpactrecursos.Actividades.RutaArtefactos;
+import com.frabasoft.genshinimpactrecursos.Preferencias.PreferenciaSonidosEntrar;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
@@ -46,9 +48,10 @@ import java.util.Date;
 import static com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSqlite.DB_NAME;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView instagram;
-    AdView publicidad;
-    Button builds, artefactos, misBuilds, hacerBKP, bannerTemporal;
+    private ImageView instagram;
+    private AdView publicidad;
+    private Button builds, artefactos, misBuilds, hacerBKP, bannerTemporal;
+    private CheckBox checkBoxSonido;
     private DatosProcesosSqlite datosProcesosSqlite;
     private String primerStringTxt = "Archivo de instalación: " +
             "\n-Se ha creado por primera vez el archivo. " +
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private String segundoStringTxt = "Esta aplicación fue creada para el uso y consumo de jugadores de Genshin Impact. " +
             "\n-Creada por un jugador para otros jugadores. " +
             "\n-La aplicación creará de manera automática un archivo .db en tu memoria, por favor no lo elimines o perderás tu BackUp personal.";
-    PermissionHelper permissionHelper;
+    private PermissionHelper permissionHelper;
     private String nombreTXT = "Leer Importante Sobre Genshin Impact Recursos.txt";
 
     //para el ad de la descarga de la imagen
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private String fechaFinalBanner = "18/05/2021 20:00:00";
     private long tiempoInicial;
     private CountDownTimer conteoRegresivo;
+    private int valorCheck = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,17 @@ public class MainActivity extends AppCompatActivity {
         artefactos = findViewById(R.id.artefactos);
         misBuilds = findViewById(R.id.misBuilds);
         hacerBKP = findViewById(R.id.hacerBKP);
+        checkBoxSonido = findViewById(R.id.checkBoxSonido);
+
+        traerValorChk(this);
+
+        checkBoxSonido.setOnClickListener(v -> {
+            if(checkBoxSonido.isChecked() == true || checkBoxSonido.isSelected()){
+                new PreferenciaSonidosEntrar(MainActivity.this).guardarValor(1);
+            }else{
+                new PreferenciaSonidosEntrar(MainActivity.this).guardarValor(0);
+            }
+        });
 
         MobileAds.initialize(MainActivity.this, initializationStatus -> {
         });
@@ -100,21 +115,32 @@ public class MainActivity extends AppCompatActivity {
         publicidad.loadAd(adRequest);
 
         instagram.setOnClickListener(v -> {
-            entrar.start();
             instagramActividad(MainActivity.this);
         });
         bannerTemporal.setOnClickListener(v -> anuncio());
+        artefactos.setOnClickListener(v -> {
+            if(checkBoxSonido.isChecked() == true){
+                if (traerValorChk(this) == 1) {
+                    entrar.start();
+                }
+            }
+            artefactosActivity();
+        });
         builds.setOnClickListener(v -> {
-            entrar.start();
+            if(checkBoxSonido.isChecked() == true) {
+                if (traerValorChk(this) == 1) {
+                    entrar.start();
+                }
+            }
             buildActivity();
         });
         misBuilds.setOnClickListener(v -> {
-            entrar.start();
+            if(checkBoxSonido.isChecked() == true){
+                if (traerValorChk(this) == 1) {
+                    entrar.start();
+                }
+            }
             misBuildsActivity();
-        });
-        artefactos.setOnClickListener(v -> {
-            entrar.start();
-            artefactosActivity();
         });
         hacerBKP.setOnClickListener(v -> importarBKP());
     }
@@ -264,44 +290,32 @@ public class MainActivity extends AppCompatActivity {
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        // The mInterstitialAd reference will be null until
-                        // an ad is loaded.
                         MainActivity.this.interstitialAd = interstitialAd;
                         Log.i(TAG, "onAdLoaded");
                         interstitialAd.setFullScreenContentCallback(
                                 new FullScreenContentCallback() {
                                     @Override
                                     public void onAdDismissedFullScreenContent() {
-                                        // Called when fullscreen content is dismissed.
-                                        // Make sure to set your reference to null so you don't
-                                        // show it a second time.
                                         MainActivity.this.interstitialAd = null;
                                         Log.d("TAG", "The ad was dismissed.");
                                     }
 
                                     @Override
                                     public void onAdFailedToShowFullScreenContent(AdError adError) {
-                                        // Called when fullscreen content failed to show.
-                                        // Make sure to set your reference to null so you don't
-                                        // show it a second time.
                                         MainActivity.this.interstitialAd = null;
                                         Log.d("TAG", "The ad failed to show.");
                                     }
 
                                     @Override
                                     public void onAdShowedFullScreenContent() {
-                                        // Called when fullscreen content is shown.
                                         Log.d("TAG", "The ad was shown.");
                                     }
                                 });
                     }
-
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
                         Log.i(TAG, loadAdError.getMessage());
                         interstitialAd = null;
-
                         String error =
                                 String.format(
                                         "domain: %s, code: %d, message: %s",
@@ -312,11 +326,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showInterstitial() {
-        // Show the ad if it's ready. Otherwise toast and restart the game.
         if (interstitialAd != null) {
             interstitialAd.show(this);
         } else {
-            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No se ha podido cargar la publicidad", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -388,5 +401,17 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception exception){
             Log.d(TAG, "ERROR TIEMPO: " + exception.getMessage());
         }
+    }
+
+    private int traerValorChk(Context context){
+        int valor;
+        if(new PreferenciaSonidosEntrar(context).traerValorGuardado() == 0){
+            valor = 0;
+            checkBoxSonido.setChecked(false);
+        }else{
+            valor = 1;
+            checkBoxSonido.setChecked(true);
+        }
+        return valor;
     }
 }

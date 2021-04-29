@@ -26,6 +26,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frabasoft.genshinimpactrecursos.MainActivity;
+import com.frabasoft.genshinimpactrecursos.Preferencias.PreferenciaSonidosEntrar;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.frabasoft.genshinimpactrecursos.SQLiteGenshin.Procesos.DatosProcesosSqlite;
 import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
@@ -226,7 +228,10 @@ public class RutaArtefactos extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        salir.start();
+        MainActivity mainActivity = new MainActivity();
+        if(traerValorChk(this) == 1){
+            salir.start();
+        }
         RutaArtefactos.this.finish();
     }
 
@@ -385,5 +390,15 @@ public class RutaArtefactos extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private int traerValorChk(Context context){
+        int valor;
+        if(new PreferenciaSonidosEntrar(context).traerValorGuardado() == 0){
+            valor = 0;
+        }else{
+            valor = 1;
+        }
+        return valor;
     }
 }
