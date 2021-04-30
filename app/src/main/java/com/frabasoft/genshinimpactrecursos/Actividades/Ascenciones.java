@@ -23,6 +23,8 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.master.permissionhelper.PermissionHelper;
 
+import java.text.DecimalFormat;
+
 public class Ascenciones extends AppCompatActivity {
     private final static String TAG = "ERRORASCEN";
     private int[] imagenesAscensiones = new int[]{

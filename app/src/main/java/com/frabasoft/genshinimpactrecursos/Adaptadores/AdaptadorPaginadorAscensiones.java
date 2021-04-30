@@ -12,14 +12,18 @@ import android.widget.Toast;
 
 import androidx.viewpager.widget.PagerAdapter;
 import com.frabasoft.genshinimpactrecursos.R;
+import com.frabasoft.genshinimpactrecursos.TouchImage.TouchImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 
 public class AdaptadorPaginadorAscensiones extends PagerAdapter {
     Context mContext;
     LayoutInflater mLayoutInflater;
     private int[] mResourceIds;
+
+    private DecimalFormat df;
 
     public AdaptadorPaginadorAscensiones(Context context, int[] resourceIds) {
         mContext = context;
@@ -41,11 +45,12 @@ public class AdaptadorPaginadorAscensiones extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = mLayoutInflater.inflate(R.layout.paginador, container, false);
 
-        ImageView imageView = itemView.findViewById(R.id.ivViewPager);
-        imageView.setImageResource(mResourceIds[position]);
-        imageView.setOnLongClickListener(v -> {
-            imageView.buildDrawingCache();
-            Bitmap bmap = imageView.getDrawingCache();
+        df = new DecimalFormat("#.##");
+        TouchImageView touchImageView = itemView.findViewById(R.id.ivViewPager);
+        touchImageView.setImageResource(mResourceIds[position]);
+        touchImageView.setOnLongClickListener(v -> {
+            touchImageView.buildDrawingCache();
+            Bitmap bmap = touchImageView.getDrawingCache();
             guardarImagenMedoto(bmap, "Ascencion-0" + position);
             return true;
         });
