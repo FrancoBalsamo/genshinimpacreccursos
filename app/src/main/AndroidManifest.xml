@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Actividades.Ascenciones"></activity>
+        <activity android:name=".Actividades.MaterialesCasas"></activity>
+        <activity android:name=".Actividades.Ascenciones" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

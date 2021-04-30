@@ -1039,7 +1039,6 @@ public class Builds extends FragmentActivity {
                     }
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
                         Log.i(TAG, loadAdError.getMessage());
                         interstitialAd = null;
                         String error =
@@ -1052,11 +1051,10 @@ public class Builds extends FragmentActivity {
     }
 
     private void showInterstitial() {
-        // Show the ad if it's ready. Otherwise toast and restart the game.
         if (interstitialAd != null) {
             interstitialAd.show(this);
         } else {
-            Toast.makeText(this, "Ad did not load", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "¡No se ha podido cargar la publicidad!", Toast.LENGTH_SHORT).show();
         }
     }
 

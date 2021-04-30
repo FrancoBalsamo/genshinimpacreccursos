@@ -565,7 +565,7 @@ public class VistaPrevia extends AppCompatActivity {
         if (interstitialAd != null) {
             interstitialAd.show(this);
         } else {
-            Toast.makeText(this, "No se ha cargado la publicidad.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "¡No se ha podido cargar la publicidad!", Toast.LENGTH_SHORT).show();
         }
     }
 

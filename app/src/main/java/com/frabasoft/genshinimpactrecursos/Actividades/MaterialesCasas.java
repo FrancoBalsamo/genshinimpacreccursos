@@ -12,23 +12,27 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorPaginadorAscensiones;
+import com.frabasoft.genshinimpactrecursos.Adaptadores.AdaptadorPaginadorMateriales;
+import com.frabasoft.genshinimpactrecursos.MainActivity;
 import com.frabasoft.genshinimpactrecursos.Preferencias.PreferenciaSonidosEntrar;
 import com.frabasoft.genshinimpactrecursos.R;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.master.permissionhelper.PermissionHelper;
 
-public class Ascenciones extends AppCompatActivity {
-    private final static String TAG = "ERRORASCEN";
-    private int[] imagenesAscensiones = new int[]{
-            R.drawable.ascension_a, R.drawable.ascension_b, R.drawable.ascension_c,
-            R.drawable.ascension_d, R.drawable.ascension_e, R.drawable.ascension_f,
-            R.drawable.ascension_g, R.drawable.ascension_h, R.drawable.ascencion_i
+public class MaterialesCasas extends AppCompatActivity {
+    private AdView publicidad;
+    private final static String TAG = "ERROMATERIALES";
+    private int[] materialesCreacion = new int[]{
+            R.drawable.materiales_casa_a, R.drawable.materiales_casa_b, R.drawable.materiales_casa_c,
+            R.drawable.materiales_casa_d, R.drawable.materiales_casa_e, R.drawable.materiales_casa_f,
+            R.drawable.materiales_casa_g, R.drawable.materiales_casa_h, R.drawable.mascotas_a
     };
     private ViewPager viewPager;
     private MediaPlayer salir;
@@ -42,15 +46,20 @@ public class Ascenciones extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ascenciones);
+        setContentView(R.layout.activity_materiales_casas);
+        MobileAds.initialize(MaterialesCasas.this, initializationStatus -> {
+        });
+        publicidad = findViewById(R.id.banerMateriales);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        publicidad.loadAd(adRequest);
         ejecutar();
         loadAd();
 
-        viewPager = findViewById(R.id.viewPagerAscencion);
+        viewPager = findViewById(R.id.viewPagerMateriales);
         salir = MediaPlayer.create(getApplicationContext(), R.raw.salir);
 
         if (viewPager != null) {
-            viewPager.setAdapter(new AdaptadorPaginadorAscensiones(this, imagenesAscensiones));
+            viewPager.setAdapter(new AdaptadorPaginadorMateriales(this, materialesCreacion));
         }
     }
 
@@ -109,7 +118,7 @@ public class Ascenciones extends AppCompatActivity {
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
                         // The mInterstitialAd reference will be null until
                         // an ad is loaded.
-                        Ascenciones.this.interstitialAd = interstitialAd;
+                        MaterialesCasas.this.interstitialAd = interstitialAd;
                         Log.i(TAG, "onAdLoaded");
                         interstitialAd.setFullScreenContentCallback(
                                 new FullScreenContentCallback() {
@@ -118,7 +127,7 @@ public class Ascenciones extends AppCompatActivity {
                                         // Called when fullscreen content is dismissed.
                                         // Make sure to set your reference to null so you don't
                                         // show it a second time.
-                                        Ascenciones.this.interstitialAd = null;
+                                        MaterialesCasas.this.interstitialAd = null;
                                         Log.d("TAG", "The ad was dismissed.");
                                     }
                                     @Override
@@ -126,7 +135,7 @@ public class Ascenciones extends AppCompatActivity {
                                         // Called when fullscreen content failed to show.
                                         // Make sure to set your reference to null so you don't
                                         // show it a second time.
-                                        Ascenciones.this.interstitialAd = null;
+                                        MaterialesCasas.this.interstitialAd = null;
                                         Log.d("TAG", "The ad failed to show.");
                                     }
                                     @Override
@@ -163,7 +172,7 @@ public class Ascenciones extends AppCompatActivity {
         if(traerValorChk(this) == 1){
             salir.start();
         }
-        Ascenciones.this.finish();
+        MaterialesCasas.this.finish();
         showInterstitial();
     }
 }

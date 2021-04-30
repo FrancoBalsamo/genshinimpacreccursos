@@ -25,7 +25,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frabasoft.genshinimpactrecursos.Actividades.Ascenciones;
 import com.frabasoft.genshinimpactrecursos.Actividades.Builds;
+import com.frabasoft.genshinimpactrecursos.Actividades.MaterialesCasas;
 import com.frabasoft.genshinimpactrecursos.Actividades.MisBuilds;
 import com.frabasoft.genshinimpactrecursos.Actividades.RutaArtefactos;
 import com.frabasoft.genshinimpactrecursos.Preferencias.PreferenciaSonidosEntrar;
@@ -50,7 +52,7 @@ import static com.frabasoft.genshinimpactrecursos.SQLiteGenshin.NombreVersionSql
 public class MainActivity extends AppCompatActivity {
     private ImageView instagram;
     private AdView publicidad;
-    private Button builds, artefactos, misBuilds, hacerBKP, bannerTemporal;
+    private Button ascension, artefactos,bannerTemporal, builds, hacerBKP, materialesCasabtn, misBuilds;
     private CheckBox checkBoxSonido;
     private DatosProcesosSqlite datosProcesosSqlite;
     private String primerStringTxt = "Archivo de instalación: " +
@@ -75,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
     private String fechaFinalBanner = "18/05/2021 20:00:00";
     private long tiempoInicial;
     private CountDownTimer conteoRegresivo;
-    private int valorCheck = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +91,15 @@ public class MainActivity extends AppCompatActivity {
 
         ejecutar();
 
+        checkBoxSonido = findViewById(R.id.checkBoxSonido);
         instagram = findViewById(R.id.instagram);
+        ascension = findViewById(R.id.ascension);
+        artefactos = findViewById(R.id.artefactos);
         bannerTemporal = findViewById(R.id.bannerTemporal);
         builds = findViewById(R.id.builds);
-        artefactos = findViewById(R.id.artefactos);
-        misBuilds = findViewById(R.id.misBuilds);
         hacerBKP = findViewById(R.id.hacerBKP);
-        checkBoxSonido = findViewById(R.id.checkBoxSonido);
+        materialesCasabtn = findViewById(R.id.materialesCasabtn);
+        misBuilds = findViewById(R.id.misBuilds);
 
         traerValorChk(this);
 
@@ -117,6 +120,15 @@ public class MainActivity extends AppCompatActivity {
         instagram.setOnClickListener(v -> {
             instagramActividad(MainActivity.this);
         });
+        ascension.setOnClickListener(v -> {
+            if(checkBoxSonido.isChecked() == true){
+                if (traerValorChk(this) == 1) {
+                    entrar.start();
+                }
+            }
+            Toast.makeText(this, "¡Recuerda que puedes almacenar la imagen presionando unos segundos sobre ella!", Toast.LENGTH_SHORT).show();
+            ascensionessActivity();
+        });
         bannerTemporal.setOnClickListener(v -> anuncio());
         artefactos.setOnClickListener(v -> {
             if(checkBoxSonido.isChecked() == true){
@@ -133,6 +145,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             buildActivity();
+        });
+        materialesCasabtn.setOnClickListener(v -> {
+            if(checkBoxSonido.isChecked()== true){
+                if(traerValorChk(this) == 1){
+                    entrar.start();
+                }
+            }
+            Toast.makeText(this, "¡Recuerda que puedes almacenar la imagen presionando unos segundos sobre ella!", Toast.LENGTH_SHORT).show();
+            materialesCasasActivity();
         });
         misBuilds.setOnClickListener(v -> {
             if(checkBoxSonido.isChecked() == true){
@@ -183,6 +204,16 @@ public class MainActivity extends AppCompatActivity {
     private void artefactosActivity() {
         Intent artefactos = new Intent(MainActivity.this, RutaArtefactos.class);
         startActivity(artefactos);
+    }
+
+    private void ascensionessActivity() {
+        Intent ascenciones = new Intent(MainActivity.this, Ascenciones.class);
+        startActivity(ascenciones);
+    }
+
+    private void materialesCasasActivity(){
+        Intent mater = new Intent(MainActivity.this, MaterialesCasas.class);
+        startActivity(mater);
     }
 
     @Override
@@ -329,7 +360,7 @@ public class MainActivity extends AppCompatActivity {
         if (interstitialAd != null) {
             interstitialAd.show(this);
         } else {
-            Toast.makeText(this, "No se ha podido cargar la publicidad", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "¡No se ha podido cargar la publicidad!", Toast.LENGTH_SHORT).show();
         }
     }
 

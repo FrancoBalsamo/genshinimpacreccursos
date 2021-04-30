@@ -1254,7 +1254,6 @@ public class MisBuilds extends AppCompatActivity {
                 vista.putExtra("pj", spPJMisBuilds.getSelectedItem().toString());
                 Toast.makeText(MisBuilds.this, "¡Recuerda que puedes guardar la vista previa como imagen en tu teléfono presionando o tocando en cualquier parte de la pantalla!", Toast.LENGTH_SHORT).show();
                 startActivity(vista);
-//                Toast.makeText(MisBuilds.this, "¡Próximamente vas a poder ver la vista previa de tus builds!", Toast.LENGTH_SHORT).show();
             }
         });
     }
