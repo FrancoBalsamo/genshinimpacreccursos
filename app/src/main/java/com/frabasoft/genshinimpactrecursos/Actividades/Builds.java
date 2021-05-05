@@ -67,7 +67,7 @@ public class Builds extends FragmentActivity {
             "Sucrose","Tartaglia", "Traveler Anemo",
             "Venti", "Xianling v1", "Xianling v2",
             "Xiao", "Xingqiu v1", "Xingqiu v2",
-            "Xinyan","Zhongli v1", "Zhongli v2",
+            "Xinyan", "Yan Fei", "Zhongli v1", "Zhongli v2",
             "Zhongli v3"};
     private TouchImageView imgPJ;
     private DecimalFormat df;
@@ -789,8 +789,8 @@ public class Builds extends FragmentActivity {
                         return true;
                     });
                 }else if(position == 36){
-                    toastGeo(Builds.this, personajes.getSelectedItem().toString());
-                    imgPJ.setImageResource(R.drawable.zhongli_v1);
+                    toastPyro(Builds.this, personajes.getSelectedItem().toString());
+                    imgPJ.setImageResource(R.drawable.yanfei);
                     imgPJ.setOnLongClickListener(v -> {
                         if(permissionHelper.hasPermission()){
                             //convertir imagen a bitmap
@@ -809,7 +809,7 @@ public class Builds extends FragmentActivity {
                     });
                 }else if(position == 37){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
-                    imgPJ.setImageResource(R.drawable.zhongli_v2);
+                    imgPJ.setImageResource(R.drawable.zhongli_v1);
                     imgPJ.setOnLongClickListener(v -> {
                         if(permissionHelper.hasPermission()){
                             //convertir imagen a bitmap
@@ -827,6 +827,25 @@ public class Builds extends FragmentActivity {
                         return true;
                     });
                 }else if(position == 38){
+                    toastGeo(Builds.this, personajes.getSelectedItem().toString());
+                    imgPJ.setImageResource(R.drawable.zhongli_v2);
+                    imgPJ.setOnLongClickListener(v -> {
+                        if(permissionHelper.hasPermission()){
+                            //convertir imagen a bitmap
+                            imgPJ.buildDrawingCache();
+                            Bitmap bmap = imgPJ.getDrawingCache();
+                            guardarImagenMedoto(bmap, personajes.getSelectedItem().toString());
+                            try {
+                                agregarLineasFicheroTXT(buildsDetalle, personajes.getSelectedItem().toString());
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
+                        }else{
+                            ejecutar();
+                        }
+                        return true;
+                    });
+                }else if(position == 39){
                     toastGeo(Builds.this, personajes.getSelectedItem().toString());
                     imgPJ.setImageResource(R.drawable.zhongli_v3);
                     imgPJ.setOnLongClickListener(v -> {

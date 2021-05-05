@@ -407,7 +407,9 @@ public class VistaPrevia extends AppCompatActivity {
             contenido.setBackgroundResource(R.drawable.xingqiuvp);
         } else if(nombre == "Xinyan" || nombre.equals("Xinyan")){
             contenido.setBackgroundResource(R.drawable.xinyanvp);
-        } else if(nombre == "Zhongli" || nombre.equals("Zhongli")){
+        } else if(nombre == "Yan Fei" || nombre.equals("Yan Fei")){
+            contenido.setBackgroundResource(R.drawable.yanfeivp);
+        }else if(nombre == "Zhongli" || nombre.equals("Zhongli")){
             contenido.setBackgroundResource(R.drawable.zhonglivp);
         }
     }

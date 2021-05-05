@@ -72,7 +72,7 @@ public class MisBuilds extends AppCompatActivity {
             "Sucrose", "Tartaglia",
             "Venti", "Xianling",
             "Xiao", "Xingqiu",
-            "Xinyan", "Zhongli"};
+            "Xinyan", "Yan Fei", "Zhongli"};
 
     private String[] arcosStringArray = {
             "Selecciona un arco",
@@ -726,6 +726,23 @@ public class MisBuilds extends AppCompatActivity {
                     nombrePJ = spPJMisBuilds.getSelectedItem().toString();
                     scrollView.setEnabled(true);
                     scrollView.setVisibility(View.VISIBLE);
+                    imgPJMisBuilds.setImageResource(R.drawable.yanfeibuilds);
+                    cargarCatalizadores();
+                    traerArtefactosGuardadosFlor();
+                    traerArtefactosGuardadosPluma();
+                    traerArtefactosGuardadosReloj();
+                    traerArtefactosGuardadosCopa();
+                    traerArtefactosGuardadosCorona();
+                    traerArmaGuardada();
+                    CargarDatosSQLite();
+                    GuardarIndividuales();
+                    GuardarTodos();
+                    VistaPreviaBuild();
+                }else if (position == 31) {
+                    limpiarET();
+                    nombrePJ = spPJMisBuilds.getSelectedItem().toString();
+                    scrollView.setEnabled(true);
+                    scrollView.setVisibility(View.VISIBLE);
                     imgPJMisBuilds.setImageResource(R.drawable.zhonglibuilds);
                     cargarLanzas();
                     traerArtefactosGuardadosFlor();
@@ -1246,15 +1263,14 @@ public class MisBuilds extends AppCompatActivity {
     }
 
     private void VistaPreviaBuild() {
-        vistaPrevia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        vistaPrevia.setOnClickListener(v -> {
+            if(traerValorChk(this) == 1){
                 entrar.start();
-                Intent vista = new Intent(MisBuilds.this, VistaPrevia.class);
-                vista.putExtra("pj", spPJMisBuilds.getSelectedItem().toString());
-                Toast.makeText(MisBuilds.this, "¡Recuerda que puedes guardar la vista previa como imagen en tu teléfono presionando o tocando en cualquier parte de la pantalla!", Toast.LENGTH_SHORT).show();
-                startActivity(vista);
             }
+            Intent vista = new Intent(MisBuilds.this, VistaPrevia.class);
+            vista.putExtra("pj", spPJMisBuilds.getSelectedItem().toString());
+            Toast.makeText(MisBuilds.this, "¡Recuerda que puedes guardar la vista previa como imagen en tu teléfono presionando o tocando en cualquier parte de la pantalla!", Toast.LENGTH_SHORT).show();
+            startActivity(vista);
         });
     }
 
